@@ -28,3 +28,8 @@ DerivedData
 # IDEs and Editors
 .vscode/
 .idea/
+# scrollcraft build artifacts
+scrollcraft/**/lab/
+scrollcraft/lab/
+scrollcraft/**/serve.log
+scrollcraft/**/node_modules/

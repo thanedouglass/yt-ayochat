@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>yt-ayochat · the scroll is dead</title>
+<meta name="description" content="yt-ayochat turns YouTube Shorts comments into community. An open-source governed RAG agent that answers your viewers and delivers the invite.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230B0A08'/><rect x='6' y='22' width='14' height='4' fill='%23FFB000'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="scrollcraft.css">
+<style>
+  /* ---------- theme: six colours, three faces ---------- */
+  :root {
+    --sc-canvas:     #0B0A08;
+    --sc-surface:    #151310;
+    --sc-ink:        #EFE9DC;
+    --sc-ink-soft:   #A39A88;
+    --sc-accent:     #FFB000;   /* amber phosphor: the machine's voice */
+    --sc-accent-ink: #171105;
+    --sc-font-display: "Bricolage Grotesque", "Archivo", system-ui, sans-serif;
+    --sc-font-text:    "Newsreader", Georgia, serif;
+    --sc-font-mono:    "IBM Plex Mono", ui-monospace, monospace;
+    --sc-shadow-color: 36 30% 2%;
+  }
+
+  body { font-family: var(--sc-font-text); }
+
+  /* the accent owns one role: everything the machine says or types */
+  .voice { color: var(--sc-accent); }
+
+  .mono {
+    font-family: var(--sc-font-mono);
+    font-size: var(--sc-t-sm);
+    letter-spacing: 0.02em;
+  }
+  .microlabel {
+    font-family: var(--sc-font-mono);
+    font-size: var(--sc-t-xs);
+    letter-spacing: var(--sc-track-wide);
+    text-transform: uppercase;
+    color: var(--sc-ink-soft);
+  }
+
+  /* ---------- act 1 · hero ---------- */
+  .hero-stage { display: block; }
+  .hero-mark {
+    position: absolute;
+    top: clamp(1.25rem, 4vh, 3rem);
+    left: var(--sc-gutter);
+  }
+  .hero-mark .microlabel { color: var(--sc-ink-soft); }
+  .hero-mark strong {
+    display: block;
+    font-family: var(--sc-font-mono);
+    font-weight: 500;
+    font-size: var(--sc-t-base);
+    color: var(--sc-accent);
+    letter-spacing: 0.02em;
+  }
+  .hero-copy {
+    position: absolute;
+    left: var(--sc-gutter);
+    right: var(--sc-gutter);
+    bottom: clamp(2.5rem, 11vh, 8rem);
+    z-index: var(--sc-z-copy);
+  }
+  .hero-h1 {
+    font-family: var(--sc-font-display);
+    font-weight: 800;
+    font-size: clamp(3.2rem, 12.5vw, 12.5rem);
+    line-height: 0.92;
+    letter-spacing: var(--sc-track-tight);
+    text-transform: uppercase;
+    text-wrap: balance;
+    margin: 0;
+    max-width: 11ch;
+    /* grammar lean: scale driven from the act's own progress */
+    transform: scale(calc(1 + var(--sc-p, 0) * 0.04));
+    transform-origin: left bottom;
+  }
+  .hero-sub {
+    margin: var(--sc-6) 0 0;
+    max-width: 34ch;
+    font-size: var(--sc-t-lg);
+    color: var(--sc-ink-soft);
+    text-wrap: pretty;
+  }
+
+  /* ---------- act 2 · the cost, broken grid ---------- */
+  .cost { padding-block: var(--sc-section); }
+  .cost-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    row-gap: var(--sc-8);
+  }
+  .cost-open {
+    grid-column: 7 / 13;
+    text-align: right;
+    font-size: var(--sc-t-lg);
+    color: var(--sc-ink);
+    max-width: 30ch;
+    justify-self: end;
+    margin: 0;
+    text-wrap: pretty;
+  }
+  .cost-zero-wrap { grid-column: 1 / 12; }
+  .cost-zero {
+    font-family: var(--sc-font-display);
+    font-weight: 800;
+    font-size: clamp(6rem, 27vw, 26rem);
+    line-height: 1;
+    letter-spacing: var(--sc-track-tight);
+    margin: 0;
+    padding-block: 0.05em;
+  }
+  .cost-after {
+    grid-column: 3 / 9;
+    margin: 0;
+    font-size: var(--sc-t-base);
+    color: var(--sc-ink-soft);
+    max-width: 38ch;
+    text-wrap: pretty;
+  }
+  .cost-tag {
+    grid-column: 9 / 13;
+    align-self: end;
+    justify-self: end;
+    text-align: right;
+  }
+
+  /* ---------- act 3 · the shift, terminal ---------- */
+  .shift-stage {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    align-content: center;
+    column-gap: var(--sc-5);
+    padding-inline: var(--sc-gutter);
+  }
+  .shift-copy {
+    grid-column: 1 / 5;
+    grid-row: 1;
+    align-self: center;
+    display: grid;
+    row-gap: var(--sc-6);
+    z-index: var(--sc-z-copy);
+  }
+  .shift-copy h2 {
+    font-family: var(--sc-font-display);
+    font-weight: 700;
+    font-size: var(--sc-t-2xl);
+    line-height: var(--sc-leading-tight);
+    letter-spacing: var(--sc-track-snug);
+    margin: 0;
+    text-wrap: balance;
+  }
+  .shift-copy p {
+    margin: 0;
+    font-size: var(--sc-t-lg);
+    color: var(--sc-ink);
+    max-width: 26ch;
+    text-wrap: pretty;
+  }
+  .term {
+    grid-column: 5 / 13;
+    grid-row: 1;
+    align-self: center;
+    margin: 0;
+    background: var(--sc-surface);
+    border: 1px solid var(--sc-hairline-strong);
+    box-shadow: var(--sc-e2), var(--sc-edge);
+    height: min(62vh, 34rem);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .term-head {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--sc-4);
+    padding: var(--sc-3) var(--sc-4);
+    border-bottom: 1px solid var(--sc-hairline);
+  }
+  .term-body { padding: var(--sc-4); flex: 1; display: flex; flex-direction: column; }
+  .term-cmd {
+    font-family: var(--sc-font-mono);
+    font-size: var(--sc-t-base);
+    font-weight: 500;
+    color: var(--sc-accent);
+    margin: 0 0 var(--sc-4);
+    min-height: 1.5em;
+  }
+  .term-feed-clip {
+    overflow: hidden;
+    flex: 1;
+    min-height: 12rem;
+    mask-image: linear-gradient(to bottom, black 72%, transparent);
+  }
+  .term-feed {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-family: var(--sc-font-mono);
+    font-size: var(--sc-t-sm);
+    color: color-mix(in oklab, var(--sc-accent) 72%, var(--sc-ink-soft));
+    line-height: 1.9;
+    /* CSS-only motion: the pipeline runs whether or not you scroll */
+    animation: feedscroll 14s steps(7, end) infinite;
+  }
+  .term-feed b { font-weight: 500; color: var(--sc-accent); }
+  @keyframes feedscroll {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .term-feed { animation: none; }
+  }
+
+  /* ---------- act 4 · silence ---------- */
+  .hush {
+    padding-block: calc(var(--sc-section) * 1.6);
+    display: grid;
+  }
+  .hush p {
+    margin: 0;
+    justify-self: start;
+    margin-left: clamp(0rem, 14vw, 18rem);
+  }
+
+  /* ---------- act 5 · the peak ---------- */
+  .peak-stage {
+    display: grid;
+    align-content: center;
+    row-gap: var(--sc-7);
+    padding-inline: var(--sc-gutter);
+  }
+  .peak-label { justify-self: start; }
+  .peak-line {
+    font-family: var(--sc-font-display);
+    font-weight: 800;
+    font-size: clamp(4rem, 17vw, 17rem);
+    line-height: 0.95;
+    letter-spacing: var(--sc-track-tight);
+    text-transform: uppercase;
+    margin: 0;
+    min-height: 1em;
+    color: var(--sc-accent);
+  }
+  .peak-dm-wrap {
+    justify-self: end;
+    width: min(34rem, 92%);
+  }
+  .dm {
+    background: var(--sc-surface);
+    border: 1px solid var(--sc-hairline-strong);
+    box-shadow: var(--sc-e3), var(--sc-edge);
+    padding: var(--sc-5);
+    font-family: var(--sc-font-mono);
+    font-size: var(--sc-t-sm);
+    line-height: 1.8;
+  }
+  .dm-head {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--sc-4);
+    padding-bottom: var(--sc-3);
+    margin-bottom: var(--sc-4);
+    border-bottom: 1px solid var(--sc-hairline);
+  }
+  .dm p { margin: 0; color: var(--sc-ink); }
+  .dm .voice { font-weight: 500; }
+  .peak-close {
+    margin: 0;
+    max-width: 34ch;
+    font-size: var(--sc-t-lg);
+    color: var(--sc-ink);
+    text-wrap: pretty;
+  }
+
+  /* ---------- act 6 · close: the page inverts to its smallest type ---------- */
+  .end { padding-block: calc(var(--sc-section) * 1.2) var(--sc-8); }
+  .end-stack { max-width: 54rem; }
+  .end h2 {
+    font-family: var(--sc-font-display);
+    font-weight: 700;
+    font-size: var(--sc-t-lg);
+    letter-spacing: var(--sc-track-snug);
+    margin: 0 0 var(--sc-4);
+  }
+  .end p { margin: 0 0 var(--sc-6); font-size: var(--sc-t-base); color: var(--sc-ink-soft); max-width: 48ch; }
+  .end pre {
+    margin: 0 0 var(--sc-6);
+    padding: var(--sc-4) var(--sc-5);
+    background: var(--sc-surface);
+    border: 1px solid var(--sc-hairline);
+    font-family: var(--sc-font-mono);
+    font-size: var(--sc-t-sm);
+    line-height: 2;
+    color: var(--sc-ink);
+    overflow-x: auto;
+  }
+  .end pre b { color: var(--sc-accent); font-weight: 400; }
+  .end-cta {
+    font-family: var(--sc-font-mono);
+    font-size: var(--sc-t-base);
+    color: var(--sc-accent);
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+    text-decoration-thickness: 1px;
+  }
+  .end-cta:hover { text-decoration-thickness: 2px; }
+  .end-foot {
+    margin-top: var(--sc-9);
+    padding-top: var(--sc-4);
+    border-top: 1px solid var(--sc-hairline);
+    display: flex;
+    justify-content: space-between;
+    gap: var(--sc-4);
+    flex-wrap: wrap;
+  }
+
+  /* ---------- the signature move: scroll-as-keystrokes ---------- */
+  .typed::after {
+    content: "▮";
+    color: var(--sc-accent);
+    animation: caret 1.1s steps(2, jump-none) infinite;
+  }
+  .typed.is-done::after { animation: none; opacity: 0; }
+  .term-cmd.typed.is-done::after { opacity: 1; animation: caret 1.1s steps(2, jump-none) infinite; }
+  @keyframes caret { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .typed::after { animation: none; }
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 860px) {
+    .cost-open { grid-column: 3 / 13; }
+    .cost-zero-wrap { grid-column: 1 / 13; }
+    .cost-after { grid-column: 1 / 11; }
+    .cost-tag { grid-column: 1 / 13; justify-self: start; text-align: left; }
+    .shift-stage { align-content: start; padding-top: clamp(4rem, 12vh, 7rem); }
+    .shift-copy { grid-column: 1 / 13; grid-row: 1; }
+    .term { grid-column: 1 / 13; grid-row: 2; margin-top: var(--sc-6); height: min(37vh, 21rem); }
+    .peak-dm-wrap { justify-self: start; }
+    .hush p { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<span data-sc-progress></span>
+<div class="sc-grain" aria-hidden="true"></div>
+
+<main id="top">
+
+  <!-- ACT 1 · THE PROBLEM: recognition. pin + kinetic, greet cue. -->
+  <section data-sc-act="pin" data-sc-span="2.2" data-sc-drift="#0B0A08" aria-label="The problem">
+    <div data-sc-stage class="hero-stage">
+      <p class="hero-mark" data-sc-cue="0 0.9 0">
+        <strong>yt-ayochat</strong>
+        <span class="microlabel">open source comment agent</span>
+      </p>
+      <div class="hero-copy" data-sc-cue="0 0.82 0">
+        <h1 class="hero-h1" data-sc-kinetic="lines">The scroll is dead.</h1>
+        <p class="hero-sub">A manifesto for creators whose Shorts get millions of views and nothing after the view.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACT 2 · THE COST: unease. flow + one huge reveal. -->
+  <section class="sc-section cost" data-sc-act="flow" data-sc-drift="#0D0C09" aria-label="The cost">
+    <div class="sc-wrap cost-grid">
+      <p class="cost-open" data-sc-in>The attention economy pays you in views and keeps the relationship. Your best viewer is already three videos away.</p>
+      <div class="cost-zero-wrap" data-sc-reveal="right" data-sc-reveal-at="0.12 0.5">
+        <p class="cost-zero">Zero.</p>
+      </div>
+      <p class="cost-after" data-sc-in>Clicks. Replies answered. Invitations delivered. The feed moves on before you can say subscribe, and everything you earned stays inside it.</p>
+      <p class="cost-tag microlabel" data-sc-in>dead traffic, at scale</p>
+    </div>
+  </section>
+
+  <!-- ACT 3 · THE SHIFT: curiosity. pin + typed command, CSS-only pipeline. -->
+  <section data-sc-act="pin" data-sc-span="2.4" data-sc-drift="#0A0908" aria-label="The shift">
+    <div data-sc-stage class="shift-stage" data-sc-verify-state="">
+      <div class="shift-copy">
+        <h2 data-sc-cue="0 0.42 0">Put an agent under the comments.</h2>
+        <p data-sc-cue="0.3 0.66">yt-ayochat reads every reply against your own knowledge base. A Python RAG pipeline, not a canned autoresponder.</p>
+        <p data-sc-cue="0.6 0.96">Guardrails first: screening, rate limits, a circuit breaker. Then the answer, in your voice.</p>
+      </div>
+      <figure class="term" aria-label="Terminal running the yt-ayochat pipeline, simulated session">
+        <figcaption class="term-head">
+          <span class="microlabel">ayochat · pipeline</span>
+          <span class="microlabel">simulated session · demo data</span>
+        </figcaption>
+        <div class="term-body">
+          <p class="term-cmd typed" data-type-at="0.04 0.3" data-verify="cmd">$ ayochat run --pipeline governed-rag</p>
+          <div class="term-feed-clip">
+            <ul class="term-feed" aria-hidden="true">
+              <li><b>[listener]</b> polling comment threads … ok</li>
+              <li><b>[gateway]</b>  rate limit ok · circuit closed</li>
+              <li><b>[ingest]</b>   chunking docs/ → chroma_db</li>
+              <li><b>[retrieve]</b> context assembled from your corpus</li>
+              <li><b>[guard]</b>    model armor pass · sensitive-data pass</li>
+              <li><b>[reply]</b>    drafted in channel voice</li>
+              <li><b>[watch]</b>    waiting on the next comment …</li>
+              <li><b>[listener]</b> polling comment threads … ok</li>
+              <li><b>[gateway]</b>  rate limit ok · circuit closed</li>
+              <li><b>[ingest]</b>   chunking docs/ → chroma_db</li>
+              <li><b>[retrieve]</b> context assembled from your corpus</li>
+              <li><b>[guard]</b>    model armor pass · sensitive-data pass</li>
+              <li><b>[reply]</b>    drafted in channel voice</li>
+              <li><b>[watch]</b>    waiting on the next comment …</li>
+            </ul>
+          </div>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ACT 4 · AUTHORED SILENCE: held breath. One line, nothing else. -->
+  <section class="hush" data-sc-act="flow" data-sc-drift="#090807" aria-label="A comment arrives">
+    <div class="sc-wrap">
+      <p class="mono voice" data-sc-in>then, under your latest Short:</p>
+    </div>
+  </section>
+
+  <!-- ACT 5 · THE PEAK: impact. Your scroll types the comment. Largest span, deep dwell. -->
+  <section data-sc-act="pin" data-sc-span="3.4" data-sc-dwell="0.5" data-sc-drift="#080807" aria-label="The conversion moment">
+    <div data-sc-stage class="peak-stage" data-sc-verify-state="">
+      <p class="peak-label microlabel" data-sc-cue="0 0.94 0">incoming comment · simulated</p>
+      <p class="peak-line typed" data-type-at="0.1 0.44" data-verify="comment">Send it</p>
+      <div class="peak-dm-wrap" data-sc-reveal="left" data-sc-reveal-at="0.48 0.62">
+        <div class="dm">
+          <div class="dm-head">
+            <span class="microlabel">ayochat · auto-dm</span>
+            <span class="microlabel">to: the commenter</span>
+          </div>
+          <p><span class="voice">→</span> you asked. here is your invite.</p>
+          <p><span class="voice">→</span> community link · delivered.</p>
+        </div>
+      </div>
+      <p class="peak-close" data-sc-cue="0.58 0.97 0.1 0.12">One comment in. One DM out. Dead traffic just became your community.</p>
+    </div>
+  </section>
+
+  <!-- ACT 6 · THE CLOSE: resolve. The page inverts to its smallest type and holds. -->
+  <section class="sc-section end" data-sc-act="flow" data-sc-drift="#0B0A08" aria-label="Run the agent">
+    <div class="sc-wrap end-stack" data-sc-in data-sc-stagger="60">
+      <h2>Run the agent.</h2>
+      <p>Open source, governed end to end, yours to read before you trust it. Clone it, point it at your channel, and stop losing the people who already showed up.</p>
+      <pre aria-label="Install commands"><b>$</b> git clone https://github.com/thanedouglass/yt-ayochat.git
+<b>$</b> cd yt-ayochat &amp;&amp; python3 -m venv .venv
+<b>$</b> source .venv/bin/activate &amp;&amp; pip install -r requirements.txt</pre>
+      <a class="end-cta" href="https://github.com/thanedouglass/yt-ayochat">github.com/thanedouglass/yt-ayochat</a>
+      <footer class="end-foot">
+        <span class="microlabel">yt-ayochat</span>
+        <span class="microlabel">built in the open by thanedouglass</span>
+      </footer>
+    </div>
+  </section>
+
+</main>
+
+<script src="scrollcraft.js"></script>
+<script>
+ScrollCraft.mount(document.body);
+
+/* Signature move: scroll-as-keystrokes.
+   Each [data-type-at="from to"] element is typed out character by character,
+   driven by its act's --sc-p. The wheel is the keyboard. */
+(function () {
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var typed = Array.prototype.map.call(
+    document.querySelectorAll('[data-type-at]'),
+    function (el) {
+      var w = el.getAttribute('data-type-at').split(' ');
+      return {
+        el: el,
+        act: el.closest('[data-sc-act]'),
+        stage: el.closest('[data-sc-stage], [data-sc-verify-state]'),
+        a: parseFloat(w[0]), b: parseFloat(w[1]),
+        full: el.textContent, last: -1,
+        key: el.getAttribute('data-verify') || 'typed'
+      };
+    }
+  );
+  if (reduce) {
+    typed.forEach(function (t) { t.el.classList.add('is-done'); });
+    return;
+  }
+  typed.forEach(function (t) { t.el.textContent = ''; });
+  function tick() {
+    typed.forEach(function (t) {
+      var p = parseFloat(t.act.style.getPropertyValue('--sc-p')) || 0;
+      var k = Math.min(1, Math.max(0, (p - t.a) / (t.b - t.a)));
+      var n = Math.round(k * t.full.length);
+      if (n !== t.last) {
+        t.last = n;
+        t.el.textContent = t.full.slice(0, n);
+        t.el.classList.toggle('is-done', n === t.full.length);
+        if (t.stage && t.stage.hasAttribute('data-sc-verify-state')) {
+          t.stage.setAttribute('data-sc-verify-state', t.key + ':' + n);
+        }
+      }
+    });
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>
