@@ -39,14 +39,19 @@ class ActionDispatcher:
         """Lazy-load YouTube Data API v3 client."""
         if self._youtube_client is not None:
             return self._youtube_client
-        if not self.api_key:
-            return None
         try:
-            from googleapiclient.discovery import build
-            self._youtube_client = build("youtube", "v3", developerKey=self.api_key)
+            from src.pipeline.auth import get_youtube_client
+            self._youtube_client = get_youtube_client()
             return self._youtube_client
         except Exception:
-            return None
+            if not self.api_key:
+                return None
+            try:
+                from googleapiclient.discovery import build
+                self._youtube_client = build("youtube", "v3", developerKey=self.api_key)
+                return self._youtube_client
+            except Exception:
+                return None
 
     def dispatch_reply(
         self,

@@ -24,6 +24,11 @@ from src.pipeline.rag_service import (
     VertexAIGenerator,
     rag_service,
 )
+from src.pipeline.auth import (
+    get_credentials,
+    get_youtube_client,
+    get_authenticated_channel_id,
+)
 
 __all__ = [
     "ActionDispatcher",
@@ -46,4 +51,7 @@ __all__ = [
     "action_dispatcher",
     "agent_gateway",
     "rag_service",
+    "get_credentials",
+    "get_youtube_client",
+    "get_authenticated_channel_id",
 ]

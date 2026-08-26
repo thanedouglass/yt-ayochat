@@ -66,12 +66,28 @@ class YouTubeCommentListener:
         """Lazy-load YouTube Data API v3 client."""
         if self._youtube_client is not None:
             return self._youtube_client
-        if not self.api_key:
+        try:
+            from src.pipeline.auth import get_youtube_client
+            self._youtube_client = get_youtube_client()
+            return self._youtube_client
+        except Exception:
+            if not self.api_key:
+                return None
+            try:
+                from googleapiclient.discovery import build
+                self._youtube_client = build("youtube", "v3", developerKey=self.api_key)
+                return self._youtube_client
+            except Exception:
+                return None
+
+    def _get_author_channel_id(self) -> Optional[str]:
+        """Get the authenticated author's channel ID."""
+        client = self._get_client()
+        if client is None:
             return None
         try:
-            from googleapiclient.discovery import build
-            self._youtube_client = build("youtube", "v3", developerKey=self.api_key)
-            return self._youtube_client
+            from src.pipeline.auth import get_authenticated_channel_id
+            return get_authenticated_channel_id(client)
         except Exception:
             return None
 
@@ -98,6 +114,8 @@ class YouTubeCommentListener:
         except Exception:
             return []
 
+        author_channel_id = self._get_author_channel_id()
+
         inbound_comments: List[InboundComment] = []
         for item in items:
             snippet = item.get("snippet", {}).get("topLevelComment", {}).get("snippet", {})
@@ -109,6 +127,28 @@ class YouTubeCommentListener:
 
             if not cid or cid in self.processed_comment_ids:
                 continue
+
+            # Skip if the channel author has already replied to this comment thread
+            if author_channel_id:
+                total_replies = item.get("snippet", {}).get("totalReplyCount", 0)
+                if total_replies > 0:
+                    try:
+                        replies_request = client.comments().list(
+                            part="snippet",
+                            parentId=cid,
+                            maxResults=100
+                        )
+                        replies_response = replies_request.execute()
+                        has_author_reply = False
+                        for reply in replies_response.get("items", []):
+                            reply_author_id = reply.get("snippet", {}).get("authorChannelId", {}).get("value")
+                            if reply_author_id == author_channel_id:
+                                has_author_reply = True
+                                break
+                        if has_author_reply:
+                            continue
+                    except Exception:
+                        pass
 
             if self.filter.should_process(text):
                 inbound_comments.append(

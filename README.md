@@ -1,6 +1,12 @@
-# yt-ayochat: Governed YouTube Comment AI Agent
+# 🐝 yt-ayochat: Digital Autonomous Pollinators
 
-An enterprise-grade, governed RAG execution pipeline and evaluation framework for automated YouTube Shorts and video comment management, powered by **Google Cloud Platform (Vertex AI, Cloud Sensitive Data Protection, Model Armor, and Google Cloud Logging)**.
+An enterprise-grade, governed RAG execution pipeline and evaluation framework that deploys **Digital Autonomous Pollinators** (social software agents) to nurture the YouTube community ecosystem. Powered by **Google Cloud Platform (Vertex AI, Cloud Sensitive Data Protection, Model Armor, and Google Cloud Logging)**.
+
+### 🌺 The Pollinator Concept
+Instead of deploying automated noise or extractive algorithms, `yt-ayochat` serves as a digital pollinator:
+*   **The Pollen (The Attention):** Millions of views land on your YouTube Shorts, but that fleeting attention easily scatters to the wind.
+*   **The Nectar (The RAG Database):** Your curated lore, community links, and resources are the actual value you want to distribute.
+*   **The Pollinator (yt-ayochat):** The autonomous social agent detects high-intent comments, retrieves the exact nectar the viewer needs from your database, and cross-pollinates that user directly into your owned ecosystem.
 
 ---
 

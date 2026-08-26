@@ -58,6 +58,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="yt-ayochat Governed RAG Execution Runner")
     parser.add_argument("--query", type=str, help="Single comment text to process through the pipeline")
     parser.add_argument("--author", type=str, default="User123", help="Author username or channel ID")
+    parser.add_argument("--video-id", type=str, help="Target YouTube Video ID for polling or target context")
     parser.add_argument("--poll", action="store_true", help="Run YouTube Data API v3 polling loop")
     parser.add_argument("--seed", action="store_true", default=True, help="Seed sample knowledge base")
 
@@ -71,7 +72,7 @@ def main() -> None:
         print(f"Raw Input: {args.query}")
         comment = InboundComment(
             comment_id="cli_cmt_001",
-            video_id="cli_demo_video",
+            video_id=args.video_id or "cli_demo_video",
             author_name=args.author,
             author_channel_id=f"UC_{args.author}",
             text_original=args.query,
@@ -88,8 +89,22 @@ def main() -> None:
         return
 
     if args.poll:
-        print("Starting YouTube Data API v3 polling cycle...")
-        results = youtube_agent.run_polling_cycle()
+        # Trigger OAuth 2.0 flow to ensure we have credentials cached
+        try:
+            from src.pipeline.auth import get_youtube_client, get_authenticated_channel_id
+            print("Authenticating with YouTube API (OAuth 2.0)...")
+            client = get_youtube_client()
+            channel_id = get_authenticated_channel_id(client)
+            print(f"Authenticated successfully. Channel ID: {channel_id}")
+        except Exception as e:
+            print(f"Warning: OAuth authentication failed: {e}. Polling might run in sandbox or fail.")
+
+        video_ids = [args.video_id] if args.video_id else None
+        if video_ids:
+            print(f"Starting YouTube Data API v3 polling cycle for video: {args.video_id}...")
+        else:
+            print("Starting YouTube Data API v3 polling cycle...")
+        results = youtube_agent.run_polling_cycle(video_ids=video_ids)
         print(f"Completed cycle. Processed {len(results)} comments.")
         return
 

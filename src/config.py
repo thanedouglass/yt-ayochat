@@ -47,6 +47,12 @@ class AppConfig:
     youtube_api_key: str = field(
         default_factory=lambda: os.getenv("YOUTUBE_API_KEY", "")
     )
+    client_secret_path: str = field(
+        default_factory=lambda: os.getenv("YOUTUBE_CLIENT_SECRET_PATH", "client_secret.json")
+    )
+    token_path: str = field(
+        default_factory=lambda: os.getenv("YOUTUBE_TOKEN_PATH", "token.json")
+    )
     target_video_ids: list[str] = field(
         default_factory=lambda: [
             v.strip() for v in os.getenv("TARGET_VIDEO_IDS", "").split(",") if v.strip()

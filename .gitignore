@@ -33,3 +33,7 @@ scrollcraft/**/lab/
 scrollcraft/lab/
 scrollcraft/**/serve.log
 scrollcraft/**/node_modules/
+
+# YouTube OAuth Credentials
+client_secret.json
+token.json
