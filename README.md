@@ -2,6 +2,9 @@
 
 An enterprise-grade, governed RAG execution pipeline and evaluation framework for automated YouTube Shorts and video comment management, powered by **Google Cloud Platform (Vertex AI, Cloud Sensitive Data Protection, Model Armor, and Google Cloud Logging)**.
 
+<img width="3456" height="1926" alt="ayochat" src="https://github.com/user-attachments/assets/d070249e-7a33-45a0-92a9-620514992b14" />
+
+
 ---
 
 ## 🏛️ System Architecture & 3 Core Pillars
