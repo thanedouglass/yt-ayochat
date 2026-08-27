@@ -35,6 +35,11 @@ class LumiSwarmEngine:
         self.hive = hive or hive_node
         self.guardrails = guardrails_pipeline
 
+    def reset_state(self) -> None:
+        """Reset node memory and cache buffers between batch loop iterations."""
+        if hasattr(self.hive, "reset_state"):
+            self.hive.reset_state()
+
     def process_comment_through_swarm(
         self,
         comment_id: str,

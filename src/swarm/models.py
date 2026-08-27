@@ -61,6 +61,9 @@ class PerceptionResult:
     slang_detected: List[str] = field(default_factory=list)
     action: SemioticIntentAction = SemioticIntentAction.PLAYFUL_BANTER
     confidence: float = 0.95
+    language: str = "en"
+    council_routed: bool = False
+    council_metadata: Dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass

@@ -207,6 +207,11 @@ class GovernedYouTubeAgent:
             swarm_decision=swarm_decision,
         )
 
+    def reset_state(self) -> None:
+        """Reset internal swarm memory/state between iterations."""
+        if self.swarm and hasattr(self.swarm, "reset_state"):
+            self.swarm.reset_state()
+
     def run_polling_cycle(self, video_ids: Optional[List[str]] = None) -> List[AgentTransactionResult]:
         """Poll all target videos for new comments and execute the governed pipeline."""
         target_ids = video_ids or config.target_video_ids
@@ -215,8 +220,12 @@ class GovernedYouTubeAgent:
         for vid in target_ids:
             comments = self.listener.poll_video_comments(vid)
             for comment in comments:
+                # Ensure memory/state is cleanly reset before every loop iteration
+                self.reset_state()
                 res = self.process_single_comment(comment)
                 results.append(res)
+                # Reset state after processing
+                self.reset_state()
 
         return results
 

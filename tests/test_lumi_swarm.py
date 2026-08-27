@@ -7,6 +7,7 @@ import pytest
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
+from backend.council import evaluate_os_sentiment_council
 from src.agent import GovernedYouTubeAgent
 from src.pipeline.listener import InboundComment
 from src.swarm.engine import LumiSwarmEngine
@@ -90,6 +91,88 @@ def test_perception_classification_taxonomy():
     p_offtopic = perception.analyze_comment("c7", "What is the best cryptocurrency to buy today?")
     assert p_offtopic.category == CommentCategory.UNINDEXED_OR_OFFTOPIC
     assert p_offtopic.action == SemioticIntentAction.OFFTOPIC_BRUSHOFF
+
+
+def test_llm_council_routing_spanish():
+    """Verify Spanish comments are dynamically detected and routed via the LLM Council."""
+    perception = PerceptionNode()
+    comment_text = "¡Increíble coreografía reina, devoraste con esos pasos de baile! 🔥"
+
+    result = perception.analyze_comment("c_es_001", comment_text)
+
+    assert result.language == "es"
+    assert result.council_routed is True
+    assert result.category == CommentCategory.HYPE
+    assert result.energy_level >= 4
+    assert result.polarity > 0.5
+    assert "council_votes_count" in result.council_metadata
+    assert result.council_metadata["council_votes_count"] >= 2
+
+
+def test_llm_council_routing_arabic():
+    """Verify Arabic comments are dynamically detected and routed via the LLM Council."""
+    perception = PerceptionNode()
+    comment_text = "فنانة ما شاء الله عليك احسن راقصة وابداع لا يوصف نار 🔥👑"
+
+    result = perception.analyze_comment("c_ar_001", comment_text)
+
+    assert result.language == "ar"
+    assert result.council_routed is True
+    assert result.category == CommentCategory.HYPE
+    assert result.energy_level >= 4
+    assert result.polarity > 0.5
+    assert result.council_metadata["routing_metadata"]["regional_council_language"] == "ar"
+
+
+def test_llm_council_routing_portuguese():
+    """Verify Portuguese comments are dynamically detected and routed via the LLM Council."""
+    perception = PerceptionNode()
+    comment_text = "Você arrasou demais nessa dança, maravilhosa e perfeita! ❤️"
+
+    result = perception.analyze_comment("c_pt_001", comment_text)
+
+    assert result.language == "pt"
+    assert result.council_routed is True
+    assert result.category == CommentCategory.HYPE
+    assert result.energy_level >= 4
+
+
+def test_batch_comments_state_reset_and_no_stale_lamp_cache():
+    """Verify that batch processing clears state and never deploys stale 'RIP to the lamp' string to non-lamp comments."""
+    agent = GovernedYouTubeAgent()
+
+    test_comments = [
+        "What shoes are you wearing in the studio rehearsal?",
+        "Where did you buy that vintage jacket?",
+        "I tried this move in my living room and dropped my water bottle!",
+        "Your footwork transition timing on count 3 was so clean!",
+        "YOU ATE THIS DANCE COVER SO HARD 🔥",
+    ]
+
+    replies = []
+    for idx, text in enumerate(test_comments):
+        # Reset state per turn
+        agent.reset_state()
+        cmt = InboundComment(
+            comment_id=f"cmt_batch_{idx}",
+            video_id="v_batch_01",
+            author_name=f"Viewer_{idx}",
+            author_channel_id=f"UC_viewer_{idx}",
+            text_original=text,
+            published_at="2026-08-27T12:00:00Z",
+        )
+        res = agent.process_single_comment(cmt)
+        replies.append(res.final_reply)
+
+    # 1. Ensure all replies are non-empty strings
+    assert all(isinstance(r, str) and len(r) > 0 for r in replies)
+
+    # 2. Ensure non-lamp comments DO NOT output the stale lamp quote
+    for idx, reply in enumerate(replies):
+        assert "RIP to the lamp" not in reply, f"Stale lamp quote found in reply for comment {idx}: '{reply}'"
+
+    # 3. Ensure uniqueness across diverse batch inputs (no static repetition)
+    assert len(set(replies)) >= 3, f"Expected varied dynamic responses across batch, got: {replies}"
 
 
 def test_hive_one_sentence_strict_enforcement():

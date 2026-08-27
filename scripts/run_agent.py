@@ -52,11 +52,13 @@ def main() -> None:
 
         decision = result.swarm_decision
         if decision:
+            council_tag = " [Karpathy LLM Council · Open-Source Models]" if decision.perception.council_routed else ""
             print(f"1️⃣ SUPERVISOR NODE:")
             print(f"   • Room Temperature: {decision.video_context.room_temperature.value}")
             print(f"   • Primary Topic:    {decision.video_context.primary_topic}")
             print(f"   • Engagement Goal:  {decision.video_context.engagement_goal}")
             print(f"\n2️⃣ PERCEPTION NODE:")
+            print(f"   • Language:         {decision.perception.language.upper()}{council_tag}")
             print(f"   • Category:         {decision.perception.category.value}")
             print(f"   • Semiotic Intent:  {decision.perception.semiotic_intent}")
             print(f"   • Energy Level:     {decision.perception.energy_level}/5")
