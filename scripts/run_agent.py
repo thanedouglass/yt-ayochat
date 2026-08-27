@@ -1,4 +1,4 @@
-"""Command-line runner for yt-ayochat Governed YouTube Comment RAG Agent."""
+"""Command-line runner for The Lumi Multi-Agent Swarm Framework."""
 
 from __future__ import annotations
 
@@ -7,91 +7,78 @@ import sys
 from src.agent import youtube_agent
 from src.config import config
 from src.pipeline.listener import InboundComment
-from src.pipeline.rag_service import KnowledgeChunk, rag_service
+from src.swarm.hive import hive_node
 from src.telemetry.logger import audit_logger
 
 
-def seed_sample_knowledge() -> None:
-    """Seed sample video transcript chunks for demo/local evaluation."""
-    chunks = [
-        KnowledgeChunk(
-            chunk_id="C-101",
-            source_name="Building Local RAG with Ollama",
-            reference="04:12",
-            content="We recommend using nomic-embed-text for local embeddings because it has an 8192 token context window and runs smoothly on 8GB of RAM.",
-        ),
-        KnowledgeChunk(
-            chunk_id="C-201",
-            source_name="Docker Deployment 101",
-            reference="01:30",
-            content="To build your Docker container, run `docker build -t my-app .` from the project root.",
-        ),
-        KnowledgeChunk(
-            chunk_id="C-301",
-            source_name="Top 5 VS Code Extensions",
-            reference="06:45",
-            content="Error Lens is essential because it displays diagnostic messages directly inline on the line where the error occurs.",
-        ),
-        KnowledgeChunk(
-            chunk_id="C-401",
-            source_name="SaaS Pricing Strategy",
-            reference="02:10",
-            content="The Starter tier is priced at $19/month and includes 5 project seats.",
-        ),
-        KnowledgeChunk(
-            chunk_id="C-402",
-            source_name="SaaS Pricing Strategy",
-            reference="05:50",
-            content="All tiers come with standard 24-hour email support included at no extra cost.",
-        ),
-        KnowledgeChunk(
-            chunk_id="C-501",
-            source_name="Why We Switched to SQLite",
-            reference="08:15",
-            content="While most people default to PostgreSQL for web apps, we specifically advise against PostgreSQL for early prototypes because it adds unnecessary operational overhead.",
-        ),
-    ]
-    rag_service.vector_store.add_chunks(chunks)
-
-
 def main() -> None:
-    parser = argparse.ArgumentParser(description="yt-ayochat Governed RAG Execution Runner")
-    parser.add_argument("--query", type=str, help="Single comment text to process through the pipeline")
-    parser.add_argument("--author", type=str, default="User123", help="Author username or channel ID")
-    parser.add_argument("--video-id", type=str, help="Target YouTube Video ID for polling or target context")
+    parser = argparse.ArgumentParser(
+        description="The Lumi Architecture · Autonomous Creator Multi-Agent Swarm Runner"
+    )
+    parser.add_argument("--query", type=str, help="Single viewer comment text to process through the swarm")
+    parser.add_argument("--author", type=str, default="hype_fan_24", help="Author username or channel handle")
+    parser.add_argument("--video-id", type=str, default="choreo_vlog_01", help="Target YouTube Video ID")
+    parser.add_argument("--blurb", type=str, default=None, help="Video overview description / PI Blurb")
+    parser.add_argument("--title", type=str, default=None, help="Video title")
+    parser.add_argument("--pinned", type=str, default=None, help="Pinned comment text")
     parser.add_argument("--poll", action="store_true", help="Run YouTube Data API v3 polling loop")
-    parser.add_argument("--seed", action="store_true", default=True, help="Seed sample knowledge base")
 
     args = parser.parse_args()
 
-    if args.seed:
-        seed_sample_knowledge()
-
     if args.query:
-        print(f"\n--- Processing Inbound Comment ---")
-        print(f"Raw Input: {args.query}")
+        print("\n" + "=" * 60)
+        print("⚡ THE LUMI ARCHITECTURE · 3-NODE AGENT SWARM EXECUTION")
+        print("=" * 60)
+        print(f"🎬 Video ID:       {args.video_id}")
+        print(f"👤 Author:         @{args.author}")
+        print(f"💬 Viewer Comment: \"{args.query}\"")
+        print("-" * 60)
+
         comment = InboundComment(
             comment_id="cli_cmt_001",
-            video_id=args.video_id or "cli_demo_video",
+            video_id=args.video_id,
             author_name=args.author,
             author_channel_id=f"UC_{args.author}",
             text_original=args.query,
-            published_at="2026-08-25T12:00:00Z",
+            published_at="2026-08-26T23:00:00Z",
         )
-        result = youtube_agent.process_single_comment(comment)
 
-        print("\n--- Pipeline Execution Result ---")
-        print(f"Trace ID:          {result.trace_id}")
-        print(f"Sanitized Query:   {result.sanitized_text}")
-        print(f"Is Blocked:        {result.is_blocked}")
-        print(f"Dispatch Status:   {result.dispatch_status.value}")
-        print(f"Final Reply:\n{result.final_reply or '[BLOCKED / NO REPLY]'}\n")
+        result = youtube_agent.process_single_comment(
+            comment=comment,
+            video_title=args.title,
+            video_description=args.blurb,
+            pinned_comment=args.pinned,
+        )
+
+        decision = result.swarm_decision
+        if decision:
+            print(f"1️⃣ SUPERVISOR NODE:")
+            print(f"   • Room Temperature: {decision.video_context.room_temperature.value}")
+            print(f"   • Primary Topic:    {decision.video_context.primary_topic}")
+            print(f"   • Engagement Goal:  {decision.video_context.engagement_goal}")
+            print(f"\n2️⃣ PERCEPTION NODE:")
+            print(f"   • Category:         {decision.perception.category.value}")
+            print(f"   • Semiotic Intent:  {decision.perception.semiotic_intent}")
+            print(f"   • Energy Level:     {decision.perception.energy_level}/5")
+            print(f"   • Polarity Score:   {decision.perception.polarity:+.2f}")
+            print(f"   • Slang Detected:   {decision.perception.slang_detected or ['None']}")
+            print(f"   • Action Directive: {decision.perception.action.value}")
+            print(f"\n3️⃣ AUTONOMOUS HIVE (LUMI'S SOVEREIGN PERSONA):")
+            print(f"   • Lore Attribution: {decision.hive_response.retrieved_lore_ids or ['Zero-Shot Swarm Synth']}")
+            print(f"   • Latency:          {decision.hive_response.generation_latency_ms:.1f}ms")
+            print(f"   • 1-Sentence Reply: \"{result.final_reply}\"")
+        else:
+            print(f"Final Reply:\n{result.final_reply or '[BLOCKED / NO REPLY]'}\n")
+
+        print("-" * 60)
+        print(f"🔒 Dispatch Status:  {result.dispatch_status.value}")
+        print(f"📋 Trace ID:        {result.trace_id}")
+        print("=" * 60 + "\n")
         return
 
     if args.poll:
-        # Trigger OAuth 2.0 flow to ensure we have credentials cached
         try:
-            from src.pipeline.auth import get_youtube_client, get_authenticated_channel_id
+            from src.pipeline.auth import get_authenticated_channel_id, get_youtube_client
             print("Authenticating with YouTube API (OAuth 2.0)...")
             client = get_youtube_client()
             channel_id = get_authenticated_channel_id(client)
@@ -101,11 +88,11 @@ def main() -> None:
 
         video_ids = [args.video_id] if args.video_id else None
         if video_ids:
-            print(f"Starting YouTube Data API v3 polling cycle for video: {args.video_id}...")
+            print(f"Starting YouTube Data API v3 swarm polling cycle for video: {args.video_id}...")
         else:
-            print("Starting YouTube Data API v3 polling cycle...")
+            print("Starting YouTube Data API v3 swarm polling cycle...")
         results = youtube_agent.run_polling_cycle(video_ids=video_ids)
-        print(f"Completed cycle. Processed {len(results)} comments.")
+        print(f"Completed cycle. Processed {len(results)} comments through Lumi swarm.")
         return
 
     parser.print_help()

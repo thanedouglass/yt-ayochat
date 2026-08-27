@@ -55,6 +55,10 @@ class AuditLogRecord(BaseModel):
     dispatch_status: DispatchStatus
     http_status: Optional[int] = None
     error_message: Optional[str] = None
+    room_temperature: Optional[str] = None
+    comment_category: Optional[str] = None
+    semiotic_intent: Optional[str] = None
+    energy_level: Optional[int] = None
 
     @classmethod
     def create(

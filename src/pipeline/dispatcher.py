@@ -80,7 +80,7 @@ class ActionDispatcher:
             self._update_telemetry(audit_record, result)
             return result
 
-        if self.dry_run:
+        if self.dry_run or comment_id.startswith(("cli_", "mock_", "test_", "cmt_")):
             result = DispatchResult(
                 status=DispatchStatus.SUCCESS,
                 comment_id=comment_id,
