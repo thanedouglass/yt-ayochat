@@ -25,6 +25,7 @@
     --sc-ink-soft:   #A39A88;
     --sc-accent:     #FFB000;   /* amber phosphor: the machine's voice */
     --sc-accent-ink: #171105;
+    --accent:        #FFB000;   /* alias for CTA buttons and UI highlights */
     --brick:         #FF2E4D;   /* electric crimson: structure only */
     --sc-font-display: "Bricolage Grotesque", "Archivo", system-ui, sans-serif;
     --sc-font-text:    "Newsreader", Georgia, serif;
@@ -653,33 +654,20 @@
     color: var(--sc-accent);
   }
 
-  /* 3. The Embedded Scheduler Frame */
-  .book-wrap {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-bottom: var(--sc-8);
+  /* 3. The Deployment CTA Button Styling */
+  .warp a[href*="calendar"]:hover {
+    background: color-mix(in oklab, var(--accent) 12%, transparent) !important;
+    border-color: var(--brick) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 0 24px rgba(255, 46, 77, 0.45), 0 0 12px rgba(255, 176, 0, 0.35);
+    transform: translateY(-2px);
   }
-  .book-frame {
-    width: 100%;
-    max-width: 48rem;
-    height: 700px;
-    min-height: 700px;
-    background: var(--sc-surface);
-    border: 1px solid var(--brick);
-    box-shadow: 0 0 30px -10px rgba(255, 46, 77, 0.3), var(--sc-e2);
-    overflow: hidden;
-    position: relative;
-    contain: layout style size;
+  .warp a[href*="calendar"]:active {
+    transform: translateY(0);
   }
-  .book-frame iframe {
-    display: block;
-    width: 100%;
-    height: 100%;
-    min-height: 700px;
-    border: 0;
-    color-scheme: dark;
-    background: var(--sc-surface);
+  .warp a[href*="calendar"]:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
   }
   .warp-foot {
     width: 100%;
@@ -864,8 +852,6 @@
     .native-kicker { grid-column: 1 / 13; }
     .step { grid-template-columns: 2.25rem minmax(0, 1fr); column-gap: var(--sc-4); }
     .warp-wrap { padding-inline: 0; }
-    .book-frame { height: 720px; min-height: 720px; }
-    .book-frame iframe { min-height: 720px; }
     .warp-foot { flex-direction: column; align-items: center; text-align: center; }
   }
 </style>
@@ -1080,18 +1066,11 @@
         <p class="warp-body">The platforms gave us scale but forgot the safety features. So we built our own firewall. This isn't just an automated funnel; it is cognitive security. We are taking the noise, the hate, and the dead traffic, and warping reality to convert it into pure, owned cash flow. <span class="warp-triad">Safe. Sexy. Sovereign.</span></p>
       </div>
 
-      <!-- 3. The Embedded Scheduler: Google Calendar Booking -->
-      <div class="book-wrap">
-        <div class="book-frame">
-          <iframe
-            src="https://calendar.app.google/S4vHVZt1QtcoiD397?gv=true"
-            title="Book a deployment session"
-            width="100%"
-            height="700"
-            loading="lazy"
-            style="border: 0;"
-          ></iframe>
-        </div>
+      <!-- 3. Deployment Session Booking CTA -->
+      <div style="text-align: center; margin-top: 2rem;">
+        <a href="https://calendar.app.google/8UTSYL2pqFFw4gTN8" target="_blank" style="display: inline-block; padding: 16px 32px; background: transparent; border: 1px solid var(--accent); color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; text-decoration: none; font-family: monospace; transition: all 0.2s ease;">
+          Book a Deployment Session
+        </a>
       </div>
 
       <footer class="warp-foot">
@@ -1425,7 +1404,7 @@ var SC_REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
     }
     if (warp) {
       new IntersectionObserver(function (entries) {
-        warpActive = entries[0].intersectionRatio > 0.05;
+        warpActive = entries[0].isIntersecting;
         updateBar();
       }, { threshold: [0, 0.05, 0.3, 1] }).observe(warp);
     }
