@@ -71,7 +71,8 @@
 ---
 
 ## 🏛️ System Architecture: The 3-Node Swarm
-
+Updated Most Recent As of August 28th, 4:47 AM 
+![YT-AyoChat Architecture](architecture.svg)
 ```
 ================== [ Local Execution & Google Cloud API Integration ] ==================
                      [ Inbound YouTube Comment Thread ]
