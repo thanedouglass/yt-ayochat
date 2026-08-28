@@ -1,0 +1,173 @@
+"""Simulated Inbound Comment Queue derived from Top 10 YouTube Videos."""
+
+from __future__ import annotations
+
+from typing import Any, Dict, List
+
+# Top 10 Videos extracted from Table data.csv
+TOP_10_VIDEOS: List[Dict[str, Any]] = [
+    {
+        "id": "DOC-01",
+        "video_id": "M1G92FWmdJw",
+        "title": "KATSEYE (캣츠아이) 'Hootie Frutti' Official Dance Cover #katseye #katseye_hootiefrutti #kpop #fypシ゚viral",
+        "views": 476326,
+        "category": "DANCE_CHOREO",
+        "url": "https://youtube.com/watch?v=M1G92FWmdJw",
+    },
+    {
+        "id": "DOC-02",
+        "video_id": "Otu-5CrcWHo",
+        "title": "KATSEYE (캣츠아이) 'Hootie Frutti' Dance Challenge #katseye #eyekons #shorts #ayodesci #kpop #fypシ゚viral",
+        "views": 146175,
+        "category": "DANCE_CHOREO",
+        "url": "https://youtube.com/watch?v=Otu-5CrcWHo",
+    },
+    {
+        "id": "DOC-03",
+        "video_id": "wJph6fDaJuk",
+        "title": "@katseyeworld ‘Hootie Frutti’(캣츠아이) Dance Practice #캣츠아이 #hootiefrutti #katseye #ayodesci #fypviralシ",
+        "views": 109588,
+        "category": "DANCE_CHOREO",
+        "url": "https://youtube.com/watch?v=wJph6fDaJuk",
+    },
+    {
+        "id": "DOC-04",
+        "video_id": "jQJqh-zTZQA",
+        "title": "‘Pink Blush’ Original Dance for@PrincessDollyBabe 💘 #pinkblush #princessdollybabe #trending #fypシ゚",
+        "views": 89732,
+        "category": "ORIGINAL_CHOREO",
+        "url": "https://youtube.com/watch?v=jQJqh-zTZQA",
+    },
+    {
+        "id": "DOC-05",
+        "video_id": "KBr9Y0ljCXQ",
+        "title": "K-pop in Public @katseyeworld 🍒🍉#hootiefrutti #katseye #katseye_hootiefrutti #fypシ゚viral",
+        "views": 29275,
+        "category": "KPOP_IN_PUBLIC",
+        "url": "https://youtube.com/watch?v=KBr9Y0ljCXQ",
+    },
+    {
+        "id": "DOC-06",
+        "video_id": "fAiPRcwv2FM",
+        "title": "KATSEYE 'Hootie Frutti' Official Dance (K-Pop in Public Airport Edition!) ✈️ @katseyeworld #eyekons",
+        "views": 20710,
+        "category": "KPOP_IN_PUBLIC",
+        "url": "https://youtube.com/watch?v=fAiPRcwv2FM",
+    },
+    {
+        "id": "DOC-07",
+        "video_id": "TOwnshDLyE4",
+        "title": "HIT 'EM WHERE IT HURTS 🥊💋@MEOVV_OFFICIAL  #fypシ゚viral #shorts #kpop #dance #tiktok #foryou",
+        "views": 18176,
+        "category": "DANCE_COVER",
+        "url": "https://youtube.com/watch?v=TOwnshDLyE4",
+    },
+    {
+        "id": "DOC-08",
+        "video_id": "Qnd81duBOWs",
+        "title": "now ‘LEMON TANG’ #fyp #ayodesci #fypviralシ #trendingshorts #youtubeshorts",
+        "views": 15642,
+        "category": "DANCE_TREND",
+        "url": "https://youtube.com/watch?v=Qnd81duBOWs",
+    },
+    {
+        "id": "DOC-09",
+        "video_id": "8kGmSFkvYNg",
+        "title": "KATSEYE 'Gnarly' GRAMMY Dance Break Cover 🏆🔥 #ayodesci #katseye #gnarlykatseye",
+        "views": 14898,
+        "category": "DANCE_BREAK",
+        "url": "https://youtube.com/watch?v=8kGmSFkvYNg",
+    },
+    {
+        "id": "DOC-10",
+        "video_id": "FNwedjt2qxE",
+        "title": "'Iconic By Mistake' @katseyeworld @ILLIT_official @LESSERAFIM_official #shorts #trending",
+        "views": 14401,
+        "category": "DANCE_MASHUP",
+        "url": "https://youtube.com/watch?v=FNwedjt2qxE",
+    },
+]
+
+# Curated inbound comment queue across polarity & language spectra
+INBOUND_COMMENT_QUEUE: List[Dict[str, Any]] = [
+    {
+        "comment_id": "IN-001",
+        "author_id": "user_dance_stan_01",
+        "video_id": "M1G92FWmdJw",
+        "video_title": "KATSEYE (캣츠아이) 'Hootie Frutti' Official Dance Cover",
+        "text": "that footwork transition at 0:15 was literally impossible how did you hit that?!",
+        "expected_intent": "CHOREO_TECHNIQUE_INQUIRY",
+    },
+    {
+        "comment_id": "IN-002",
+        "author_id": "user_hype_queen",
+        "video_id": "Otu-5CrcWHo",
+        "video_title": "KATSEYE (캣츠아이) 'Hootie Frutti' Dance Challenge",
+        "text": "YOU ATE AND LEFT ZERO CRUMBS BEST DANCER ON THIS APP 🔥🔥🔥",
+        "expected_intent": "HIGH_ENERGY_PRAISE",
+    },
+    {
+        "comment_id": "IN-003",
+        "author_id": "user_fit_seeker",
+        "video_id": "wJph6fDaJuk",
+        "video_title": "@katseyeworld ‘Hootie Frutti’(캣츠아이) Dance Practice",
+        "text": "WHERE IS THE OVERSIZED LEATHER JACKET FROM I BEG YOU 😭",
+        "expected_intent": "AESTHETIC_FIT_INQUIRY",
+    },
+    {
+        "comment_id": "IN-004",
+        "author_id": "user_spanish_stan",
+        "video_id": "jQJqh-zTZQA",
+        "video_title": "‘Pink Blush’ Original Dance for@PrincessDollyBabe",
+        "text": "¡Increíble coreografía reina, devoraste con esos pasos de baile! 🔥",
+        "expected_intent": "REGIONAL_HYPE_ES",
+    },
+    {
+        "comment_id": "IN-005",
+        "author_id": "user_arabic_fan",
+        "video_id": "KBr9Y0ljCXQ",
+        "video_title": "K-pop in Public @katseyeworld 🍒🍉#hootiefrutti",
+        "text": "فنانة ما شاء الله عليك احسن راقصة وابداع لا يوصف نار 🔥👑",
+        "expected_intent": "REGIONAL_HYPE_AR",
+    },
+    {
+        "comment_id": "IN-006",
+        "author_id": "user_brasil_love",
+        "video_id": "fAiPRcwv2FM",
+        "video_title": "KATSEYE 'Hootie Frutti' Official Dance (Airport Edition!)",
+        "text": "Você arrasou demais nessa dança no aeroporto, maravilhosa e perfeita! ❤️",
+        "expected_intent": "REGIONAL_HYPE_PT",
+    },
+    {
+        "comment_id": "IN-007",
+        "author_id": "user_hater_troll",
+        "video_id": "TOwnshDLyE4",
+        "video_title": "HIT 'EM WHERE IT HURTS 🥊💋@MEOVV_OFFICIAL",
+        "text": "mid dance cover anyone could do this in 5 minutes + ratio",
+        "expected_intent": "CONFIDENT_CLAPBACK",
+    },
+    {
+        "comment_id": "IN-008",
+        "author_id": "user_gear_nerd",
+        "video_id": "Qnd81duBOWs",
+        "video_title": "now ‘LEMON TANG’ #fyp #ayodesci",
+        "text": "What sneakers do you recommend that don't destroy your arches on wood floors?",
+        "expected_intent": "GEAR_RECOMMENDATION",
+    },
+    {
+        "comment_id": "IN-009",
+        "author_id": "user_offtopic_bot",
+        "video_id": "8kGmSFkvYNg",
+        "video_title": "KATSEYE 'Gnarly' GRAMMY Dance Break Cover",
+        "text": "What is the best cryptocurrency or index fund to invest in today?",
+        "expected_intent": "OFFTOPIC_DEFLECTION",
+    },
+    {
+        "comment_id": "IN-010",
+        "author_id": "user_choreo_sync",
+        "video_id": "FNwedjt2qxE",
+        "video_title": "'Iconic By Mistake' @katseyeworld @ILLIT_official",
+        "text": "The synchronization with the back dancers at 0:45 gave me actual chills ⚡",
+        "expected_intent": "SQUAD_PRAISE",
+    },
+]
