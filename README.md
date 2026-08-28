@@ -9,6 +9,9 @@
 
 `yt-ayochat` is an enterprise-grade, decentralized multi-agent swarm framework (**The Lumi Architecture**) designed to autonomously govern, engage, and protect digital creator spaces. Tailored specifically for a **Gen-Z digital creator, dancer, and lifestyle/fashion influencer**, the system transitions classical, rigid RAG pipelines into an agile 3-node agent ecosystem integrated with **Karpathy's LLM Council** router for global language parity.
 
+<img width="3456" height="1926" alt="ayochat" src="https://github.com/user-attachments/assets/d070249e-7a33-45a0-92a9-620514992b14" />
+
+
 ---
 
 ## 📁 Repository Structure & Directory Map
@@ -68,7 +71,8 @@
 ---
 
 ## 🏛️ System Architecture: The 3-Node Swarm
-
+Updated Most Recent As of August 28th, 4:47 AM 
+![YT-AyoChat Architecture](architecture.svg)
 ```
 ================== [ Local Execution & Google Cloud API Integration ] ==================
                      [ Inbound YouTube Comment Thread ]
