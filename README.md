@@ -163,6 +163,8 @@ To enable safe, real-time self-learning without risking model collapse or file-l
    - Captures dynamic real-world audience interactions, new slang variants, and emergent community themes.
    - Operates in strict append-only mode (`open("lumi_synthetic_memory.jsonl", "a")`), eliminating concurrency write locks during live high-frequency polling while compiling a high-fidelity synthetic memory dataset for future fine-tuning and offline distillation.
 
+> **Data Provenance & Seeding:** The initial ground-truth creator lore (`lumi_corpus.jsonl`) was curated by the author and expanded via human-in-the-loop multi-turn synthesis with Gemini to calibrate multi-polarity edge cases before autonomous live dispatch.
+
 ---
 
 ## ✂️ 2. Chunking Strategy & 5 Labeled Sample Chunks

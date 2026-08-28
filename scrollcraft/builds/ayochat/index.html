@@ -832,27 +832,359 @@
   .term-cmd.typed.is-done::after { opacity: 1; animation: caret 1.1s steps(2, jump-none) infinite; }
   @keyframes caret { 50% { opacity: 0; } }
 
-  /* ---------- responsive ---------- */
-  @media (max-width: 860px) {
-    .cost-open { grid-column: 3 / 13; }
-    .cost-zero-wrap { grid-column: 1 / 13; }
-    .cost-after { grid-column: 1 / 11; }
-    .cost-tag { grid-column: 1 / 13; justify-self: start; text-align: left; }
-    .shift-stage { align-content: start; padding-top: clamp(4rem, 12vh, 7rem); }
-    .shift-copy { grid-column: 1 / 13; grid-row: 1; }
-    .term { grid-column: 1 / 13; grid-row: 2; margin-top: var(--sc-6); height: min(37vh, 21rem); }
-    .peak-dm-wrap { justify-self: start; }
-    .hush p { margin-left: 0; }
-    .native h2 { grid-column: 1 / 13; }
-    .native-lede { grid-column: 1 / 13; }
-    .native-col { grid-column: 1 / 13; align-self: start; }
-    .native-col + .native-col { grid-column: 1 / 13; }
-    .toggle-row { grid-column: 1 / 13; }
-    .toggle-path { margin-left: 0; }
-    .native-kicker { grid-column: 1 / 13; }
-    .step { grid-template-columns: 2.25rem minmax(0, 1fr); column-gap: var(--sc-4); }
-    .warp-wrap { padding-inline: 0; }
-    .warp-foot { flex-direction: column; align-items: center; text-align: center; }
+  /* ---------- Hero Logo Image ---------- */
+  .hero-logo-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .hero-logo-img {
+    max-width: min(320px, 70vw);
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 0 24px rgba(255, 176, 0, 0.45));
+    transition: transform 0.3s ease, filter 0.3s ease;
+  }
+  .hero-logo-img:hover {
+    transform: scale(1.02);
+    filter: drop-shadow(0 0 36px rgba(255, 176, 0, 0.75));
+  }
+
+  /* ---------- Act 6: Swarm Simulation / Playground ---------- */
+  .playground {
+    padding-block: calc(var(--sc-section) * 1.1) calc(var(--sc-8) + var(--bar-h));
+    position: relative;
+    background: radial-gradient(circle at 50% 10%, rgba(255, 176, 0, 0.05) 0%, transparent 65%);
+    border-top: 1px solid var(--sc-hairline);
+  }
+  .playground-wrap {
+    max-width: 56rem;
+    margin-inline: auto;
+  }
+  .playground-head {
+    text-align: center;
+    margin-bottom: var(--sc-6);
+  }
+  .playground-title {
+    font-family: var(--sc-font-display);
+    font-weight: 800;
+    font-size: clamp(2.2rem, 5.5vw, 4.2rem);
+    line-height: 0.98;
+    letter-spacing: var(--sc-track-tight);
+    text-transform: uppercase;
+    color: var(--sc-ink);
+    margin: var(--sc-3) 0 var(--sc-4);
+  }
+  .playground-lede {
+    font-family: var(--sc-font-text);
+    font-size: clamp(1.1rem, 1rem + 0.4vw, 1.35rem);
+    line-height: 1.6;
+    color: var(--sc-ink-soft);
+    max-width: 52ch;
+    margin: 0 auto;
+  }
+
+  /* Preset Chips */
+  .preset-chips-wrap {
+    margin-bottom: var(--sc-5);
+  }
+  .preset-label {
+    display: block;
+    margin-bottom: var(--sc-2);
+    color: var(--sc-ink-soft);
+  }
+  .preset-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sc-2);
+  }
+  .preset-chip {
+    background: color-mix(in oklab, var(--sc-surface) 90%, var(--sc-canvas));
+    border: 1px solid var(--sc-hairline-strong);
+    color: var(--sc-ink);
+    font-family: var(--sc-font-mono);
+    font-size: var(--sc-t-xs);
+    padding: 6px 14px;
+    border-radius: var(--sc-r-pill);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .preset-chip:hover {
+    border-color: var(--sc-accent);
+    color: var(--sc-accent);
+    background: color-mix(in oklab, var(--sc-accent) 8%, var(--sc-surface));
+    transform: translateY(-1px);
+  }
+
+  /* Input Form */
+  .playground-form {
+    margin-bottom: var(--sc-6);
+  }
+  .input-glow-wrap {
+    display: flex;
+    gap: var(--sc-3);
+    background: color-mix(in oklab, var(--sc-surface) 95%, var(--sc-canvas));
+    border: 1px solid var(--sc-hairline-strong);
+    border-radius: var(--sc-r-md);
+    padding: var(--sc-2);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  .input-glow-wrap:focus-within {
+    border-color: var(--sc-accent);
+    box-shadow: 0 0 25px rgba(255, 176, 0, 0.25);
+  }
+  .swarm-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--sc-ink);
+    font-family: var(--sc-font-mono);
+    font-size: clamp(0.9rem, 0.85rem + 0.2vw, 1.05rem);
+    padding: 10px 14px;
+  }
+  .swarm-input::placeholder {
+    color: color-mix(in oklab, var(--sc-ink-soft) 60%, transparent);
+  }
+  .swarm-submit-btn {
+    background: var(--sc-accent);
+    color: var(--sc-accent-ink);
+    border: none;
+    border-radius: var(--sc-r-sm);
+    font-family: var(--sc-font-mono);
+    font-weight: 600;
+    font-size: var(--sc-t-sm);
+    text-transform: uppercase;
+    letter-spacing: var(--sc-track-wide);
+    padding: 10px 22px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+  .swarm-submit-btn:hover {
+    background: #FFFFFF;
+    box-shadow: 0 0 20px rgba(255, 176, 0, 0.6);
+    transform: translateY(-1px);
+  }
+  .swarm-submit-btn:active {
+    transform: translateY(0);
+  }
+
+  /* Terminal Console Box */
+  .playground-terminal {
+    background: #09090b;
+    border: 1px solid color-mix(in oklab, var(--sc-accent) 30%, var(--sc-hairline));
+    border-radius: var(--sc-r-md);
+    overflow: hidden;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 176, 0, 0.08);
+    margin-bottom: var(--sc-7);
+  }
+  .terminal-bar {
+    background: #111114;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--sc-hairline);
+  }
+  .terminal-dots {
+    display: flex;
+    gap: 6px;
+  }
+  .terminal-dots .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .dot.red { background: #ff5f56; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #27c93f; }
+  .terminal-title {
+    font-family: var(--sc-font-mono);
+    font-size: var(--sc-t-xs);
+    color: var(--sc-ink-soft);
+    letter-spacing: var(--sc-track-wide);
+  }
+  .terminal-status {
+    font-family: var(--sc-font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: color-mix(in oklab, var(--sc-accent) 20%, transparent);
+    color: var(--sc-accent);
+    border: 1px solid color-mix(in oklab, var(--sc-accent) 40%, transparent);
+  }
+  .terminal-status.success {
+    background: rgba(39, 201, 63, 0.15);
+    color: #27c93f;
+    border-color: rgba(39, 201, 63, 0.4);
+  }
+  .terminal-status.running {
+    background: rgba(255, 176, 0, 0.2);
+    color: #ffb000;
+    border-color: rgba(255, 176, 0, 0.5);
+    animation: gem-aura-pulse 1.5s infinite;
+  }
+  .terminal-console {
+    padding: var(--sc-5);
+    margin: 0;
+    min-height: 280px;
+    max-height: 480px;
+    overflow-y: auto;
+    font-family: var(--sc-font-mono);
+    font-size: clamp(0.78rem, 0.72rem + 0.15vw, 0.9rem);
+    line-height: 1.75;
+    color: var(--sc-ink);
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .term-dim { color: var(--sc-ink-soft); }
+  .term-acc { color: var(--sc-accent); font-weight: 500; }
+  .term-brick { color: var(--brick); font-weight: 500; }
+  .term-cyan { color: #5ce1e6; font-weight: 500; }
+  .term-green { color: #27c93f; font-weight: 500; }
+  .term-hive-reply {
+    display: block;
+    background: color-mix(in oklab, var(--sc-accent) 10%, transparent);
+    border-left: 3px solid var(--sc-accent);
+    padding: 8px 14px;
+    margin-top: 8px;
+    color: #FFFFFF;
+    font-weight: 500;
+  }
+
+  /* Local Quickstart & Portal Links Card */
+  .local-run-card {
+    background: color-mix(in oklab, var(--sc-surface) 95%, var(--sc-canvas));
+    border: 1px solid var(--sc-hairline-strong);
+    border-radius: var(--sc-r-md);
+    padding: var(--sc-6);
+    margin-top: var(--sc-6);
+  }
+  .local-run-head {
+    margin-bottom: var(--sc-4);
+  }
+  .local-run-title {
+    font-family: var(--sc-font-display);
+    font-weight: 700;
+    font-size: var(--sc-t-xl);
+    color: var(--sc-ink);
+    margin: var(--sc-1) 0 0;
+  }
+  .snippet-wrapper {
+    position: relative;
+    margin-bottom: var(--sc-5);
+  }
+  .local-snippet {
+    background: #08080a;
+    border: 1px solid var(--sc-hairline);
+    border-radius: var(--sc-r-sm);
+    padding: var(--sc-4);
+    font-family: var(--sc-font-mono);
+    font-size: clamp(0.78rem, 0.72rem + 0.15vw, 0.88rem);
+    line-height: 1.8;
+    color: var(--sc-ink);
+    margin: 0;
+    overflow-x: auto;
+  }
+  .t-prompt {
+    color: var(--brick);
+    font-weight: 700;
+    margin-right: 6px;
+    user-select: none;
+  }
+  .copy-snippet-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: color-mix(in oklab, var(--sc-surface) 90%, var(--sc-canvas));
+    border: 1px solid var(--sc-hairline-strong);
+    color: var(--sc-ink-soft);
+    font-family: var(--sc-font-mono);
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .copy-snippet-btn:hover {
+    color: var(--sc-accent);
+    border-color: var(--sc-accent);
+  }
+
+  .portal-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sc-3);
+    justify-content: center;
+    margin-top: var(--sc-5);
+  }
+  .portal-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: var(--sc-r-sm);
+    font-family: var(--sc-font-mono);
+    font-size: var(--sc-t-sm);
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+  }
+  .github-btn {
+    background: #24292e;
+    color: #FFFFFF;
+    border: 1px solid #444d56;
+  }
+  .github-btn:hover {
+    background: #2f363d;
+    border-color: var(--sc-ink);
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+  }
+  .devpost-btn {
+    background: #003e54;
+    color: #FFFFFF;
+    border: 1px solid #006b94;
+  }
+  .devpost-btn:hover {
+    background: #005270;
+    border-color: #5ce1e6;
+    box-shadow: 0 0 16px rgba(92, 225, 230, 0.35);
+    transform: translateY(-2px);
+  }
+  .booking-btn {
+    background: color-mix(in oklab, var(--sc-accent) 12%, transparent);
+    color: var(--sc-accent);
+    border: 1px solid var(--sc-accent);
+  }
+  .booking-btn:hover {
+    background: var(--sc-accent);
+    color: var(--sc-accent-ink);
+    box-shadow: 0 0 20px rgba(255, 176, 0, 0.45);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 640px) {
+    .input-glow-wrap {
+      flex-direction: column;
+    }
+    .swarm-submit-btn {
+      justify-content: center;
+    }
+    .portal-links {
+      flex-direction: column;
+    }
+    .portal-btn {
+      justify-content: center;
+    }
   }
 </style>
 </head>
@@ -868,10 +1200,10 @@
   <!-- ACT 1 · THE PROBLEM: recognition. pin + kinetic, greet cue. -->
   <section data-sc-act="pin" data-sc-span="2.2" style="--span: 2.2" data-sc-drift="#0B0A08" aria-label="The problem">
     <div data-sc-stage class="hero-stage">
-      <p class="hero-mark" data-sc-cue="0 0.9 0">
-        <strong>yt-ayochat</strong>
-        <span class="microlabel">open source comment agent</span>
-      </p>
+      <div class="hero-mark hero-logo-wrap" data-sc-cue="0 0.9 0">
+        <img src="ayochatreveal.png" alt="ManyChat, but for YouTube Shorts. YT-AyoChat is an open-source, 3-node multi-agent LLM architecture engineered for YouTube Shorts." class="hero-logo-img">
+        <span class="microlabel" style="margin-top: 0.6rem; display: block;">open source 3-node multi-agent swarm</span>
+      </div>
       <div class="hero-copy" data-sc-cue="0 0.82 0">
         <h1 class="hero-h1" data-sc-kinetic="lines">The scroll is dead.</h1>
         <p class="hero-sub">A manifesto for creators whose Shorts get millions of views and nothing after the view.</p>
@@ -1077,6 +1409,88 @@
         <span class="microlabel">yt-ayochat</span>
         <span class="microlabel">built in the open by thanedouglass</span>
       </footer>
+
+    </div>
+  </section>
+
+  <!-- ACT 6 · THE SWARM PLAYGROUND & LIVE SIMULATOR -->
+  <section id="playground" class="sc-section playground" data-sc-act="flow" data-sc-drift="#0B0A08" aria-label="Swarm Playground and Simulation">
+    <div class="sc-wrap playground-wrap" data-sc-in data-sc-stagger="60">
+      <header class="playground-head">
+        <p class="microlabel" style="color: var(--sc-accent);">interactive demo · 3-node multi-agent swarm</p>
+        <h2 class="playground-title">Swarm Simulation &amp; Playground</h2>
+        <p class="playground-lede">
+          Test the Lumi Architecture in real time. Paste an incoming YouTube comment in English, Spanish, Arabic, or Portuguese to observe the Supervisor, Perception Node (LLM Council Router), and Autonomous Hive synthesize a grounded, 1-sentence sovereign creator response.
+        </p>
+      </header>
+
+      <!-- Preset Chips -->
+      <div class="preset-chips-wrap">
+        <span class="preset-label microlabel">Try Preset Community Comments:</span>
+        <div class="preset-chips">
+          <button class="preset-chip" type="button" data-comment="that footwork transition at 0:15 was literally impossible how did you hit that?!">💃 Dance Choreo</button>
+          <button class="preset-chip" type="button" data-comment="YOU ATE AND LEFT ZERO CRUMBS BEST DANCER ON THIS APP 🔥🔥🔥">🔥 Viral Hype</button>
+          <button class="preset-chip" type="button" data-comment="WHERE IS THE OVERSIZED LEATHER JACKET FROM I BEG YOU 😭">👗 Fit Check</button>
+          <button class="preset-chip" type="button" data-comment="¡Increíble coreografía reina, devoraste con esos pasos de baile! 🔥">🇪🇸 Spanish (Council)</button>
+          <button class="preset-chip" type="button" data-comment="فنانة ما شاء الله عليك احسن راقصة وابداع لا يوصف نار 🔥👑">🇸🇦 Arabic (Council)</button>
+          <button class="preset-chip" type="button" data-comment="Você arrasou demais nessa dança, maravilhosa e perfeita! ❤️">🇧🇷 Portuguese (Council)</button>
+          <button class="preset-chip" type="button" data-comment="mid dance cover anyone could do this in 5 minutes + ratio">🛑 Troll Deflect</button>
+          <button class="preset-chip" type="button" data-comment="What is the best cryptocurrency to invest in today?">🚫 Off-Topic</button>
+        </div>
+      </div>
+
+      <!-- Playground Input & Action Bar -->
+      <form class="playground-form" id="swarm-form" onsubmit="return false;">
+        <div class="input-glow-wrap">
+          <input type="text" id="comment-input" class="swarm-input" placeholder="Type or paste a mock YouTube comment..." value="that footwork transition at 0:15 was literally impossible how did you hit that?!" autocomplete="off" spellcheck="false">
+          <button type="submit" id="run-swarm-btn" class="swarm-submit-btn">
+            <span>⚡ Run Swarm</span>
+          </button>
+        </div>
+      </form>
+
+      <!-- Terminal Output Box -->
+      <div class="playground-terminal" aria-label="Terminal Swarm Execution Output">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+          <div class="terminal-title">lumi-swarm · node-dispatch.py (simulated)</div>
+          <div class="terminal-status" id="terminal-badge">READY</div>
+        </div>
+        <pre class="terminal-console" id="terminal-output"><code><span class="term-dim"># Enter any YouTube comment above and click "Run Swarm" to observe multi-agent perception, language routing, and sovereign hive response generation.</span></code></pre>
+      </div>
+
+      <!-- HOW TO RUN LOCALLY & REPO / DEVPOST LINKS -->
+      <div class="local-run-card">
+        <div class="local-run-head">
+          <span class="microlabel" style="color: var(--brick);">developer quickstart</span>
+          <h3 class="local-run-title">Run yt-ayochat Locally in 60 Seconds</h3>
+        </div>
+        <div class="snippet-wrapper">
+          <pre class="local-snippet"><code><span class="t-prompt">$</span> git clone https://github.com/thanedouglass/yt-ayochat.git
+<span class="t-prompt">$</span> cd yt-ayochat &amp;&amp; python3 -m venv .venv &amp;&amp; source .venv/bin/activate
+<span class="t-prompt">$</span> pip install -r requirements.txt
+<span class="t-prompt">$</span> python -m scripts.run_agent --query "that footwork transition at 0:15 was insane!"</code></pre>
+          <button class="copy-snippet-btn" id="copy-quickstart-btn" type="button">Copy Snippet</button>
+        </div>
+
+        <div class="portal-links">
+          <a href="https://github.com/thanedouglass/yt-ayochat" target="_blank" rel="noopener noreferrer" class="portal-btn github-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            <span>GitHub Repository</span>
+          </a>
+          <a href="https://devpost.com/software/yt-ayochat" target="_blank" rel="noopener noreferrer" class="portal-btn devpost-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.002 1.61L0 12.004 6.002 22.39h11.996L24 12.004 17.998 1.61H6.002zm2.083 4.195h3.94c2.81 0 4.604 1.487 4.604 4.186 0 2.722-1.815 4.22-4.604 4.22H8.085V5.805zm2.386 2.05v4.32h1.493c1.378 0 2.29-.687 2.29-2.16 0-1.464-.912-2.16-2.29-2.16h-1.493z"/></svg>
+            <span>Devpost Submission</span>
+          </a>
+          <a href="https://calendar.app.google/8UTSYL2pqFFw4gTN8" target="_blank" rel="noopener noreferrer" class="portal-btn booking-btn">
+            <span>📅 Book Deployment</span>
+          </a>
+        </div>
+      </div>
 
     </div>
   </section>
@@ -1527,11 +1941,144 @@ var SC_REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
         range.selectNodeContents(btn.querySelector('code'));
         var sel = window.getSelection();
         sel.removeAllRanges();
-        sel.addRange(range);
         done('press ⌘C');
       }
     });
   });
+})();
+
+/* ------------------------------------------------------------------
+   Playground 3-Node Swarm Simulator Logic
+------------------------------------------------------------------ */
+(function() {
+  var commentInput = document.getElementById('comment-input');
+  var form = document.getElementById('swarm-form');
+  var terminalOutput = document.getElementById('terminal-output');
+  var terminalBadge = document.getElementById('terminal-badge');
+  var presetChips = document.querySelectorAll('.preset-chip');
+  var copyQuickstartBtn = document.getElementById('copy-quickstart-btn');
+
+  // Quickstart copy
+  if (copyQuickstartBtn) {
+    copyQuickstartBtn.addEventListener('click', function() {
+      var snippetText = "git clone https://github.com/thanedouglass/yt-ayochat.git\ncd yt-ayochat && python3 -m venv .venv && source .venv/bin/activate\npip install -r requirements.txt\npython -m scripts.run_agent --query \"that footwork transition at 0:15 was insane!\"";
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(snippetText).then(function() {
+          copyQuickstartBtn.textContent = 'Copied!';
+          setTimeout(function() { copyQuickstartBtn.textContent = 'Copy Snippet'; }, 2000);
+        });
+      }
+    });
+  }
+
+  // Preset chips click
+  presetChips.forEach(function(chip) {
+    chip.addEventListener('click', function() {
+      var comment = chip.getAttribute('data-comment');
+      if (commentInput) {
+        commentInput.value = comment;
+        runSimulation(comment);
+      }
+    });
+  });
+
+  // Form submit
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var comment = commentInput ? commentInput.value.trim() : '';
+      if (!comment) return;
+      runSimulation(comment);
+    });
+  }
+
+  function detectLanguage(text) {
+    if (/[\u0600-\u06FF]/.test(text)) return { code: 'ar', name: 'Arabic', council: true, model: 'CamelBERT / Jais (Council Consensus)' };
+    if (/[áéíóúüñ¿¡]/i.test(text) || /\b(hola|gracias|incre[ií]ble|reina|devoraste|choreo|bailar|pasos)\b/i.test(text)) return { code: 'es', name: 'Spanish', council: true, model: 'BETO / Llama-3-Spanish (Council Consensus)' };
+    if (/[ãõç]/i.test(text) || /\b(você|arrasou|demais|dança|maravilhosa|perfeita|obrigado)\b/i.test(text)) return { code: 'pt', name: 'Portuguese', council: true, model: 'BERTimbau / Llama-3-PT (Council Consensus)' };
+    return { code: 'en', name: 'English', council: false, model: 'Gemini 1.5 Pro + text-embedding-004' };
+  }
+
+  function generateHiveResponse(text, lang) {
+    var lower = text.toLowerCase();
+    if (lang.code === 'ar') {
+      return "الله يسعدك يا قلبي، الرقص هو حياتي وفرحانة ان الفيديو عجبك!";
+    }
+    if (lang.code === 'es') {
+      return "¡Muchísimas gracias amor, dejamos el corazón en esa coreografía!";
+    }
+    if (lang.code === 'pt') {
+      return "Muito obrigada pelo carinho, ensaiamos muito para entregar essa coreografia perfeita!";
+    }
+    if (lower.includes('footwork') || lower.includes('transition') || lower.includes('step') || lower.includes('choreo') || lower.includes('0:15')) {
+      return "That footwork transition took three whole studio sessions to drill without twisting my ankle!";
+    }
+    if (lower.includes('jacket') || lower.includes('fit') || lower.includes('leather') || lower.includes('wear') || lower.includes('outfit')) {
+      return "Jacket is a vintage oversized find from the Melrose flea market, got it for thirty bucks!";
+    }
+    if (lower.includes('ate') || lower.includes('crumbs') || lower.includes('queen') || lower.includes('slay') || lower.includes('best dancer') || lower.includes('hyping')) {
+      return "Appreciate you so much, we're just getting warmed up for tour season!";
+    }
+    if (lower.includes('mid') || lower.includes('hate') || lower.includes('ratio') || lower.includes('cringe') || lower.includes('5 min')) {
+      return "Post your 5-minute version and tag me so we can all see the vision.";
+    }
+    if (lower.includes('crypto') || lower.includes('stock') || lower.includes('bitcoin') || lower.includes('calculus')) {
+      return "I'm strictly tracking dance counts and runway fashion, so you'll have to ask Wall Street about that one.";
+    }
+    return "Appreciate the love and energy, staying locked in every single day for this community!";
+  }
+
+  var isSimulating = false;
+
+  function runSimulation(comment) {
+    if (isSimulating) return;
+    isSimulating = true;
+
+    if (terminalBadge) {
+      terminalBadge.textContent = 'ROUTING...';
+      terminalBadge.className = 'terminal-status running';
+    }
+
+    var lang = detectLanguage(comment);
+    var now = new Date().toISOString().replace('T', ' ').slice(0, 19);
+    var traceId = 'tr-' + Math.random().toString(16).slice(2, 10);
+    var response = generateHiveResponse(comment, lang);
+
+    var supervisorDirective = "COMMUNITY_ELEVATION (Room Temp: 0.88 - High Kinetic Engagement)";
+    var intent = lang.code === 'ar' ? 'REGIONAL_HYPE_AR' : (lang.code === 'es' ? 'REGIONAL_HYPE_ES' : (lang.code === 'pt' ? 'REGIONAL_HYPE_PT' : 'AUTHENTIC_CREATOR_PRAISE'));
+
+    terminalOutput.innerHTML = '<span class="term-dim">[' + now + '] <b>[INGEST]</b> Inbound comment received: "' + escapeHtml(comment) + '"</span>\n' +
+      '<span class="term-dim">[' + now + '] <b>[GATEWAY]</b> Model Armor &amp; Cloud SDP Scan: <span class="term-green">PASSED · 0 redactions</span> (Trace: ' + traceId + ')</span>\n' +
+      '<span class="term-cyan">[' + now + '] <b>[SUPERVISOR NODE]</b> Evaluating video context &amp; room temperature...</span>\n' +
+      '  ➔ Room Directive: <span class="term-acc">' + supervisorDirective + '</span>\n' +
+      '<span class="term-brick">[' + now + '] <b>[PERCEPTION NODE]</b> Language detected: <b>' + lang.name + ' (' + lang.code.toUpperCase() + ')</b></span>\n';
+
+    setTimeout(function() {
+      if (lang.council) {
+        terminalOutput.innerHTML += '  ➔ <span class="term-brick"><b>[KARPATHY LLM COUNCIL]</b></span> Routing non-English intent to Open-Source Model Council (' + lang.model + ')\n' +
+          '  ➔ Council Consensus: Intent = <b>' + intent + '</b> | Polarity = <b>+0.96</b> | Energy = <b>5/5</b>\n';
+      } else {
+        terminalOutput.innerHTML += '  ➔ <span class="term-acc"><b>[GEMINI 1.5 PRO RAG]</b></span> ChromaDB Lore Match (Top-1 Cosine: 0.892, Ref: lumi_corpus.jsonl)\n' +
+          '  ➔ Semiotic Intent: <b>' + intent + '</b> | Energy Voltage: <b>5/5</b>\n';
+      }
+
+      setTimeout(function() {
+        terminalOutput.innerHTML += '<span class="term-acc">[' + now + '] <b>[AUTONOMOUS HIVE]</b> Synthesizing sovereign 1-sentence creator response:</span>\n' +
+          '<div class="term-hive-reply">💬 <b>Lumi:</b> "' + escapeHtml(response) + '"</div>\n\n' +
+          '<span class="term-green">[' + now + '] <b>[ACTION DISPATCHER]</b> HTTP 200 OK · Appended to lumi_synthetic_memory.jsonl · Latency: 142ms</span>';
+
+        if (terminalBadge) {
+          terminalBadge.textContent = 'HTTP 200 DISPATCHED';
+          terminalBadge.className = 'terminal-status success';
+        }
+        isSimulating = false;
+      }, 450);
+    }, 400);
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
 })();
 </script>
 </body>

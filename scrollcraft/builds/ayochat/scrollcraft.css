@@ -433,3 +433,22 @@ video[data-sc-scrub].sc-has-clip { opacity: 1; }
       transparent 58%);
   }
 }
+
+/* ------------------------------------------------------------- branding & playground -- */
+.hero-logo-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.hero-logo-img {
+  max-width: min(320px, 70vw);
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 0 24px rgba(255, 176, 0, 0.45));
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+.hero-logo-img:hover {
+  transform: scale(1.02);
+  filter: drop-shadow(0 0 36px rgba(255, 176, 0, 0.75));
+}
+
