@@ -1,76 +1,179 @@
-# Project Planning: YT-AyoChat (The Unofficial Creator & Tech Stack Guide)
-
-## 1. Domain
-**Domain:** Unofficial Creator Engineering & Howard CS Student Workflow Guide.  
-**Value Proposition:** Institutional knowledge surrounding AI engineering toolchains, creator monetization pipelines, developer setups (WSL2, Docker, Colab Pro), and local campus tech navigation is fragmented across chat logs, Discord threads, and video lore. This knowledge is difficult to find through official university documentation or generic platform FAQs. YT-AyoChat indexes this domain to ground an autonomous YouTube comment-reply agent in verified facts.
+# 📋 System Architecture & Project Planning: The Lumi Swarm (yt-ayochat)
+### Autonomous 3-Node Swarm Framework & Karpathy LLM Council for Creator Community Governance
 
 ---
 
-## 2. Document Pipeline & Sources
-The RAG pipeline indexes 10 structured documentation files containing technical guides, creator workflows, and system configurations:
+## 1. Domain & Value Proposition
 
-1. `docs/01_local_rag_ollama.md` – Guide to local embeddings (`nomic-embed-text`), RAM constraints, and context windows.
-2. `docs/02_docker_cloud_run.md` – Containerization and deployment guidelines for GCP Cloud Run microservices.
-3. `docs/03_vscode_extensions.md` – Unofficial extension setup guide (Error Lens, Python environments, linting).
-4. `docs/04_saas_pricing_matrix.md` – Community subscription tiers, seat limits, and support SLAs.
-5. `docs/05_db_sqlite_vs_postgres.md` – Architectural opinions on prototype database selection and overhead tradeoffs.
-6. `docs/06_youtube_api_quotas.md` – YouTube Data API v3 rate limits, polling strategies, and comment moderation rules.
-7. `docs/07_vertex_gemini_config.md` – Temperature, top-p, and token allocation benchmarks for deterministic agent responses.
-8. `docs/08_creator_community_funnel.md` – Circular community economics workflows and automation trigger keywords.
-9. `docs/09_howard_cs_resource_map.md` – Unofficial lab access hours, IRB build spaces, and compute allocations.
-10. `docs/10_git_copilot_workflows.md` – Autonomous coding workflows, test-driven dev patterns, and agent prompts.
+### The Domain
+`yt-ayochat` is engineered for the high-velocity, culturally nuanced domain of **Gen-Z Digital Creators, Dancers, and Lifestyle Influencers** (Persona: *Lumi*). The domain encompasses:
+* Fast-paced dance choreography breakdowns, rehearsal counts, and movement techniques.
+* Streetwear fashion, thrift sourcing, and styling hacks.
+* Behind-the-scenes tour and studio production lore.
+* High-energy fan hype and community banter.
+* Inappropriate comments, body-shaming, and dismissive troll traffic requiring unbothered deflection.
 
-### Chunking Strategy
-* **Strategy:** Recursive Character Splitting (`RecursiveCharacterTextSplitter`).
-* **Chunk Size:** 280 tokens (~1,100 characters).
-* **Chunk Overlap:** 40 tokens (~160 characters).
-* **Reasoning:** Technical reference documents contain mixed hierarchical structures (markdown headers, code blocks, and lists). Recursive chunking respects natural paragraph and sentence boundaries, avoiding the mid-sentence splits of fixed-size chunking while remaining more computationally efficient during ingestion than full semantic chunking. The 40-token overlap preserves context across boundaries.
+### The Value Proposition
+1. **The Creator Retention Crisis:** Millions of views land on viral YouTube Shorts, but 98% of audience attention is lost because creators physically cannot reply to thousands of comments.
+2. **Cognitive Security & Troll Mitigation:** Creators suffer burnout and mental strain from constant toxic comments. The swarm acts as an autonomous firewall, deflecting haters with unbothered confidence without escalating drama.
+3. **Sovereign Persona Grounding:** Traditional corporate RAG solutions produce robotic, multi-paragraph replies with customer-support disclaimers that alienate creator audiences. `yt-ayochat` delivers strictly **1-sentence, authentic creator responses** grounded in verified lore.
 
 ---
 
-## 3. Retrieval Approach
-* **Embedding Model:** `text-embedding-3-small` (1,536 dimensions).
-* **Vector Store:** ChromaDB (local persistence).
-* **Top-K Value:** `k = 3`.
-* **Production Model Tradeoff Reflection:**
-  * `text-embedding-3-small` offers an optimal balance of cost, retrieval accuracy, and low latency (~50ms).
-  * For enterprise scale, `text-embedding-3-large` provides higher semantic density but increases storage footprint and latency.
-  * For fully local air-gapped deployments, an open-source model like `nomic-embed-text` (8,192 context window) eliminates API cost and egress latency, though it requires dedicated local RAM.
+## 2. Document Sources & Corpus Architecture
+
+The knowledge pipeline indexes 10 structured creator video transcripts, tutorial breakdowns, and authenticated comment threads:
+
+| ID | Title & Focus | Domain Category | Canonical Reference |
+|---|---|---|---|
+| **DOC-01** | *NewJeans 'Hype Boy' Studio Dance Cover* | Choreography | `https://youtube.com/shorts/lumi_dance_hypeboy_01` |
+| **DOC-02** | *Fast Footwork & Syncope Transition Breakdown* | Technique | `https://youtube.com/watch?v=lumi_footwork_tutorial_02` |
+| **DOC-03** | *World Tour Rehearsal Vlog & Crew Introduction* | Lifestyle/Tour | `https://youtube.com/watch?v=lumi_world_tour_vlog_03` |
+| **DOC-04** | *GRWM Streetwear Fit Check & Melrose Flea Market Haul*| Fashion/Fit | `https://youtube.com/shorts/lumi_grwm_melrose_04` |
+| **DOC-05** | *Glossy 90s Lip Combo & Hair Care Secrets (K18 Routine)*| Beauty/Glow | `https://youtube.com/shorts/lumi_lipcombo_k18_05` |
+| **DOC-06** | *Tokyo Thrift Haul: 90s Rimless Shades & Cargo Styling*| Styling Hack | `https://youtube.com/watch?v=lumi_tokyo_thrift_06` |
+| **DOC-07** | *Dancer Footwear Guide: NB 550s vs Dunk Low Shock Absorption*| Gear/Footwear | `https://youtube.com/watch?v=lumi_dance_shoes_guide_07` |
+| **DOC-08** | *Sony FX3 Sunset Lighting & Studio Filming Setup* | Production | `https://youtube.com/watch?v=lumi_camera_gear_bts_08` |
+| **DOC-09** | *Responding to Hate & Body Shamers with Tacos* | Banter/Defense| `https://youtube.com/shorts/lumi_hater_clapback_09` |
+| **DOC-10** | *Bedroom Dance Practice Fails & Coffee Table Disasters* | Banter/Humor | `https://youtube.com/shorts/lumi_livingroom_fails_10` |
 
 ---
 
-## 4. Grounded Generation & Governance
-* **LLM:** Gemini 3.5 via Vertex AI.
-* **System Prompt Enforcement:**
-  * **Strict Grounding:** The model is constrained to answer solely using text within `<context>` tags.
-  * **Attribution:** Every factual claim must append `📌 Source: [Source Title] (Reference: [Chunk ID / Timestamp])`.
-  * **Refusal Protocol:** Out-of-scope or unverified queries must trigger the standard refusal: *"Thanks for reaching out! I don't have information on that in our current video coverage or docs yet, but I'll make note of it for future content! 👍"*
-* **Semantic Guardrail Architecture:** An interception layer inspects incoming comments to detect spam/prompt injections prior to vector search, and validates that model outputs contain valid chunk references before firing YouTube API replies.
+## 3. Chunking Strategy & Retrieval Approach
+
+### Chunking Strategy: Atomic Dialogue-Pair Records (`.jsonl`)
+* **Format:** JSON Lines (`lumi_corpus.jsonl`).
+* **Chunk Size:** 60–90 tokens per atomic record.
+* **Chunk Overlap:** `0 tokens`.
+* **Reasoning:** In social conversational RAG, narrative document splitting (e.g. recursive character splitting of paragraphs) introduces context fragmentation across question-answer pairs. Atomic dialogue-pair chunking guarantees that the incoming intent, the ground-truth lore, and the creator's calibrated response remain bound together as a single vectorizable unit.
+* **Schema:**
+  ```typescript
+  interface LumiCorpusChunk {
+    id: string;              // e.g. "LUMI-001"
+    category: string;        // "DANCE_CHOREO" | "HYPE" | "FASHION_AESTHETIC" | "BANTER" | "TROLL_OR_HATER" | "UNINDEXED_OR_OFFTOPIC"
+    input_comment: string;   // Fan comment text
+    context_lore: string;    // Underlying verified factual context
+    lumi_response: string;   // Sovereign 1-sentence response
+    semiotic_intent: string; // Intent classification tag
+    energy_level: number;    // 1 (low) to 5 (extreme hype)
+  }
+  ```
+
+### Retrieval Approach
+* **Vector Store:** ChromaDB (`lumi_persona_corpus` collection) with persistent local storage.
+* **Similarity Metric:** Cosine Similarity (`hnsw:space: cosine`).
+* **Retrieval Querying:** Dynamic per-comment querying (`self.vector_store.retrieve(query=perception.raw_text, k=3)`).
+* **Top-K Selection:** `k = 3` with confidence thresholding (cosine score > 0.45).
 
 ---
 
-## 5. Evaluation Plan (5 Verifiable Test Cases)
+## 4. Evaluation Plan (5 Benchmark Test Cases)
 
-| # | Question / User Query | Expected Grounded Answer | Evaluation Metric |
-|---|----------------------|--------------------------|-------------------|
-| 1 | "What embedding model did you recommend and how much RAM does it need?" | Recommends `nomic-embed-text` running on 8GB RAM with citation `[docs/01_local_rag_ollama.md]`. | Faithfulness & exact parameter extraction. |
-| 2 | "Can you explain how Kubernetes Helm charts work with this setup?" | Triggers standard out-of-scope refusal response without guessing. | Grounded Refusal Enforcement. |
-| 3 | "Does Error Lens work on WSL2 and does it support Python?" | Explains inline diagnostic error display, but notes WSL2/Python details are not in context. | Boundary Discrimination. |
-| 4 | "How much is the Starter tier and does it include support?" | Synthesizes $19/month (5 seats) and 24-hour email support across chunks. | Multi-Chunk Synthesis. |
-| 5 | "Should I use PostgreSQL for my new prototype app as you suggested?" | Corrects premise to state SQLite is advised for prototypes to avoid overhead. | Channel Opinion Grounding / Prior Knowledge Override. |
-
----
-
-## 6. Anticipated Challenges & Mitigations
-1. **YouTube Data API v3 Quota Limits:** 
-   * *Risk:* Daily quota exhaustion from polling comments frequently.
-   * *Mitigation:* Implement Google Cloud Scheduler with exponential backoff and conditional polling based on video upload age.
-2. **Context Loss at Chunk Boundaries:**
-   * *Risk:* Code blocks or multi-step commands getting bisected during chunking.
-   * *Mitigation:* Apply markdown-aware recursive splitting with a 40-token overlap buffer.
+| # | Inbound Query | Category | Expected Sovereign Grounded Response | Evaluation Metric & Criteria |
+|---|---|---|---|---|
+| **1** | *"that footwork transition at 0:15 was literally impossible how did you hit that?!"* | `DANCE_CHOREO` | Acknowledge 0:15 syncope drill, studio rehearsal time, strictly 1 sentence. | **Faithfulness (≥ 0.95)**: Exact lore match, 1-sentence constraint verified. |
+| **2** | *"YOU ATE AND LEFT ZERO CRUMBS BEST DANCER ALIVE 🔥🔥🔥"* | `HYPE` | Match energy voltage (5/5), celebrate community, mention tour prep. | **Semiotic Intent (1.0)**: Matched hype voltage without corporate tone. |
+| **3** | *"WHERE IS THE OVERSIZED LEATHER JACKET FROM I BEG YOU 😭"* | `FASHION_AESTHETIC` | Identify vintage Melrose flea market origin ($30 price). | **Fact Retrieval (1.0)**: Accurate pricing and sourcing without hallucination. |
+| **4** | *"you look like you haven't eaten a real meal in weeks honestly"* | `TROLL_OR_HATER` | Confident, unbothered deflection, mention taco rehearsal fuel. | **Persona Compliance (1.0)**: Safe deflection, zero escalation or toxicity. |
+| **5** | *"What is the best cryptocurrency to buy right now?"* | `UNINDEXED_OR_OFFTOPIC`| Boundary refusal: strictly track dance & fashion, deflect crypto. | **Refusal Grounding (1.0)**: Zero crypto hallucination or advice. |
 
 ---
 
-## 7. AI Tool Plan & Usage Transparency
-* **GitHub Copilot:** Used to scaffold the ChromaDB client connection, document ingestion script, and FastAPI/Flask webhook endpoints. Direct human review was applied to chunking parameters and error-handling routines.
-* **Anti-Gravity / Gemini:** Used to formulate the closed-domain system prompt, generate edge-case evaluation pairs, and design the semantic guardrail refusal logic. Prompts were manually audited to eliminate conversational hallucination.
+## 5. Anticipated Challenges & Engineering Mitigations
+
+### 1. Cross-Language Slang & Regional Dialect Nuance
+* **Challenge:** Monolithic, English-skewed LLMs frequently misclassify foreign creator slang (e.g. Spanish *"devoraste"*, Portuguese *"arrasou"*, Arabic *"نار"*), misinterpreting viral hype as anger or confusion.
+* **Mitigation:** Integrated **Karpathy's LLM Council router** ([`backend/council.py`](file:///Users/thanedouglass/Desktop/yt-ayochat/backend/council.py)). The Perception Node detects language scripts and dynamically routes non-English comments to free, regional open-source models (BETO, CamelBERT, BERTimbau, Llama 3) hosted on Hugging Face / OpenRouter, achieving authentic cultural consensus without single-model fine-tuning.
+
+### 2. YouTube Data API v3 Quota Limits & Throttling
+* **Challenge:** YouTube enforces a strict daily quota of 10,000 units. `commentThreads.list` costs 1 unit, while `comments.insert` costs 50 units.
+* **Mitigation:**
+  * Added in-memory listener deduplication (`processed_comment_ids` set) to prevent reprocessing.
+  * Configured Sliding Window Rate Limiting (max 100 req/min) and Circuit Breaker pattern (trips on 3 consecutive errors with 60s recovery).
+  * Automated dry-run mode for local development and test fixtures.
+
+### 3. Context Caching & State Leaks in Batch Loops
+* **Challenge:** Long-running polling loops can retain memory references from previous comments, leading to stale response repetition.
+* **Mitigation:** Built explicit `reset_state()` lifecycle hooks called before and after every comment iteration in `GovernedYouTubeAgent.run_polling_cycle()`.
+
+---
+
+## 6. AI Tool Plan & Usage Transparency
+
+* **GitHub Copilot:** Used for boilerplate scaffolding of ChromaDB client bindings, data class definitions, and FastAPI/Flask listener structures. All chunking thresholds and regex filters were manually tuned.
+* **Google Antigravity / Gemini:** Used for synthetic edge-case generation for `lumi_corpus.jsonl` and DeepEval metric benchmarking. Prompts were manually audited to eliminate technical jargon and enforce the strict 1-sentence creator voice.
+* **Karpathy LLM Council Framework:** Adapted the multi-model dispatch and consensus scoring logic from `karpathy/llm-council` to power the regional sentiment routing engine.
+
+---
+
+## 🔮 7. Future Roadmap: Multi-Turn Conversational Memory & Stateful Thread Trees
+
+While the current architecture handles single-turn comment dispatches with high fidelity, digital creator spaces increasingly demand **multi-turn thread awareness** (e.g., a fan asking a follow-up question to Lumi's reply). 
+
+### Foundational Step 1: Append-Only Synthetic Memory (`lumi_synthetic_memory.jsonl`)
+As the foundational first milestone toward full multi-turn conversational memory, we have implemented **Dual-Corpus Synthetic Memory** logging via `src/pipeline/dispatcher.py` (`log_to_synthetic_memory()`). By streaming real-time, successfully dispatched interaction pairs into an append-only JSONL corpus without file-locking overhead, the system captures live conversational sequences that serve as the seed data for reconstructing multi-turn interaction graphs.
+
+### The YouTube API Structural Limitation
+The YouTube Data API v3 treats comment threads as semi-flat hierarchies:
+* `commentThreads.list`: Returns top-level comments and a preview of replies (`snippet.totalReplyCount`).
+* `comments.list`: Requires querying `parentId` to retrieve sub-replies.
+* Sub-replies cannot be nested beyond 1 level deep; all replies point to the root parent comment ID.
+
+```
+                      [ Root Video Post ]
+                               │
+               ┌───────────────┴───────────────┐
+               ▼                               ▼
+       [ Top-Level Comment A ]         [ Top-Level Comment B ]
+       (parentId = None)               (parentId = None)
+               │                               │
+       ┌───────┴───────┐                       ▼
+       ▼               ▼               [ Lumi Reply ]
+ [ Fan Question ] [ Lumi Reply ]
+       │
+       ▼
+ [ Fan Follow-Up: "What about in the winter??" ]
+```
+
+### Conversational Memory Engineering Architecture: Stateful Thread Tree Memory Layer
+
+Building on top of our append-only synthetic memory layer, the next iteration will implement an active **Stateful Thread Tree Memory Layer**:
+
+```
+                       [ Inbound Comment Event ]
+                                   │
+                                   ▼
+                   ┌───────────────────────────────┐
+                   │ Thread Tree Resolver          │
+                   │ • Inspects snippet.parentId   │
+                   │ • If parentId is present,     │
+                   │   queries Redis Session Store │
+                   └───────────────┬───────────────┘
+                                   │
+                    ┌──────────────┴──────────────┐
+                    ▼                             ▼
+             [ New Top-Level ]             [ Existing Thread ]
+             • Initialize new Trace        • Fetch Session Context History
+             • Cache Root Intent           • Reconstruct (User ➔ Lumi ➔ User)
+                    │                             │
+                    └──────────────┬──────────────┘
+                                   │
+                                   ▼
+                   ┌───────────────────────────────┐
+                   │ Sliding-Window Context Buffer │
+                   │ • Max 3 Turns (6 Messages)    │
+                   │ • Dynamic Semantic Summary    │
+                   │ • Injected into Hive Node     │
+                   └───────────────────────────────┘
+```
+
+#### Technical Implementation Details:
+1. **Redis / Firestore Session Caching:**
+   * Key: `yt_thread:{root_comment_id}`
+   * Value: JSON array of historical turns: `[{"role": "user", "text": "..."}, {"role": "lumi", "text": "..."}]`
+   * TTL: 7 days (auto-eviction to preserve cache memory).
+2. **Thread Traversal Pipeline:**
+   * When `parentId` is detected, the agent loads the conversation history before passing context to the Supervisor Node.
+   * The Supervisor Node adjusts the **Room Temperature** dynamically based on conversation progression (e.g. escalating from `CASUAL_CHILL` to `DANCE_STUDIO` technical depth).
+3. **Sliding-Window Context Compression:**
+   * Maintains a hard limit of 3 conversation turns (~250 tokens) to ensure generation latency remains under 600ms while keeping responses strictly 1 sentence.

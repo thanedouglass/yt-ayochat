@@ -143,6 +143,35 @@ def test_action_dispatcher_insert():
         )
 
 
+def test_log_to_synthetic_memory_and_dual_corpus(tmp_path, monkeypatch):
+    """Verify log_to_synthetic_memory writes correctly formatted JSONL entries."""
+    import json
+    from src.pipeline.dispatcher import log_to_synthetic_memory
+
+    synth_file = tmp_path / "lumi_synthetic_memory.jsonl"
+    monkeypatch.chdir(tmp_path)
+
+    log_to_synthetic_memory(
+        category="DANCE_CHOREO",
+        input_comment="that footwork transition at 0:15 was insane!",
+        lumi_response="That footwork transition took three whole studio sessions to drill without twisting my ankle!",
+        intent="CHOREO_PRAISE",
+        energy=5,
+    )
+
+    assert synth_file.exists()
+    lines = synth_file.read_text(encoding="utf-8").strip().splitlines()
+    assert len(lines) == 1
+    data = json.loads(lines[0])
+    assert data["id"].startswith("LUMI-SYNTH-")
+    assert data["category"] == "DANCE_CHOREO"
+    assert data["input_comment"] == "that footwork transition at 0:15 was insane!"
+    assert data["context_lore"] == "Autonomously generated via Swarm routing"
+    assert data["lumi_response"] == "That footwork transition took three whole studio sessions to drill without twisting my ankle!"
+    assert data["semiotic_intent"] == "CHOREO_PRAISE"
+    assert data["energy_level"] == 5
+
+
 def test_auth_gitignore_security():
     """Verify that .gitignore strictly contains client_secret.json and token.json."""
     import subprocess
