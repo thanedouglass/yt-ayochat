@@ -37,3 +37,5 @@ scrollcraft/**/node_modules/
 # YouTube OAuth Credentials
 client_secret.json
 token.json
+__pycache__/
+chroma_db/
