@@ -139,16 +139,16 @@ The knowledge corpus represents the verified lore, choreography breakdowns, styl
 
 | Source ID | Video / Short Title | Category | Canonical Content Reference URL |
 |---|---|---|---|
-| **DOC-01** | *NewJeans 'Hype Boy' Studio Dance Cover* | Dance Choreo | `https://youtube.com/shorts/lumi_dance_hypeboy_01` |
-| **DOC-02** | *Fast Footwork & Syncope Transition Breakdown* | Dance Choreo | `https://youtube.com/watch?v=lumi_footwork_tutorial_02` |
-| **DOC-03** | *World Tour Rehearsal Vlog & Crew Introduction* | Lifestyle/Tour | `https://youtube.com/watch?v=lumi_world_tour_vlog_03` |
-| **DOC-04** | *GRWM Streetwear Fit Check & Melrose Flea Market Haul*| Fashion/Fit | `https://youtube.com/shorts/lumi_grwm_melrose_04` |
-| **DOC-05** | *Glossy 90s Lip Combo & Hair Care Secrets (K18 Routine)*| Beauty/Glow | `https://youtube.com/shorts/lumi_lipcombo_k18_05` |
-| **DOC-06** | *Tokyo Thrift Haul: 90s Rimless Shades & Cargo Styling*| Styling Hack | `https://youtube.com/watch?v=lumi_tokyo_thrift_06` |
-| **DOC-07** | *Dancer Footwear Guide: NB 550s vs Dunk Low Shock Absorption*| Gear/Footwear | `https://youtube.com/watch?v=lumi_dance_shoes_guide_07` |
-| **DOC-08** | *Sony FX3 Sunset Lighting & Studio Filming Setup* | Production | `https://youtube.com/watch?v=lumi_camera_gear_bts_08` |
-| **DOC-09** | *Responding to Hate & Body Shamers with Tacos* | Banter/Defense| `https://youtube.com/shorts/lumi_hater_clapback_09` |
-| **DOC-10** | *Bedroom Dance Practice Fails & Coffee Table Disasters* | Community Banter| `https://youtube.com/shorts/lumi_livingroom_fails_10` |
+| **DOC-01** | *KATSEYE (캣츠아이) 'Hootie Frutti' Official Dance Cover* (476K views) | Dance Choreo | `https://youtube.com/watch?v=M1G92FWmdJw` |
+| **DOC-02** | *KATSEYE (캣츠아이) 'Hootie Frutti' Dance Challenge* (146K views) | Dance Challenge | `https://youtube.com/watch?v=Otu-5CrcWHo` |
+| **DOC-03** | *@katseyeworld ‘Hootie Frutti’(캣츠아이) Dance Practice* (109K views) | Dance Practice | `https://youtube.com/watch?v=wJph6fDaJuk` |
+| **DOC-04** | *‘Pink Blush’ Original Dance for @PrincessDollyBabe* (89K views) | Original Choreo | `https://youtube.com/watch?v=jQJqh-zTZQA` |
+| **DOC-05** | *K-pop in Public @katseyeworld (Hootie Frutti)* (29K views) | K-Pop in Public | `https://youtube.com/watch?v=KBr9Y0ljCXQ` |
+| **DOC-06** | *KATSEYE 'Hootie Frutti' Official Dance (Airport Edition)* (20K views) | Public Edition | `https://youtube.com/watch?v=fAiPRcwv2FM` |
+| **DOC-07** | *HIT 'EM WHERE IT HURTS @MEOVV_OFFICIAL* (18K views) | Dance Cover | `https://youtube.com/watch?v=TOwnshDLyE4` |
+| **DOC-08** | *now ‘LEMON TANG’ Dance Trend* (15K views) | Dance Trend | `https://youtube.com/watch?v=Qnd81duBOWs` |
+| **DOC-09** | *KATSEYE 'Gnarly' GRAMMY Dance Break Cover* (14K views) | Dance Break | `https://youtube.com/watch?v=8kGmSFkvYNg` |
+| **DOC-10** | *'Iconic By Mistake' @katseyeworld @ILLIT_official* (14K views) | Dance Mashup | `https://youtube.com/watch?v=FNwedjt2qxE` |
 
 ### 🧬 Dual-Corpus Architecture & Synthetic Memory
 To enable safe, real-time self-learning without risking model collapse or file-locking crashes during live polling, Lumi implements a **Dual-Corpus Architecture**:
