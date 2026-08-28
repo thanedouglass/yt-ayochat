@@ -106,9 +106,12 @@ The knowledge pipeline indexes 10 structured creator video transcripts, tutorial
 
 ---
 
-## 🔮 7. Future Roadmap: Multi-Turn Conversational Memory
+## 🔮 7. Future Roadmap: Multi-Turn Conversational Memory & Stateful Thread Trees
 
 While the current architecture handles single-turn comment dispatches with high fidelity, digital creator spaces increasingly demand **multi-turn thread awareness** (e.g., a fan asking a follow-up question to Lumi's reply). 
+
+### Foundational Step 1: Append-Only Synthetic Memory (`lumi_synthetic_memory.jsonl`)
+As the foundational first milestone toward full multi-turn conversational memory, we have implemented **Dual-Corpus Synthetic Memory** logging via `src/pipeline/dispatcher.py` (`log_to_synthetic_memory()`). By streaming real-time, successfully dispatched interaction pairs into an append-only JSONL corpus without file-locking overhead, the system captures live conversational sequences that serve as the seed data for reconstructing multi-turn interaction graphs.
 
 ### The YouTube API Structural Limitation
 The YouTube Data API v3 treats comment threads as semi-flat hierarchies:
@@ -132,9 +135,9 @@ The YouTube Data API v3 treats comment threads as semi-flat hierarchies:
  [ Fan Follow-Up: "What about in the winter??" ]
 ```
 
-### Conversational Memory Engineering Architecture
+### Conversational Memory Engineering Architecture: Stateful Thread Tree Memory Layer
 
-To overcome this without exceeding API quotas, the next iteration will implement a **Stateful Thread Tree Memory Layer**:
+Building on top of our append-only synthetic memory layer, the next iteration will implement an active **Stateful Thread Tree Memory Layer**:
 
 ```
                        [ Inbound Comment Event ]

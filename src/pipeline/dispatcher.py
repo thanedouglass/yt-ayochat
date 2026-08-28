@@ -1,7 +1,5 @@
-"""Action Dispatcher for posting verified replies to YouTube comment threads."""
-
-from __future__ import annotations
-
+import json
+import uuid
 from dataclasses import dataclass
 from typing import Any, Optional
 
@@ -9,6 +7,23 @@ from src.config import config
 from src.governance.guardrails import guardrails_pipeline
 from src.telemetry.logger import audit_logger
 from src.telemetry.schema import AuditLogRecord, DispatchStatus
+
+
+def log_to_synthetic_memory(category, input_comment, lumi_response, intent, energy):
+    """Appends successful swarm dispatches to a secondary learning corpus."""
+    new_record = {
+        "id": f"LUMI-SYNTH-{uuid.uuid4().hex[:8].upper()}",
+        "category": category,
+        "input_comment": input_comment,
+        "context_lore": "Autonomously generated via Swarm routing",
+        "lumi_response": lumi_response,
+        "semiotic_intent": intent,
+        "energy_level": energy
+    }
+    
+    # Append-only mode prevents file-locking crashes during live polling
+    with open("lumi_synthetic_memory.jsonl", "a", encoding="utf-8") as f:
+        f.write(json.dumps(new_record) + "\n")
 
 
 @dataclass
@@ -67,7 +82,7 @@ class ActionDispatcher:
                 comment_id=comment_id,
                 error_message="Empty reply text provided.",
             )
-            self._update_telemetry(audit_record, result)
+            self._update_telemetry(audit_record, result, reply_text=reply_text)
             return result
 
         # Verify citation or refusal format before dispatching
@@ -78,7 +93,7 @@ class ActionDispatcher:
                 comment_id=comment_id,
                 error_message=f"Dispatch rejected: {verification.error_message}",
             )
-            self._update_telemetry(audit_record, result)
+            self._update_telemetry(audit_record, result, reply_text=reply_text)
             return result
 
         if self.dry_run or comment_id.startswith(("cli_", "mock_", "test_", "cmt_")):
@@ -88,7 +103,7 @@ class ActionDispatcher:
                 reply_id=f"dry_run_reply_{comment_id}",
                 http_status=200,
             )
-            self._update_telemetry(audit_record, result)
+            self._update_telemetry(audit_record, result, reply_text=reply_text)
             return result
 
         client = self._get_client()
@@ -100,7 +115,7 @@ class ActionDispatcher:
                 reply_id=f"mock_reply_{comment_id}",
                 http_status=200,
             )
-            self._update_telemetry(audit_record, result)
+            self._update_telemetry(audit_record, result, reply_text=reply_text)
             return result
 
         try:
@@ -121,7 +136,7 @@ class ActionDispatcher:
                 reply_id=reply_id,
                 http_status=200,
             )
-            self._update_telemetry(audit_record, result)
+            self._update_telemetry(audit_record, result, reply_text=reply_text)
             return result
 
         except Exception as e:
@@ -131,13 +146,14 @@ class ActionDispatcher:
                 http_status=500,
                 error_message=str(e),
             )
-            self._update_telemetry(audit_record, result)
+            self._update_telemetry(audit_record, result, reply_text=reply_text)
             return result
 
     def _update_telemetry(
         self,
         audit_record: Optional[AuditLogRecord],
         result: DispatchResult,
+        reply_text: str = "",
     ) -> None:
         """Update audit record and re-emit to Google Cloud Logging."""
         if audit_record is not None:
@@ -146,6 +162,39 @@ class ActionDispatcher:
             if result.error_message:
                 audit_record.error_message = result.error_message
             audit_logger.log_audit_record(audit_record)
+
+        # Call log_to_synthetic_memory immediately after a successful HTTP 200 dispatch
+        if result.status == DispatchStatus.SUCCESS and result.http_status == 200:
+            category = (
+                audit_record.comment_category
+                if audit_record and audit_record.comment_category
+                else "BANTER"
+            )
+            input_comment = (
+                audit_record.sanitized_query
+                if audit_record and audit_record.sanitized_query
+                else ""
+            )
+            intent = (
+                audit_record.semiotic_intent
+                if audit_record and audit_record.semiotic_intent
+                else "CREATOR_COMMUNITY_BANTER"
+            )
+            energy = (
+                audit_record.energy_level
+                if audit_record and audit_record.energy_level is not None
+                else 3
+            )
+            try:
+                log_to_synthetic_memory(
+                    category=category,
+                    input_comment=input_comment,
+                    lumi_response=reply_text,
+                    intent=intent,
+                    energy=energy,
+                )
+            except Exception:
+                pass
 
 
 # Global default dispatcher instance

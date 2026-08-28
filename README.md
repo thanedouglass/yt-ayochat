@@ -93,6 +93,16 @@ The knowledge corpus represents the verified lore, choreography breakdowns, styl
 | **DOC-09** | *Responding to Hate & Body Shamers with Tacos* | Banter/Defense| `https://youtube.com/shorts/lumi_hater_clapback_09` |
 | **DOC-10** | *Bedroom Dance Practice Fails & Coffee Table Disasters* | Community Banter| `https://youtube.com/shorts/lumi_livingroom_fails_10` |
 
+### 🧬 Dual-Corpus Architecture & Synthetic Memory
+To enable safe, real-time self-learning without risking model collapse or file-locking crashes during live polling, Lumi implements a **Dual-Corpus Architecture**:
+1. **Immutable Ground-Truth Lore (`lumi_corpus.jsonl`):** 
+   - Contains creator-verified choreography facts, styling secrets, gear specifications, and core boundary responses.
+   - Remains strictly read-only during live agent execution to ensure the bedrock persona is never overwritten or corrupted.
+2. **Append-Only Continuous Learning Corpus (`lumi_synthetic_memory.jsonl`):**
+   - Automatically records live, successful HTTP 200 YouTube API comment dispatches logged via `src/pipeline/dispatcher.py` (`log_to_synthetic_memory()`).
+   - Captures dynamic real-world audience interactions, new slang variants, and emergent community themes.
+   - Operates in strict append-only mode (`open("lumi_synthetic_memory.jsonl", "a")`), eliminating concurrency write locks during live high-frequency polling while compiling a high-fidelity synthetic memory dataset for future fine-tuning and offline distillation.
+
 ---
 
 ## ✂️ 2. Chunking Strategy & 5 Labeled Sample Chunks
