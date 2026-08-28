@@ -97,6 +97,8 @@ class LumiSwarmEngine:
             "action": p_res.action.value,
             "lore_ids": h_res.retrieved_lore_ids,
             "generation_latency_ms": h_res.generation_latency_ms,
+            "applied_vectors": h_res.applied_vectors,
+            "cultural_alignment_flag": h_res.cultural_alignment_flag,
         }
 
         # Telemetry logging before HTTP 200 payload dispatch

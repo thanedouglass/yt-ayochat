@@ -73,6 +73,148 @@
 ## 🏛️ System Architecture: The 3-Node Swarm
 Updated Most Recent As of August 28th, 4:47 AM 
 ![YT-AyoChat Architecture](architecture.svg)
+
+### 🎛️ Antigravity Ingestion Gateway Daemon & Mental Map Preservation
+
+The **Antigravity Ingestion Gateway Daemon** operates as a background filesystem orchestrator that enforces automated semantic routing, time-based lifecycle archiving, and persistent auditable logging. It ensures high-velocity creator workflows and AI governance research stay organized without losing the researcher's cognitive mental map:
+
+#### 1. Ingestion Node Monitoring (`scan_gateway`)
+* **Monitored Ingestion Nodes:** Continuously monitors the root `Desktop/` and `Desktop/Inbox/` directories for newly dropped creator media, research papers, and temporary workspace artifacts.
+* **Non-Destructive Processing:** Silently evaluates and routes active files every 60 seconds while ignoring directory trees and self-referential log files (`system_log.md`).
+
+#### 2. Media Semantic Routing (`MEDIA_RAW_DIR`)
+* **Target Destination:** `~/Media_Lab/Raw`
+* **File Type Matching:** `.mp3`, `.wav`, `.mp4`, `.mov`, `.mkv`, `.flac`, `.aac`, `.avi`
+* **Workflow Role:** Automatically isolates heavy audio mixes, dance challenge footage, raw clips, and FFmpeg-bound assets away from the desktop into dedicated high-throughput media staging pipelines.
+
+#### 3. Research Semantic Keyword Routing (`RESEARCH_VAULT_DIR`)
+* **Target Destination:** `~/Research_Vault`
+* **File Type Matching:** `.pdf`, `.md`, `.txt`, `.tex`
+* **Domain Keyword Extraction:** Scans filenames for cognitive and AI governance keywords (`ethics`, `llm`, `data`, `cognitive`, `hci`, `semiotic`, `ai`, `human-computer`).
+* **Workflow Role:** Routes empirical research papers, evaluation reports, and human-computer interaction studies directly into the long-term knowledge repository for RAG indexing.
+
+#### 4. Time-Based Inactivity Archiving: The Horizon Rule (`ARCHIVE_BASE_DIR`)
+* **Target Destination:** `~/Archive/YYYY/MM/`
+* **Inactivity Threshold:** Touched / unmodified for $> 48\text{ hours}$ ($172,800\text{ seconds}$).
+* **Workflow Role:** Prevents desktop accretion by moving stale files into structured, chronological year/month archive folders while preserving full metadata and modification timestamps.
+
+#### 5. Persistent Markdown Provenance Ledger (`system_log.md`)
+* **Ledger Location:** `~/system_log.md`
+* **Audit Table Schema:** `| Timestamp | File | Source | Destination | Rule Applied |`
+* **Workflow Role:** Every file operation appends an immutable, human-readable trace to the ledger, guaranteeing that automated daemon actions never disrupt the human mental map.
+
+```python
+#!/usr/bin/env python3
+"""
+Antigravity Ingestion Gateway Daemon
+Enforces semantic routing, time-based archiving, and a persistent markdown ledger 
+for desktop organization without losing the human mental map.
+"""
+
+import os
+import time
+import shutil
+import logging
+from pathlib import Path
+from datetime import datetime
+
+# Configure logging to mirror the required system_log.md format
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+
+# Define paths (defaulting to standard user desktop and local vault structures)
+USER_HOME = Path.home()
+DESKTOP_DIR = USER_HOME / "Desktop"
+INBOX_DIR = DESKTOP_DIR / "Inbox"
+MEDIA_RAW_DIR = USER_HOME / "Media_Lab" / "Raw"
+RESEARCH_VAULT_DIR = USER_HOME / "Research_Vault"
+ARCHIVE_BASE_DIR = USER_HOME / "Archive"
+LEDGER_PATH = USER_HOME / "system_log.md"
+
+# Ensure core directories exist
+for directory in [INBOX_DIR, MEDIA_RAW_DIR, RESEARCH_VAULT_DIR, ARCHIVE_BASE_DIR]:
+    directory.mkdir(parents=True, exist_ok=True)
+
+# Initialize ledger if it doesn't exist
+if not LEDGER_PATH.exists():
+    with open(LEDGER_PATH, "w", encoding="utf-8") as f:
+        f.write("# Antigravity Ingestion Gateway Ledger\n\n| Timestamp | File | Source | Destination | Rule Applied |\n| :--- | :--- | :--- | :--- | :--- |\n")
+
+def append_to_ledger(filename: str, source: str, destination: str, rule: str):
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    ledger_entry = f"| {timestamp} | `{filename}` | `{source}` | `{destination}` | {rule} |\n"
+    with open(LEDGER_PATH, "a", encoding="utf-8") as f:
+        f.write(ledger_entry)
+    logging.info(f"Routed {filename} from {source} to {destination} [{rule}]")
+
+def process_file(file_path: Path):
+    if file_path.name == "system_log.md" or file_path.is_dir():
+        return
+
+    file_lower = file_path.name.lower()
+    file_stats = file_path.stat()
+    file_age_seconds = time.time() - file_stats.st_mtime
+    
+    # 1. Media Routing (Audio mixes, video edits, FFmpeg-bound files)
+    media_extensions = {".mp3", ".wav", ".mp4", ".mov", ".mkv", ".flac", ".aac", ".avi"}
+    if file_path.suffix.lower() in media_extensions:
+        dest = MEDIA_RAW_DIR / file_path.name
+        shutil.move(str(file_path), str(dest))
+        append_to_ledger(file_path.name, str(file_path.parent), str(MEDIA_RAW_DIR), "Media Semantic Routing")
+        return
+
+    # 2. Research Vault Routing (PDFs/Markdown with specific domain keywords)
+    research_extensions = {".pdf", ".md", ".txt", ".tex"}
+    if file_path.suffix.lower() in research_extensions:
+        # Check filename or read snippet for keywords
+        keywords = ["ethics", "llm", "data", "cognitive", "hci", "semiotic", "ai", "human-computer"]
+        matched_keyword = any(kw in file_lower for kw in keywords)
+        
+        if matched_keyword:
+            dest = RESEARCH_VAULT_DIR / file_path.name
+            shutil.move(str(file_path), str(dest))
+            append_to_ledger(file_path.name, str(file_path.parent), str(RESEARCH_VAULT_DIR), "Research Semantic Keyword Routing")
+            return
+
+    # 3. Time-Based Archiving (The Horizon Rule: untouched for > 48 hours / 172800 seconds)
+    forty_eight_hours = 48 * 60 * 60
+    if file_age_seconds > forty_eight_hours:
+        file_mtime = datetime.fromtimestamp(file_stats.st_mtime)
+        year_month_dir = ARCHIVE_BASE_DIR / str(file_mtime.year) / f"{file_mtime.month:02d}"
+        year_month_dir.mkdir(parents=True, exist_ok=True)
+        
+        dest = year_month_dir / file_path.name
+        shutil.move(str(file_path), str(dest))
+        append_to_ledger(file_path.name, str(file_path.parent), str(year_month_dir), "Horizon Rule (48h Inactivity Archive)")
+        return
+
+def scan_gateway():
+    """Scans both the Desktop root and the specific Inbox ingestion node."""
+    targets = [DESKTOP_DIR, INBOX_DIR]
+    for target in targets:
+        if not target.exists():
+            continue
+        for item in target.iterdir():
+            # Only process files directly sitting on Desktop or inside Inbox
+            if item.is_file():
+                try:
+                    process_file(item)
+                except Exception as e:
+                    logging.error(f"Failed to process {item.name}: {e}")
+
+if __name__ == "__main__":
+    logging.info("Antigravity Ingestion Gateway Daemon initialized. Monitoring ingestion nodes...")
+    try:
+        while True:
+            scan_gateway()
+            # Poll every 60 seconds silently in the background
+            time.sleep(60)
+    except KeyboardInterrupt:
+        logging.info("Daemon terminated by user. Mental map preserved via system_log.md.")
+```
 ```
 ================== [ Local Execution & Google Cloud API Integration ] ==================
                      [ Inbound YouTube Comment Thread ]
@@ -143,16 +285,16 @@ The knowledge corpus represents the verified lore, choreography breakdowns, styl
 
 | Source ID | Video / Short Title | Category | Canonical Content Reference URL |
 |---|---|---|---|
-| **DOC-01** | *NewJeans 'Hype Boy' Studio Dance Cover* | Dance Choreo | `https://youtube.com/shorts/lumi_dance_hypeboy_01` |
-| **DOC-02** | *Fast Footwork & Syncope Transition Breakdown* | Dance Choreo | `https://youtube.com/watch?v=lumi_footwork_tutorial_02` |
-| **DOC-03** | *World Tour Rehearsal Vlog & Crew Introduction* | Lifestyle/Tour | `https://youtube.com/watch?v=lumi_world_tour_vlog_03` |
-| **DOC-04** | *GRWM Streetwear Fit Check & Melrose Flea Market Haul*| Fashion/Fit | `https://youtube.com/shorts/lumi_grwm_melrose_04` |
-| **DOC-05** | *Glossy 90s Lip Combo & Hair Care Secrets (K18 Routine)*| Beauty/Glow | `https://youtube.com/shorts/lumi_lipcombo_k18_05` |
-| **DOC-06** | *Tokyo Thrift Haul: 90s Rimless Shades & Cargo Styling*| Styling Hack | `https://youtube.com/watch?v=lumi_tokyo_thrift_06` |
-| **DOC-07** | *Dancer Footwear Guide: NB 550s vs Dunk Low Shock Absorption*| Gear/Footwear | `https://youtube.com/watch?v=lumi_dance_shoes_guide_07` |
-| **DOC-08** | *Sony FX3 Sunset Lighting & Studio Filming Setup* | Production | `https://youtube.com/watch?v=lumi_camera_gear_bts_08` |
-| **DOC-09** | *Responding to Hate & Body Shamers with Tacos* | Banter/Defense| `https://youtube.com/shorts/lumi_hater_clapback_09` |
-| **DOC-10** | *Bedroom Dance Practice Fails & Coffee Table Disasters* | Community Banter| `https://youtube.com/shorts/lumi_livingroom_fails_10` |
+| **DOC-01** | *KATSEYE (캣츠아이) 'Hootie Frutti' Official Dance Cover* (476K views) | Dance Choreo | `https://youtube.com/watch?v=M1G92FWmdJw` |
+| **DOC-02** | *KATSEYE (캣츠아이) 'Hootie Frutti' Dance Challenge* (146K views) | Dance Challenge | `https://youtube.com/watch?v=Otu-5CrcWHo` |
+| **DOC-03** | *@katseyeworld ‘Hootie Frutti’(캣츠아이) Dance Practice* (109K views) | Dance Practice | `https://youtube.com/watch?v=wJph6fDaJuk` |
+| **DOC-04** | *‘Pink Blush’ Original Dance for @PrincessDollyBabe* (89K views) | Original Choreo | `https://youtube.com/watch?v=jQJqh-zTZQA` |
+| **DOC-05** | *K-pop in Public @katseyeworld (Hootie Frutti)* (29K views) | K-Pop in Public | `https://youtube.com/watch?v=KBr9Y0ljCXQ` |
+| **DOC-06** | *KATSEYE 'Hootie Frutti' Official Dance (Airport Edition)* (20K views) | Public Edition | `https://youtube.com/watch?v=fAiPRcwv2FM` |
+| **DOC-07** | *HIT 'EM WHERE IT HURTS @MEOVV_OFFICIAL* (18K views) | Dance Cover | `https://youtube.com/watch?v=TOwnshDLyE4` |
+| **DOC-08** | *now ‘LEMON TANG’ Dance Trend* (15K views) | Dance Trend | `https://youtube.com/watch?v=Qnd81duBOWs` |
+| **DOC-09** | *KATSEYE 'Gnarly' GRAMMY Dance Break Cover* (14K views) | Dance Break | `https://youtube.com/watch?v=8kGmSFkvYNg` |
+| **DOC-10** | *'Iconic By Mistake' @katseyeworld @ILLIT_official* (14K views) | Dance Mashup | `https://youtube.com/watch?v=FNwedjt2qxE` |
 
 ### 🧬 Dual-Corpus Architecture & Synthetic Memory
 To enable safe, real-time self-learning without risking model collapse or file-locking crashes during live polling, Lumi implements a **Dual-Corpus Architecture**:
