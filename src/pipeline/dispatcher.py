@@ -58,6 +58,7 @@ class ActionDispatcher:
         comment_id: str,
         reply_text: str,
         audit_record: Optional[AuditLogRecord] = None,
+        require_citation: bool = True,
     ) -> DispatchResult:
         """Validate and dispatch reply to YouTube comment thread."""
         if not reply_text:
@@ -70,7 +71,7 @@ class ActionDispatcher:
             return result
 
         # Verify citation or refusal format before dispatching
-        verification = self.guardrails.verify_output(reply_text)
+        verification = self.guardrails.verify_output(reply_text, require_citation=require_citation)
         if not verification.is_valid:
             result = DispatchResult(
                 status=DispatchStatus.FAILED,

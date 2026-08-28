@@ -102,6 +102,7 @@ class GovernedYouTubeAgent:
                 comment_id=comment.comment_id,
                 reply_text=gw_response.final_reply,
                 audit_record=gw_response.audit_record,
+                require_citation=True,
             )
             self.listener.mark_processed(comment.comment_id)
             return AgentTransactionResult(
@@ -190,6 +191,7 @@ class GovernedYouTubeAgent:
             comment_id=comment.comment_id,
             reply_text=swarm_decision.final_output,
             audit_record=audit_record,
+            require_citation=False,
         )
 
         self.listener.mark_processed(comment.comment_id)

@@ -92,7 +92,7 @@ class SemanticGuardrailPipeline:
             model_armor_details=armor_verdict,
         )
 
-    def verify_output(self, generated_text: str) -> OutputVerificationResult:
+    def verify_output(self, generated_text: str, require_citation: bool = True) -> OutputVerificationResult:
         """Verify that the generated response satisfies grounding citation, refusal, or sovereign 1-sentence persona requirements."""
         cleaned = generated_text.strip()
         if not cleaned:
@@ -137,6 +137,15 @@ class SemanticGuardrailPipeline:
                 is_refusal=False,
                 has_valid_citation=True,
                 citation_details=cleaned.split("📌 Source:")[-1].strip(),
+            )
+
+        # If citation is required but not present, validation fails
+        if require_citation:
+            return OutputVerificationResult(
+                is_valid=False,
+                is_refusal=False,
+                has_valid_citation=False,
+                error_message="Missing required grounding citation.",
             )
 
         # Sovereign 1-sentence Lumi persona validation (no robotic corporate boilerplate)
