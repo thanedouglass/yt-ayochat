@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
 <title>yt-ayochat · the scroll is dead</title>
 <meta name="description" content="yt-ayochat turns YouTube Shorts comments into community. An open-source governed RAG agent that answers your viewers and delivers the invite.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230B0A08'/><rect x='6' y='22' width='14' height='4' fill='%23FFB000'/></svg>">
@@ -11,7 +12,12 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="scrollcraft.css">
 <style>
-  /* ---------- theme: six colours, three faces ---------- */
+  /* ---------- theme ----------
+     Two hues, two jobs, no overlap.
+       amber  = VOICE.     Everything the agent says, types or labels.
+       crimson = STRUCTURE. The ledger wall and the connective trace. Never
+                 type, never a control. It lives on a canvas behind the page.
+     Splitting them by role is what keeps a second hue from being confetti. */
   :root {
     --sc-canvas:     #0B0A08;
     --sc-surface:    #151310;
@@ -19,15 +25,17 @@
     --sc-ink-soft:   #A39A88;
     --sc-accent:     #FFB000;   /* amber phosphor: the machine's voice */
     --sc-accent-ink: #171105;
+    --accent:        #FFB000;   /* alias for CTA buttons and UI highlights */
+    --brick:         #FF2E4D;   /* electric crimson: structure only */
     --sc-font-display: "Bricolage Grotesque", "Archivo", system-ui, sans-serif;
     --sc-font-text:    "Newsreader", Georgia, serif;
     --sc-font-mono:    "IBM Plex Mono", ui-monospace, monospace;
     --sc-shadow-color: 36 30% 2%;
+    --bar-h: 3.25rem;
   }
 
   body { font-family: var(--sc-font-text); }
 
-  /* the accent owns one role: everything the machine says or types */
   .voice { color: var(--sc-accent); }
 
   .mono {
@@ -42,6 +50,26 @@
     text-transform: uppercase;
     color: var(--sc-ink-soft);
   }
+
+  /* ---------- the ledger wall: fixed canvas behind every act ---------- */
+  #brickfield {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    /* out of flow and never resized by content, so it cannot shift layout */
+  }
+  main { position: relative; z-index: 1; }
+
+  /* Reserve each pinned act's geometry at first paint.
+     The engine only adds .sc-stage (and the act's height) once it mounts, so
+     until then a pinned section collapses to nothing and everything below it
+     sits a full viewport too high. The correction lands as one CLS 1.0 lurch.
+     Declaring the same height up front means mount changes nothing.
+     --span must match data-sc-span on the same element; vh, not svh, because
+     that is the unit the engine writes. */
+  [data-sc-act="pin"] { min-height: calc(var(--span, 1) * 100vh); }
+  [data-sc-stage] { min-height: 100svh; }
 
   /* ---------- act 1 · hero ---------- */
   .hero-stage { display: block; }
@@ -76,7 +104,6 @@
     text-wrap: balance;
     margin: 0;
     max-width: 11ch;
-    /* grammar lean: scale driven from the act's own progress */
     transform: scale(calc(1 + var(--sc-p, 0) * 0.04));
     transform-origin: left bottom;
   }
@@ -205,7 +232,6 @@
     font-size: var(--sc-t-sm);
     color: color-mix(in oklab, var(--sc-accent) 72%, var(--sc-ink-soft));
     line-height: 1.9;
-    /* CSS-only motion: the pipeline runs whether or not you scroll */
     animation: feedscroll 14s steps(7, end) infinite;
   }
   .term-feed b { font-weight: 500; color: var(--sc-accent); }
@@ -213,13 +239,10 @@
     from { transform: translateY(0); }
     to   { transform: translateY(-50%); }
   }
-  @media (prefers-reduced-motion: reduce) {
-    .term-feed { animation: none; }
-  }
 
   /* ---------- act 4 · silence ---------- */
   .hush {
-    padding-block: calc(var(--sc-section) * 1.6);
+    padding-block: calc(var(--sc-section) * 1.3);
     display: grid;
   }
   .hush p {
@@ -278,8 +301,177 @@
     text-wrap: pretty;
   }
 
-  /* ---------- act 6 · close: the page inverts to its smallest type ---------- */
-  .end { padding-block: calc(var(--sc-section) * 1.2) var(--sc-8); }
+  /* ---------- act 6 · native infrastructure, editorial manifesto ---------- */
+  .native { padding-block: var(--sc-section); }
+  .native-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: var(--sc-5);
+    row-gap: var(--sc-7);
+  }
+  .native-eyebrow { grid-column: 1 / 13; }
+  .native h2 {
+    grid-column: 1 / 11;
+    font-family: var(--sc-font-display);
+    font-weight: 800;
+    font-size: clamp(2.6rem, 7.6vw, 7rem);
+    line-height: 0.98;
+    letter-spacing: var(--sc-track-tight);
+    margin: 0;
+    text-wrap: balance;
+  }
+  .native h2 em { font-style: normal; color: var(--sc-accent); }
+  .native-lede {
+    grid-column: 2 / 8;
+    margin: 0;
+    font-size: var(--sc-t-xl);
+    line-height: 1.34;
+    color: var(--sc-ink);
+    text-wrap: pretty;
+  }
+  .native-col {
+    grid-column: 8 / 13;
+    align-self: end;
+    margin: 0;
+    font-size: var(--sc-t-base);
+    line-height: var(--sc-leading-body);
+    color: var(--sc-ink-soft);
+    text-wrap: pretty;
+  }
+  .native-col + .native-col { grid-column: 8 / 13; }
+  /* the one concrete anchor for an abstract argument: the control that
+     should exist. Labelled as a proposal, because it does not. */
+  .toggle-row {
+    grid-column: 2 / 11;
+    display: flex;
+    align-items: center;
+    gap: var(--sc-4);
+    flex-wrap: wrap;
+    padding: var(--sc-4) var(--sc-5);
+    border: 1px solid var(--sc-hairline-strong);
+    border-left: 1px solid var(--sc-accent);
+    background: var(--sc-surface);
+  }
+  .toggle-switch {
+    flex: none;
+    width: 2.75rem;
+    height: 1.5rem;
+    border: 1px solid var(--sc-accent);
+    background: color-mix(in oklab, var(--sc-accent) 16%, transparent);
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    justify-content: flex-end;
+  }
+  .toggle-switch span {
+    display: block;
+    width: 1.15rem;
+    height: 1.15rem;
+    background: var(--sc-accent);
+  }
+  .toggle-label {
+    font-family: var(--sc-font-mono);
+    font-size: var(--sc-t-sm);
+    color: var(--sc-ink);
+    margin: 0;
+  }
+  .toggle-path { margin: 0; margin-left: auto; }
+  .native-kicker {
+    grid-column: 1 / 12;
+    margin: 0;
+    font-family: var(--sc-font-display);
+    font-weight: 700;
+    font-size: var(--sc-t-2xl);
+    line-height: var(--sc-leading-tight);
+    letter-spacing: var(--sc-track-snug);
+    color: var(--sc-ink);
+    text-wrap: balance;
+  }
+
+  /* ---------- act 7 · build on top of this ---------- */
+  .forge { padding-block: var(--sc-section); }
+  .forge-head { max-width: 46rem; margin-bottom: var(--sc-9); }
+  .forge h2 {
+    font-family: var(--sc-font-display);
+    font-weight: 800;
+    font-size: clamp(2.2rem, 5.4vw, 4.6rem);
+    line-height: 1;
+    letter-spacing: var(--sc-track-tight);
+    margin: 0 0 var(--sc-5);
+    text-wrap: balance;
+  }
+  .forge-head p {
+    margin: 0;
+    font-size: var(--sc-t-lg);
+    color: var(--sc-ink-soft);
+    max-width: 52ch;
+    text-wrap: pretty;
+  }
+  /* a real sequence, so the numbering is information rather than decoration */
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; row-gap: var(--sc-7); }
+  .step {
+    display: grid;
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    column-gap: var(--sc-5);
+    align-items: start;
+    padding-top: var(--sc-5);
+    border-top: 1px solid var(--sc-hairline);
+  }
+  .step-n {
+    font-family: var(--sc-font-mono);
+    font-size: var(--sc-t-sm);
+    color: var(--sc-accent);
+    padding-top: 0.35rem;
+  }
+  .step h3 {
+    margin: 0 0 var(--sc-2);
+    font-family: var(--sc-font-display);
+    font-weight: 700;
+    font-size: var(--sc-t-lg);
+    letter-spacing: var(--sc-track-snug);
+  }
+  .step p {
+    margin: 0 0 var(--sc-4);
+    font-size: var(--sc-t-base);
+    color: var(--sc-ink-soft);
+    max-width: 58ch;
+    text-wrap: pretty;
+  }
+  .copyline {
+    display: flex;
+    align-items: center;
+    gap: var(--sc-4);
+    width: 100%;
+    text-align: left;
+    font-family: var(--sc-font-mono);
+    font-size: var(--sc-t-sm);
+    color: var(--sc-ink);
+    background: var(--sc-surface);
+    border: 1px solid var(--sc-hairline);
+    padding: var(--sc-3) var(--sc-4);
+    cursor: pointer;
+    transition: border-color var(--sc-d-fast) var(--sc-ease-out),
+                background-color var(--sc-d-fast) var(--sc-ease-out);
+  }
+  .copyline code { flex: 1; overflow-x: auto; white-space: nowrap; }
+  .copyline .copy-hint {
+    flex: none;
+    font-size: var(--sc-t-xs);
+    letter-spacing: var(--sc-track-wide);
+    text-transform: uppercase;
+    color: var(--sc-ink-soft);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .copyline:hover { border-color: var(--sc-accent); background: #191510; }
+    .copyline:hover .copy-hint { color: var(--sc-accent); }
+  }
+  .copyline:focus-visible { outline: 2px solid var(--sc-accent); outline-offset: 3px; }
+  .copyline:active { transform: translateY(1px); }
+  .copyline.is-copied { border-color: var(--sc-accent); }
+  .copyline.is-copied .copy-hint { color: var(--sc-accent); }
+
+  /* ---------- act 8 · close ---------- */
+  .end { padding-block: calc(var(--sc-section) * 1.2) calc(var(--sc-8) + var(--bar-h)); }
   .end-stack { max-width: 54rem; }
   .end h2 {
     font-family: var(--sc-font-display);
@@ -310,6 +502,7 @@
     text-decoration-thickness: 1px;
   }
   .end-cta:hover { text-decoration-thickness: 2px; }
+  .end-cta:focus-visible { outline: 2px solid var(--sc-accent); outline-offset: 4px; }
   .end-foot {
     margin-top: var(--sc-9);
     padding-top: var(--sc-4);
@@ -318,6 +511,315 @@
     justify-content: space-between;
     gap: var(--sc-4);
     flex-wrap: wrap;
+  }
+
+  /* ---------- act 5 · the reality warp & reality stone ---------- */
+  .warp {
+    padding-block: calc(var(--sc-section) * 1.3) calc(var(--sc-8) + var(--bar-h));
+    position: relative;
+  }
+  .warp-wrap {
+    max-width: 52rem;
+    margin-inline: auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* 1. The Visual Peak: Pure CSS Pulsing Reality Stone */
+  .gem-container {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    margin: 0 auto var(--sc-7);
+    display: grid;
+    place-items: center;
+    isolation: isolate;
+  }
+  .gem-aura {
+    position: absolute;
+    inset: -16px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 50%,
+      rgba(255, 46, 77, 0.55) 0%,
+      rgba(255, 14, 56, 0.32) 32%,
+      rgba(206, 26, 50, 0.14) 56%,
+      transparent 74%
+    );
+    filter: blur(16px);
+    pointer-events: none;
+    z-index: 0;
+    animation: gem-aura-pulse 3.8s ease-in-out infinite;
+  }
+  .gem-crystal {
+    position: relative;
+    width: 88px;
+    height: 88px;
+    z-index: 1;
+    clip-path: polygon(50% 0%, 86% 14%, 100% 50%, 86% 86%, 50% 100%, 14% 86%, 0% 50%, 14% 14%);
+    background:
+      conic-gradient(from 22.5deg at 50% 50%,
+        #ff5270 0deg 45deg,
+        #ce1a32 45deg 90deg,
+        #7d0515 90deg 135deg,
+        #ce1a32 135deg 180deg,
+        #4d000b 180deg 225deg,
+        #9e0d22 225deg 270deg,
+        #ce1a32 270deg 315deg,
+        #ff738c 315deg 360deg
+      );
+    box-shadow:
+      0 0 24px rgba(255, 46, 77, 0.85),
+      0 0 50px rgba(255, 46, 77, 0.55),
+      0 0 90px rgba(206, 26, 50, 0.35);
+    filter: drop-shadow(0 0 16px rgba(255, 46, 77, 0.88)) drop-shadow(0 0 42px rgba(255, 20, 50, 0.65));
+    animation: gem-breathe 3.8s ease-in-out infinite;
+  }
+  .gem-table {
+    position: absolute;
+    inset: 18%;
+    clip-path: polygon(50% 0%, 86% 14%, 100% 50%, 86% 86%, 50% 100%, 14% 86%, 0% 50%, 14% 14%);
+    background: radial-gradient(circle at 45% 40%,
+      #ffd1dc 0%,
+      #ff6685 24%,
+      #ff2e4d 55%,
+      #a80820 100%
+    );
+    box-shadow:
+      inset 0 0 10px rgba(255, 255, 255, 0.7),
+      inset 0 0 20px rgba(255, 46, 77, 0.9);
+  }
+  .gem-flare {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(125deg,
+      transparent 36%,
+      rgba(255, 255, 255, 0.4) 44%,
+      rgba(255, 255, 255, 0.85) 48%,
+      rgba(255, 255, 255, 0.4) 52%,
+      transparent 60%
+    );
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+  @keyframes gem-aura-pulse {
+    0%, 100% { transform: scale(0.94); opacity: 0.7; }
+    50% { transform: scale(1.15); opacity: 1; }
+  }
+  @keyframes gem-breathe {
+    0%, 100% {
+      transform: scale(0.97);
+      filter: drop-shadow(0 0 14px rgba(255, 46, 77, 0.75)) drop-shadow(0 0 32px rgba(255, 20, 50, 0.45));
+    }
+    50% {
+      transform: scale(1.03);
+      filter: drop-shadow(0 0 26px rgba(255, 46, 77, 0.98)) drop-shadow(0 0 65px rgba(255, 0, 60, 0.75));
+    }
+  }
+
+  /* 2. The Manifesto Copy */
+  .warp-manifesto-block {
+    margin-bottom: var(--sc-8);
+    max-width: 48rem;
+  }
+  .warp-eyebrow {
+    margin-bottom: var(--sc-4);
+    color: var(--brick);
+  }
+  .warp-title {
+    font-family: var(--sc-font-display);
+    font-weight: 800;
+    font-size: clamp(2.4rem, 6.5vw, 5.5rem);
+    line-height: 0.96;
+    letter-spacing: var(--sc-track-tight);
+    text-transform: uppercase;
+    margin: 0 0 var(--sc-6);
+    color: var(--sc-ink);
+    text-wrap: balance;
+  }
+  .warp-body {
+    font-family: var(--sc-font-text);
+    font-size: clamp(1.25rem, 1.1rem + 0.55vw, 1.6rem);
+    line-height: 1.58;
+    color: var(--sc-ink);
+    max-width: 46ch;
+    margin: 0 auto;
+    text-wrap: pretty;
+  }
+  .warp-triad {
+    display: inline;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--sc-accent);
+  }
+
+  /* 3. The Deployment CTA Button Styling */
+  .warp a[href*="calendar"]:hover {
+    background: color-mix(in oklab, var(--accent) 12%, transparent) !important;
+    border-color: var(--brick) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 0 24px rgba(255, 46, 77, 0.45), 0 0 12px rgba(255, 176, 0, 0.35);
+    transform: translateY(-2px);
+  }
+  .warp a[href*="calendar"]:active {
+    transform: translateY(0);
+  }
+  .warp a[href*="calendar"]:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+  }
+  .warp-foot {
+    width: 100%;
+    margin-top: var(--sc-8);
+    padding-top: var(--sc-4);
+    border-top: 1px solid var(--sc-hairline);
+    display: flex;
+    justify-content: space-between;
+    gap: var(--sc-4);
+    flex-wrap: wrap;
+  }
+
+  /* ---------- the dual-terminal echo ----------
+     A ghosted second voice behind the page. The foreground types the
+     creator's strategy; this types what the model is doing while they read.
+     Decorative, so aria-hidden, and kept far under the ink it sits behind. */
+  #ghostfeed {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    padding: 10vh var(--sc-gutter) 12vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0;
+    font-family: var(--sc-font-mono);
+    font-size: clamp(0.6rem, 0.88vw, 0.78rem);
+    line-height: 2.2;
+    letter-spacing: 0.045em;
+    color: color-mix(in oklab, var(--sc-accent) 38%, var(--sc-ink-soft));
+    opacity: 0.16;
+    white-space: pre;
+    overflow: hidden;
+    mask-image: linear-gradient(to bottom, transparent, #000 16%, #000 58%, transparent 94%);
+    transition: opacity 420ms var(--sc-ease-out);
+  }
+  #ghostfeed b { font-weight: 400; color: var(--sc-accent); }
+  #ghostfeed .gf-caret { color: var(--sc-accent); }
+
+  /* ---------- the stark beat: the one colourless moment on the page ----------
+     No bricks, no grain, no ghost, no chrome, no accent. Everything the page
+     has been doing stops, so the philosophy lands in silence and the peak has
+     somewhere to arrive from. */
+  body.is-stark #ghostfeed { opacity: 0; }
+  body.is-stark .sc-grain { opacity: 0; transition: opacity 420ms var(--sc-ease-out); }
+  body.is-stark .stackbar { opacity: 0; }
+  body.is-stark [data-sc-progress] { opacity: 0; transition: opacity 420ms var(--sc-ease-out); }
+
+  .symmetry { padding-block: calc(var(--sc-section) * 1.05); }
+  .sym-card {
+    max-width: 44rem;
+    margin-inline: auto;
+    border: 1px solid color-mix(in oklab, var(--sc-ink) 26%, transparent);
+    background: #0A0A0A;
+    padding: 0;
+  }
+  .sym-head {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--sc-4);
+    padding: var(--sc-3) var(--sc-5);
+    border-bottom: 1px solid color-mix(in oklab, var(--sc-ink) 16%, transparent);
+  }
+  /* monochrome on purpose: this card is the only place amber does not speak */
+  .sym-head .microlabel { color: color-mix(in oklab, var(--sc-ink) 62%, transparent); }
+  .sym-body-wrap { padding: var(--sc-7) var(--sc-5) var(--sc-8); }
+  .sym-title {
+    margin: 0 0 var(--sc-6);
+    font-family: var(--sc-font-display);
+    font-weight: 700;
+    font-size: var(--sc-t-2xl);
+    line-height: var(--sc-leading-tight);
+    letter-spacing: var(--sc-track-snug);
+    color: var(--sc-ink);
+    text-wrap: balance;
+  }
+  .sym-text {
+    margin: 0;
+    font-size: var(--sc-t-lg);
+    line-height: 1.62;
+    color: var(--sc-ink);
+    text-wrap: pretty;
+  }
+  .sym-text .sym-turn { color: color-mix(in oklab, var(--sc-ink) 72%, transparent); }
+
+  /* ---------- floating stack bar ---------- */
+  .stackbar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: var(--bar-h);
+    z-index: var(--sc-z-chrome);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: color-mix(in oklab, var(--sc-canvas) 88%, transparent);
+    backdrop-filter: blur(6px);
+    border-top: 1px solid color-mix(in oklab, var(--sc-accent) 26%, transparent);
+    box-shadow: 0 -1px 0 color-mix(in oklab, var(--sc-accent) 9%, transparent),
+                0 -14px 30px -22px var(--sc-accent);
+    /* recedes while the peak act owns the screen */
+    opacity: var(--bar-o, 1);
+    transition: opacity 320ms var(--sc-ease-out);
+  }
+  .stackbar__track {
+    display: flex;
+    flex: none;
+    align-items: center;
+    will-change: transform;
+    animation: marquee 42s linear infinite;
+  }
+  .stackbar:hover .stackbar__track { animation-play-state: paused; }
+  @keyframes marquee {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(-50%, 0, 0); }
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sc-2);
+    padding-inline: var(--sc-5);
+    font-family: var(--sc-font-mono);
+    font-size: var(--sc-t-xs);
+    letter-spacing: var(--sc-track-wide);
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--sc-ink-soft);
+    transition: color var(--sc-d-fast) var(--sc-ease-out);
+  }
+  .chip svg { flex: none; width: 14px; height: 14px; }
+  .chip::after {
+    content: "";
+    width: 3px;
+    height: 3px;
+    margin-left: var(--sc-4);
+    background: currentColor;
+    opacity: 0.5;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .chip:hover { color: var(--sc-accent); }
+  }
+
+  /* ---------- reduced motion ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    .term-feed { animation: none; }
+    .stackbar__track { animation: none; }
+    .typed::after { animation: none; }
+    .copyline { transition: none; }
+    .gem-aura { animation: none; opacity: 0.85; }
+    .gem-crystal { animation: none; transform: none; }
   }
 
   /* ---------- the signature move: scroll-as-keystrokes ---------- */
@@ -329,9 +831,6 @@
   .typed.is-done::after { animation: none; opacity: 0; }
   .term-cmd.typed.is-done::after { opacity: 1; animation: caret 1.1s steps(2, jump-none) infinite; }
   @keyframes caret { 50% { opacity: 0; } }
-  @media (prefers-reduced-motion: reduce) {
-    .typed::after { animation: none; }
-  }
 
   /* ---------- responsive ---------- */
   @media (max-width: 860px) {
@@ -344,18 +843,30 @@
     .term { grid-column: 1 / 13; grid-row: 2; margin-top: var(--sc-6); height: min(37vh, 21rem); }
     .peak-dm-wrap { justify-self: start; }
     .hush p { margin-left: 0; }
+    .native h2 { grid-column: 1 / 13; }
+    .native-lede { grid-column: 1 / 13; }
+    .native-col { grid-column: 1 / 13; align-self: start; }
+    .native-col + .native-col { grid-column: 1 / 13; }
+    .toggle-row { grid-column: 1 / 13; }
+    .toggle-path { margin-left: 0; }
+    .native-kicker { grid-column: 1 / 13; }
+    .step { grid-template-columns: 2.25rem minmax(0, 1fr); column-gap: var(--sc-4); }
+    .warp-wrap { padding-inline: 0; }
+    .warp-foot { flex-direction: column; align-items: center; text-align: center; }
   }
 </style>
 </head>
 <body>
 
 <span data-sc-progress></span>
+<canvas id="brickfield" aria-hidden="true"></canvas>
+<div id="ghostfeed" aria-hidden="true"></div>
 <div class="sc-grain" aria-hidden="true"></div>
 
 <main id="top">
 
   <!-- ACT 1 · THE PROBLEM: recognition. pin + kinetic, greet cue. -->
-  <section data-sc-act="pin" data-sc-span="2.2" data-sc-drift="#0B0A08" aria-label="The problem">
+  <section data-sc-act="pin" data-sc-span="2.2" style="--span: 2.2" data-sc-drift="#0B0A08" aria-label="The problem">
     <div data-sc-stage class="hero-stage">
       <p class="hero-mark" data-sc-cue="0 0.9 0">
         <strong>yt-ayochat</strong>
@@ -381,7 +892,7 @@
   </section>
 
   <!-- ACT 3 · THE SHIFT: curiosity. pin + typed command, CSS-only pipeline. -->
-  <section data-sc-act="pin" data-sc-span="2.4" data-sc-drift="#0A0908" aria-label="The shift">
+  <section data-sc-act="pin" data-sc-span="2.4" style="--span: 2.4" data-sc-drift="#0A0908" aria-label="The shift">
     <div data-sc-stage class="shift-stage" data-sc-verify-state="">
       <div class="shift-copy">
         <h2 data-sc-cue="0 0.42 0">Put an agent under the comments.</h2>
@@ -418,7 +929,24 @@
     </div>
   </section>
 
-  <!-- ACT 4 · AUTHORED SILENCE: held breath. One line, nothing else. -->
+  <!-- ACT 4 · REFLECTION: the stark beat. The page drops every device it has
+       — bricks, grain, ghost, chrome, accent — for one colourless card. -->
+  <section id="symmetry" class="sc-section symmetry" data-sc-act="flow" data-sc-drift="#080808" aria-label="The symmetry of alignment">
+    <div class="sc-wrap">
+      <article class="sym-card" data-sc-in>
+        <header class="sym-head">
+          <span class="microlabel">ayochat · alignment</span>
+          <span class="microlabel">read only</span>
+        </header>
+        <div class="sym-body-wrap">
+          <h2 class="sym-title">The symmetry of alignment</h2>
+          <p class="sym-text">You are indexing our lore. We are indexing your intent. <span class="sym-turn">In an attention economy built on noise, the only way to find your people is to let the model map your boundaries while you map its safety guardrails.</span> We are studying each other.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ACT 5 · AUTHORED SILENCE: held breath. One line, nothing else. -->
   <section class="hush" data-sc-act="flow" data-sc-drift="#090807" aria-label="A comment arrives">
     <div class="sc-wrap">
       <p class="mono voice" data-sc-in>then, under your latest Short:</p>
@@ -426,7 +954,7 @@
   </section>
 
   <!-- ACT 5 · THE PEAK: impact. Your scroll types the comment. Largest span, deep dwell. -->
-  <section data-sc-act="pin" data-sc-span="3.4" data-sc-dwell="0.5" data-sc-drift="#080807" aria-label="The conversion moment">
+  <section id="peak" data-sc-act="pin" data-sc-span="3.4" style="--span: 3.4" data-sc-dwell="0.5" data-sc-drift="#080807" aria-label="The conversion moment">
     <div data-sc-stage class="peak-stage" data-sc-verify-state="">
       <p class="peak-label microlabel" data-sc-cue="0 0.94 0">incoming comment · simulated</p>
       <p class="peak-line typed" data-type-at="0.1 0.44" data-verify="comment">Send it</p>
@@ -444,7 +972,69 @@
     </div>
   </section>
 
-  <!-- ACT 6 · THE CLOSE: resolve. The page inverts to its smallest type and holds. -->
+  <!-- ACT 6 · CONVICTION: the argument widens. Editorial manifesto. -->
+  <section class="sc-section native" data-sc-act="flow" data-sc-drift="#0C0B09" aria-label="Native infrastructure">
+    <div class="sc-wrap native-grid" data-sc-in data-sc-stagger="70">
+      <p class="native-eyebrow microlabel">where this belongs</p>
+      <h2>Native infrastructure, <em>not an extension.</em></h2>
+      <p class="native-lede">A creator who answers comments to build a community is doing the platform's own job. That work should not require a third-party add-on, an API key of their own, and a browser tab nobody asked them to keep open.</p>
+      <p class="native-col">Every comment-to-DM tool on the market today is scaffolding bolted to the outside of YouTube Studio. Creators paste tokens between dashboards, grant scopes they cannot audit, and hand the relationship they are trying to own to whichever vendor sits in the middle.</p>
+      <p class="native-col">The retrieval, the governance and the reply already run on Alphabet infrastructure. Vertex AI serves the model. Model Armor screens the prompt. Sensitive Data Protection redacts before generation. The pipeline never leaves the ecosystem, so the control surface should not either.</p>
+      <div class="toggle-row">
+        <span class="toggle-switch" aria-hidden="true"><span></span></span>
+        <p class="toggle-label">Answer comments and send the invite automatically</p>
+        <p class="toggle-path microlabel">proposed · Studio → Community → Automation</p>
+      </div>
+      <p class="native-kicker">This should be a toggle in the creator dashboard, not a repository you have to find. Until it is, the repository is open.</p>
+    </div>
+  </section>
+
+  <!-- ACT 7 · AGENCY: addressed to developers. A real sequence, so it is numbered. -->
+  <section class="sc-section forge" data-sc-act="flow" data-sc-drift="#0A0908" aria-label="Build on top of this">
+    <div class="sc-wrap" data-sc-in data-sc-stagger="70">
+      <div class="forge-head">
+        <h2>Build on top of this.</h2>
+        <p>The governance layer is the interesting part, and it is the part most likely to be wrong for a language or a community it was never tested against. Fork it, measure it, and push the policy further than this repo took it.</p>
+      </div>
+      <ol class="steps">
+        <li class="step">
+          <span class="step-n" aria-hidden="true">01</span>
+          <div>
+            <h3>Clone the pipeline</h3>
+            <p>The listener, gateway, retrieval and guardrail stages are separate modules. Read the one you want to change before you change it.</p>
+            <button class="copyline" type="button" data-copy="git clone https://github.com/thanedouglass/yt-ayochat.git">
+              <code>git clone https://github.com/thanedouglass/yt-ayochat.git</code>
+              <span class="copy-hint">copy</span>
+            </button>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step-n" aria-hidden="true">02</span>
+          <div>
+            <h3>Run the evaluation gate</h3>
+            <p>Nine benchmark cases run against the golden dataset with custom metrics. Get a passing baseline on your machine before you touch the policy, so you can tell your regressions from ours.</p>
+            <button class="copyline" type="button" data-copy="python run_evals.py --verbose --output-json eval_report.json">
+              <code>python run_evals.py --verbose --output-json eval_report.json</code>
+              <span class="copy-hint">copy</span>
+            </button>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step-n" aria-hidden="true">03</span>
+          <div>
+            <h3>Extend the Semantic Governance Policy</h3>
+            <p>The SGP intercepts prompt injections and redacts personal data before generation. Its screening was written and benchmarked in English. Low-resource languages need their own cases in the golden dataset and their own thresholds, and that contribution is worth more to this project than another feature.</p>
+            <button class="copyline" type="button" data-copy="src/governance/guardrails.py">
+              <code>src/governance/guardrails.py</code>
+              <span class="copy-hint">copy path</span>
+            </button>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ACT 8 · THE CLOSE: resolve. The page inverts to its smallest type and holds. -->
   <section class="sc-section end" data-sc-act="flow" data-sc-drift="#0B0A08" aria-label="Run the agent">
     <div class="sc-wrap end-stack" data-sc-in data-sc-stagger="60">
       <h2>Run the agent.</h2>
@@ -453,24 +1043,77 @@
 <b>$</b> cd yt-ayochat &amp;&amp; python3 -m venv .venv
 <b>$</b> source .venv/bin/activate &amp;&amp; pip install -r requirements.txt</pre>
       <a class="end-cta" href="https://github.com/thanedouglass/yt-ayochat">github.com/thanedouglass/yt-ayochat</a>
-      <footer class="end-foot">
+    </div>
+  </section>
+
+  <!-- ACT 5 · THE REALITY WARP: the culmination of the visual narrative -->
+  <section id="warp" class="sc-section warp" data-sc-act="flow" data-sc-drift="#0B0A08" aria-label="The reality warp">
+    <div class="sc-wrap warp-wrap" data-sc-in data-sc-stagger="70">
+
+      <!-- 1. The Visual Peak: The Reality Stone (Red Gem) -->
+      <div class="gem-container" aria-hidden="true">
+        <div class="gem-aura"></div>
+        <div class="gem-crystal">
+          <div class="gem-table"></div>
+          <div class="gem-flare"></div>
+        </div>
+      </div>
+
+      <!-- 2. The Manifesto Copy: Cognitive Security -->
+      <div class="warp-manifesto-block">
+        <p class="warp-eyebrow microlabel">act 5 · cognitive security</p>
+        <h2 class="warp-title">The Reality Warp</h2>
+        <p class="warp-body">The platforms gave us scale but forgot the safety features. So we built our own firewall. This isn't just an automated funnel; it is cognitive security. We are taking the noise, the hate, and the dead traffic, and warping reality to convert it into pure, owned cash flow. <span class="warp-triad">Safe. Sexy. Sovereign.</span></p>
+      </div>
+
+      <!-- 3. Deployment Session Booking CTA -->
+      <div style="text-align: center; margin-top: 2rem;">
+        <a href="https://calendar.app.google/8UTSYL2pqFFw4gTN8" target="_blank" style="display: inline-block; padding: 16px 32px; background: transparent; border: 1px solid var(--accent); color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; text-decoration: none; font-family: monospace; transition: all 0.2s ease;">
+          Book a Deployment Session
+        </a>
+      </div>
+
+      <footer class="warp-foot">
         <span class="microlabel">yt-ayochat</span>
         <span class="microlabel">built in the open by thanedouglass</span>
       </footer>
+
     </div>
   </section>
 
 </main>
 
+<!-- Floating stack bar. Marks are drawn, not borrowed: no vendor logo files,
+     no external requests. Duplicated track = seamless -50% loop. -->
+<aside class="stackbar" aria-label="Architecture">
+  <div class="stackbar__track">
+    <span class="chip"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M8 1.6 14 5v6L8 14.4 2 11V5z"/></svg>Vertex AI</span>
+    <span class="chip"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M8 1.5c1.1 3.3 3.1 5.3 6.4 6.5C11.1 9.2 9.1 11.2 8 14.5 6.9 11.2 4.9 9.2 1.6 8 4.9 6.8 6.9 4.8 8 1.5Z"/></svg>Gemini 1.5 Pro</span>
+    <span class="chip"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><ellipse cx="8" cy="4" rx="5.4" ry="2.3"/><path d="M2.6 4v8c0 1.3 2.4 2.3 5.4 2.3s5.4-1 5.4-2.3V4"/><path d="M2.6 8c0 1.3 2.4 2.3 5.4 2.3s5.4-1 5.4-2.3"/></svg>ChromaDB</span>
+    <span class="chip"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M8 1.6 13.4 4v4.3c0 3.2-2.3 5.3-5.4 6.1-3.1-.8-5.4-2.9-5.4-6.1V4z"/><path d="m5.7 8 1.7 1.8 3-3.4"/></svg>Model Armor</span>
+    <span class="chip"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M6 2.2h4M3.4 5.6h9.2M4.6 9h6.8M6.4 12.4h3.2"/></svg>Python · DeepEval</span>
+    <span class="chip"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="m5.4 5.2-3 2.9 3 2.9M10.6 5.2l3 2.9-3 2.9"/></svg>Claude Code · UI</span>
+    <span class="chip" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 1.6 14 5v6L8 14.4 2 11V5z"/></svg>Vertex AI</span>
+    <span class="chip" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 1.5c1.1 3.3 3.1 5.3 6.4 6.5C11.1 9.2 9.1 11.2 8 14.5 6.9 11.2 4.9 9.2 1.6 8 4.9 6.8 6.9 4.8 8 1.5Z"/></svg>Gemini 1.5 Pro</span>
+    <span class="chip" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><ellipse cx="8" cy="4" rx="5.4" ry="2.3"/><path d="M2.6 4v8c0 1.3 2.4 2.3 5.4 2.3s5.4-1 5.4-2.3V4"/><path d="M2.6 8c0 1.3 2.4 2.3 5.4 2.3s5.4-1 5.4-2.3"/></svg>ChromaDB</span>
+    <span class="chip" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 1.6 13.4 4v4.3c0 3.2-2.3 5.3-5.4 6.1-3.1-.8-5.4-2.9-5.4-6.1V4z"/><path d="m5.7 8 1.7 1.8 3-3.4"/></svg>Model Armor</span>
+    <span class="chip" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 2.2h4M3.4 5.6h9.2M4.6 9h6.8M6.4 12.4h3.2"/></svg>Python · DeepEval</span>
+    <span class="chip" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="m5.4 5.2-3 2.9 3 2.9M10.6 5.2l3 2.9-3 2.9"/></svg>Claude Code · UI</span>
+  </div>
+</aside>
+
 <script src="scrollcraft.js"></script>
 <script>
 ScrollCraft.mount(document.body);
 
-/* Signature move: scroll-as-keystrokes.
-   Each [data-type-at="from to"] element is typed out character by character,
-   driven by its act's --sc-p. The wheel is the keyboard. */
+var SC_REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ------------------------------------------------------------------
+   Signature move: scroll-as-keystrokes.
+   Each [data-type-at="from to"] element is typed out character by
+   character, driven by its act's --sc-p. The wheel is the keyboard.
+------------------------------------------------------------------ */
 (function () {
-  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var typed = Array.prototype.map.call(
     document.querySelectorAll('[data-type-at]'),
     function (el) {
@@ -485,7 +1128,7 @@ ScrollCraft.mount(document.body);
       };
     }
   );
-  if (reduce) {
+  if (SC_REDUCE) {
     typed.forEach(function (t) { t.el.classList.add('is-done'); });
     return;
   }
@@ -507,6 +1150,388 @@ ScrollCraft.mount(document.body);
     requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
+})();
+
+/* ------------------------------------------------------------------
+   The ledger wall.
+   One fixed canvas, drawn in document space. Bricks lock as the scroll
+   line passes them and stay locked, so descending the page builds a
+   wall rather than replaying an effect. A connective trace weaves
+   between the acts on the same canvas, so the whole atmosphere costs
+   one element and one rAF loop.
+
+   Everything is painted, never laid out: the canvas is position:fixed
+   and sized in device pixels, so it cannot contribute layout shift.
+------------------------------------------------------------------ */
+(function () {
+  var cv = document.getElementById('brickfield');
+  if (!cv || !cv.getContext) return;
+  var ctx = cv.getContext('2d');
+
+  var BW = 96, BH = 26, GAP = 4;          // brick metrics, css px
+  var ROW = BH + GAP, COL = BW + GAP;
+  // The settled wall stays quiet on purpose: the drama belongs to the snap,
+  // not to the resting texture. A loud wall competes with the typography and
+  // fills the silence this page deliberately leaves in front of its peak.
+  var REST = 0.075, GHOST = 0.03;         // settled / not-yet-laid alpha
+  var PULSE_MS = 780, MAX_PULSE = 60;
+
+  var vw = 0, vh = 0, docH = 0, cols = 0, dpr = 1;
+  var laidRow = -1, pulses = [], nodes = [], lastY = -1, running = false;
+  // stark: 1 while the alignment card owns the screen, and every painted
+  // thing on this canvas fades out for it.
+  var stark = 0, starkTarget = 0, starkWas = -1, symTop = 0, symH = 0;
+
+  function measure() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    vw = window.innerWidth;
+    vh = window.innerHeight;
+    docH = document.documentElement.scrollHeight;
+    cols = Math.ceil(vw / COL) + 2;
+    cv.width = Math.round(vw * dpr);
+    cv.height = Math.round(vh * dpr);
+    cv.style.width = vw + 'px';
+    cv.style.height = vh + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    // trace vertices: one per act, alternating sides so the line weaves
+    // between the text blocks instead of running down a gutter.
+    // The final vertex converges straight to the center (0.5 * vw) at the Reality Stone.
+    var xs = [0.14, 0.8, 0.24, 0.86, 0.3, 0.72, 0.2, 0.8, 0.22];
+    var actEls = document.querySelectorAll('[data-sc-act]');
+    nodes = Array.prototype.map.call(
+      actEls,
+      function (el, i) {
+        var r = el.getBoundingClientRect();
+        var isWarp = el.classList.contains('warp') || el.id === 'warp' || (i === actEls.length - 1);
+        return {
+          x: isWarp ? 0.5 * vw : (xs[i % xs.length] * vw),
+          y: isWarp ? (r.top + window.scrollY + 140) : (r.top + window.scrollY + Math.min(r.height, vh) * 0.5)
+        };
+      }
+    );
+    var sym = document.getElementById('symmetry');
+    if (sym) {
+      var sr = sym.getBoundingClientRect();
+      symTop = sr.top + window.scrollY;
+      symH = sr.height;
+    }
+    lastY = -1;
+  }
+
+  // deterministic per-brick jitter, so the wall has grain without Math.random
+  function hash(r, c) {
+    var h = (r * 73856093) ^ (c * 19349663);
+    h = (h ^ (h >>> 13)) >>> 0;
+    return (h % 1000) / 1000;
+  }
+
+  function draw(now) {
+    var y = window.scrollY;
+    var line = y + vh * 0.66;                  // where bricks lock in
+    var row0 = Math.floor(y / ROW) - 1;
+    var row1 = Math.ceil((y + vh) / ROW) + 1;
+    var newRow = Math.floor(line / ROW);
+
+    if (!SC_REDUCE && newRow > laidRow) {
+      var from = Math.max(laidRow + 1, newRow - 3);
+      for (var r = from; r <= newRow; r++) {
+        for (var c = 0; c < cols; c++) {
+          if (pulses.length < MAX_PULSE && hash(r, c) > 0.34) {
+            pulses.push({ r: r, c: c, t: now });
+          }
+        }
+      }
+      laidRow = newRow;
+    }
+
+    ctx.clearRect(0, 0, vw, vh);
+
+    var s = 1 - stark;                          // everything dims for the beat
+    if (s < 0.004) {                            // fully stark: nothing painted
+      return;
+    }
+
+    // --- the wall ---
+    for (var r2 = row0; r2 <= row1; r2++) {
+      if (r2 < 0) continue;
+      var offset = (r2 % 2) ? -COL / 2 : 0;    // running bond
+      var sy = r2 * ROW - y;
+      var laid = SC_REDUCE || r2 <= laidRow;
+      for (var c2 = 0; c2 < cols; c2++) {
+        var sx = c2 * COL + offset;
+        var j = hash(r2, c2);
+        if (j < 0.44) continue;                // gaps: a wall, not a grid
+        if (laid) {
+          // a deeper red at rest reads as crimson rather than going mauve
+          // the way a bright red does once alpha drops it onto near-black
+          ctx.fillStyle = 'rgba(206,26,50,' + (REST * (0.55 + j * 0.7) * s).toFixed(3) + ')';
+          ctx.fillRect(sx, sy, BW, BH);
+          // edge light: real lips catch light, and it sells the depth
+          ctx.fillStyle = 'rgba(255,120,140,' + ((0.028 + j * 0.03) * s).toFixed(3) + ')';
+          ctx.fillRect(sx, sy, BW, 1);
+        } else {
+          ctx.strokeStyle = 'rgba(255,46,77,' + (GHOST * s).toFixed(3) + ')';
+          ctx.lineWidth = 1;
+          ctx.strokeRect(sx + 0.5, sy + 0.5, BW - 1, BH - 1);
+        }
+      }
+    }
+
+    // --- snap pulses: brighter fill plus a cheap halo, no shadowBlur ---
+    for (var p = pulses.length - 1; p >= 0; p--) {
+      var age = (now - pulses[p].t) / PULSE_MS;
+      if (age >= 1) { pulses.splice(p, 1); continue; }
+      var pr = pulses[p].r, pc = pulses[p].c;
+      var py = pr * ROW - y;
+      if (py < -ROW * 2 || py > vh + ROW) continue;
+      var px = pc * COL + ((pr % 2) ? -COL / 2 : 0);
+      var k = 1 - age;
+      var e = k * k;                            // ease-out decay
+      ctx.fillStyle = 'rgba(255,46,77,' + (0.16 * e * s).toFixed(3) + ')';
+      ctx.fillRect(px - 7, py - 7, BW + 14, BH + 14);
+      ctx.fillStyle = 'rgba(255,72,98,' + (0.52 * e * s).toFixed(3) + ')';
+      ctx.fillRect(px, py, BW, BH);
+    }
+
+    // --- connective trace: drawn only as far as the reader has come ---
+    if (nodes.length > 1) {
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(255,46,77,' + (0.34 * s).toFixed(3) + ')';
+      ctx.beginPath();
+      var started = false;
+      for (var n = 0; n < nodes.length; n++) {
+        var nd = nodes[n];
+        if (nd.y > line) break;
+        var ny = nd.y - y;
+        if (!started) { ctx.moveTo(nd.x, ny); started = true; }
+        else { ctx.lineTo(nd.x, ny); }
+      }
+      if (started) ctx.stroke();
+
+      for (var n2 = 0; n2 < nodes.length; n2++) {
+        var nd2 = nodes[n2];
+        if (nd2.y > line) break;
+        var ny2 = nd2.y - y;
+        if (ny2 < -20 || ny2 > vh + 20) continue;
+        ctx.fillStyle = 'rgba(255,86,110,' + (0.55 * s).toFixed(3) + ')';
+        ctx.fillRect(nd2.x - 2, ny2 - 2, 4, 4);
+      }
+    }
+
+    // --- wash: keeps the composited ground dark where the copy sits, so
+    //     bone and amber type keep their contrast over the structure ---
+    var wash = ctx.createLinearGradient(0, 0, vw, 0);
+    wash.addColorStop(0,    'rgba(11,10,8,0.40)');
+    wash.addColorStop(0.5,  'rgba(11,10,8,0.72)');
+    wash.addColorStop(1,    'rgba(11,10,8,0.40)');
+    ctx.fillStyle = wash;
+    ctx.fillRect(0, 0, vw, vh);
+  }
+
+  function frame(now) {
+    var y = window.scrollY;
+
+    // the beat owns the screen once the viewport's midline is inside it
+    var mid = y + vh * 0.5;
+    starkTarget = (symH && mid > symTop && mid < symTop + symH) ? 1 : 0;
+    if (starkTarget !== starkWas) {
+      starkWas = starkTarget;
+      document.body.classList.toggle('is-stark', starkTarget === 1);
+    }
+    var easing = Math.abs(stark - starkTarget) > 0.002;
+
+    // idle when nothing has changed: no wasted frames while the reader reads
+    if (y !== lastY || pulses.length || easing) {
+      lastY = y;
+      stark = easing ? stark + (starkTarget - stark) * 0.11 : starkTarget;
+      draw(now);
+    }
+    if (running) requestAnimationFrame(frame);
+  }
+
+  var resizeTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      measure();
+      draw(performance.now());
+    }, 120);
+  });
+
+  measure();
+  // the wall behind the reader is already built when they arrive
+  laidRow = SC_REDUCE ? Number.MAX_SAFE_INTEGER : Math.floor((window.scrollY + vh * 0.66) / ROW);
+  draw(performance.now());
+
+  if (!SC_REDUCE) {
+    running = true;
+    requestAnimationFrame(frame);
+  } else {
+    // No loop under reduced motion, but the stark beat is a state rather than
+    // a movement, so it still has to land.
+    var st;
+    window.addEventListener('scroll', function () {
+      clearTimeout(st);
+      st = setTimeout(function () {
+        var mid = window.scrollY + vh * 0.5;
+        var on = !!(symH && mid > symTop && mid < symTop + symH);
+        if ((on ? 1 : 0) !== starkWas) {
+          starkWas = on ? 1 : 0;
+          stark = on ? 1 : 0;
+          document.body.classList.toggle('is-stark', on);
+          draw(performance.now());
+        }
+      }, 90);
+    }, { passive: true });
+  }
+
+  /* The stack bar recedes while the peak or the reality warp owns the screen. */
+  var peak = document.getElementById('peak');
+  var warp = document.getElementById('warp');
+  var bar = document.querySelector('.stackbar');
+  if (bar && 'IntersectionObserver' in window) {
+    var peakActive = false;
+    var warpActive = false;
+    function updateBar() {
+      bar.style.setProperty('--bar-o', (peakActive || warpActive) ? '0' : '1');
+    }
+    if (peak) {
+      new IntersectionObserver(function (entries) {
+        peakActive = entries[0].intersectionRatio > 0.55;
+        updateBar();
+      }, { threshold: [0, 0.55, 1] }).observe(peak);
+    }
+    if (warp) {
+      new IntersectionObserver(function (entries) {
+        warpActive = entries[0].isIntersecting;
+        updateBar();
+      }, { threshold: [0, 0.05, 0.3, 1] }).observe(warp);
+    }
+  }
+})();
+
+/* ------------------------------------------------------------------
+   The dual-terminal echo.
+   The foreground types the creator's strategy. This types what the
+   model is doing while they read it, in the same rhythm, one layer
+   back. Scroll position is the playhead for both, so the two terminals
+   advance together and the page reads as mutual observation.
+
+   Config values here are the repo's real ones (gemini-1.5-pro, temp 0,
+   256 max output tokens, text-embedding-3-small at 1536 dims). The
+   per-comment figures are a demo trace, and the feed says so on its
+   first line.
+------------------------------------------------------------------ */
+(function () {
+  var host = document.getElementById('ghostfeed');
+  if (!host) return;
+
+  var SEQ = [
+    '# simulated telemetry · demo session',
+    'listener   poll=1  threads=1  new=1',
+    'gateway    rate_limit=ok  circuit=closed',
+    'embed      model=text-embedding-3-small  dim=1536',
+    'chunk      id=0x2f1a  tokens=311',
+    'retrieve   top_k=4  store=chroma_db',
+    '  cos 0.8412  docs/community.md#L12',
+    '  cos 0.7935  docs/faq.md#L04',
+    '  cos 0.7318  docs/invite.md#L21',
+    '  cos 0.6644  docs/faq.md#L57',
+    'vector     v[0:4] = [ 0.0412 -0.1180  0.0733  0.2051 ]',
+    'armor      verdict=ALLOWED  infotypes=[]',
+    'sdp        redactions=0  scan=clean',
+    'generate   model=gemini-1.5-pro  temp=0.0  max_out=256',
+    'dispatch   channel=auto_dm  status=queued',
+    'watch      waiting on the next comment …'
+  ];
+
+  var VISIBLE = 13;
+  var lines = [];
+  for (var rep = 0; rep < 7; rep++) lines = lines.concat(SEQ);
+
+  // prefix sums so a character cursor maps straight to a line
+  var starts = [], total = 0;
+  for (var i = 0; i < lines.length; i++) { starts.push(total); total += lines[i].length + 1; }
+
+  function esc(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+  // the words the machine says when everything passed
+  function mark(s) {
+    return esc(s).replace(/\b(ALLOWED|clean|closed|queued|ok)\b/g, '<b>$1</b>');
+  }
+
+  var lastCut = -1;
+
+  function render(cut) {
+    if (cut === lastCut) return;
+    lastCut = cut;
+    var idx = 0;
+    while (idx < lines.length - 1 && starts[idx + 1] <= cut) idx++;
+    var into = Math.max(0, Math.min(lines[idx].length, cut - starts[idx]));
+    var from = Math.max(0, idx - VISIBLE + 1);
+    var out = '';
+    for (var k = from; k < idx; k++) out += '<div>' + mark(lines[k]) + '</div>';
+    out += '<div>' + mark(lines[idx].slice(0, into)) + '<span class="gf-caret">▍</span></div>';
+    host.innerHTML = out;
+  }
+
+  if (SC_REDUCE) {
+    render(starts[VISIBLE] + lines[VISIBLE].length);   // a settled, readable trace
+    return;
+  }
+
+  var pending = false;
+  function schedule() {
+    if (pending) return;
+    pending = true;
+    requestAnimationFrame(function () {
+      pending = false;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+      render(Math.round(p * (total - 1)));
+    });
+  }
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule, { passive: true });
+  schedule();
+})();
+
+/* ------------------------------------------------------------------
+   Copy-to-clipboard on the build steps. Falls back to selecting the
+   text when the clipboard is unavailable, so the control is never a
+   dead end.
+------------------------------------------------------------------ */
+(function () {
+  var timers = new WeakMap();
+  document.querySelectorAll('.copyline').forEach(function (btn) {
+    var hint = btn.querySelector('.copy-hint');
+    var base = hint.textContent;
+    btn.addEventListener('click', function () {
+      var text = btn.getAttribute('data-copy');
+      function done(msg) {
+        hint.textContent = msg;
+        btn.classList.add('is-copied');
+        clearTimeout(timers.get(btn));
+        timers.set(btn, setTimeout(function () {
+          hint.textContent = base;
+          btn.classList.remove('is-copied');
+        }, 1600));
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { done('copied'); },
+                                                 function () { done('press ⌘C'); });
+      } else {
+        var range = document.createRange();
+        range.selectNodeContents(btn.querySelector('code'));
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        done('press ⌘C');
+      }
+    });
+  });
 })();
 </script>
 </body>

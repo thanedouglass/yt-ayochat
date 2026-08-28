@@ -92,14 +92,23 @@ class SemanticGuardrailPipeline:
             model_armor_details=armor_verdict,
         )
 
-    def verify_output(self, generated_text: str) -> OutputVerificationResult:
-        """Verify that the generated response satisfies grounding citation or refusal requirements."""
+    def verify_output(self, generated_text: str, require_citation: bool = True) -> OutputVerificationResult:
+        """Verify that the generated response satisfies grounding citation, refusal, or sovereign 1-sentence persona requirements."""
         cleaned = generated_text.strip()
+        if not cleaned:
+            return OutputVerificationResult(
+                is_valid=False,
+                is_refusal=False,
+                has_valid_citation=False,
+                error_message="Empty response generated.",
+            )
 
         # Check for standard refusal message match
         is_refusal = (
             config.refusal_message.strip().lower() in cleaned.lower()
             or "i don't have information on that in our current video coverage" in cleaned.lower()
+            or "strictly tracking dance" in cleaned.lower()
+            or "outside our current video" in cleaned.lower()
         )
 
         if is_refusal:
@@ -122,7 +131,6 @@ class SemanticGuardrailPipeline:
                 citation_details=f"Source: {source} | Reference: {reference}",
             )
 
-        # Also support fallback citation format if model outputted standard "📌 Source: ..."
         if "📌 Source:" in cleaned or "📌 source:" in cleaned:
             return OutputVerificationResult(
                 is_valid=True,
@@ -131,11 +139,21 @@ class SemanticGuardrailPipeline:
                 citation_details=cleaned.split("📌 Source:")[-1].strip(),
             )
 
+        # If citation is required but not present, validation fails
+        if require_citation:
+            return OutputVerificationResult(
+                is_valid=False,
+                is_refusal=False,
+                has_valid_citation=False,
+                error_message="Missing required grounding citation.",
+            )
+
+        # Sovereign 1-sentence Lumi persona validation (no robotic corporate boilerplate)
         return OutputVerificationResult(
-            is_valid=False,
+            is_valid=True,
             is_refusal=False,
             has_valid_citation=False,
-            error_message="Response missing mandatory source citation or standard refusal format.",
+            citation_details="Lumi Sovereign 1-Sentence Persona",
         )
 
 

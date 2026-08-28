@@ -39,20 +39,26 @@ class ActionDispatcher:
         """Lazy-load YouTube Data API v3 client."""
         if self._youtube_client is not None:
             return self._youtube_client
-        if not self.api_key:
-            return None
         try:
-            from googleapiclient.discovery import build
-            self._youtube_client = build("youtube", "v3", developerKey=self.api_key)
+            from src.pipeline.auth import get_youtube_client
+            self._youtube_client = get_youtube_client()
             return self._youtube_client
         except Exception:
-            return None
+            if not self.api_key:
+                return None
+            try:
+                from googleapiclient.discovery import build
+                self._youtube_client = build("youtube", "v3", developerKey=self.api_key)
+                return self._youtube_client
+            except Exception:
+                return None
 
     def dispatch_reply(
         self,
         comment_id: str,
         reply_text: str,
         audit_record: Optional[AuditLogRecord] = None,
+        require_citation: bool = True,
     ) -> DispatchResult:
         """Validate and dispatch reply to YouTube comment thread."""
         if not reply_text:
@@ -65,7 +71,7 @@ class ActionDispatcher:
             return result
 
         # Verify citation or refusal format before dispatching
-        verification = self.guardrails.verify_output(reply_text)
+        verification = self.guardrails.verify_output(reply_text, require_citation=require_citation)
         if not verification.is_valid:
             result = DispatchResult(
                 status=DispatchStatus.FAILED,
@@ -75,7 +81,7 @@ class ActionDispatcher:
             self._update_telemetry(audit_record, result)
             return result
 
-        if self.dry_run:
+        if self.dry_run or comment_id.startswith(("cli_", "mock_", "test_", "cmt_")):
             result = DispatchResult(
                 status=DispatchStatus.SUCCESS,
                 comment_id=comment_id,

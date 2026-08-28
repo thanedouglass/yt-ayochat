@@ -16,6 +16,7 @@
 
 /* ---------------------------------------------------------------- tokens -- */
 :root {
+  color-scheme:     dark;
   /* --- colour roles. Override these six and the page is rebranded. -------- */
   --sc-canvas:      #08090b;   /* the page ground. Drift interpolates this.   */
   --sc-surface:     #101217;   /* anything raised off the ground             */
@@ -23,6 +24,8 @@
   --sc-ink-soft:    #9a9ba1;   /* secondary text. Tinted, never flat gray.   */
   --sc-accent:      #d8ff3e;   /* ONE accent. It owns a region, not confetti. */
   --sc-accent-ink:  #08090b;   /* text that sits on the accent               */
+  --accent:         #FFB000;   /* alias for CTA buttons and UI highlights    */
+  --brick:          #FF2E4D;   /* electric crimson: structure & culmination  */
 
   --sc-hairline:    color-mix(in oklab, var(--sc-ink) 12%, transparent);
   --sc-hairline-strong: color-mix(in oklab, var(--sc-ink) 22%, transparent);
