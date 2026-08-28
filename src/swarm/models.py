@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any, Dict, List, Optional
+from pydantic import BaseModel, Field
 
 
 class RoomTemperature(str, Enum):
@@ -35,6 +36,46 @@ class SemioticIntentAction(str, Enum):
     UNBOTHERED_DEFLECT = "UNBOTHERED_DEFLECT"
     OFFTOPIC_BRUSHOFF = "OFFTOPIC_BRUSHOFF"
     DROP_SILENT = "DROP_SILENT"
+
+
+class AppliedSentimentVectors(BaseModel):
+    """Multi-vector 4D sentiment calibration applied during generation."""
+    code_switch_alpha: float = Field(
+        ...,
+        description="Code-Switch Vector alpha_cs (0.0=Standard English, 1.0=Creator Vernacular)",
+    )
+    sovereignty_beta: str = Field(
+        ...,
+        description="Sovereignty Strategy beta_sf (e.g. DEFLECT, DISCLAIMER, CLAPBACK, ELEVATE, BANTER, CELEBRATE, SHARE_STYLING)",
+    )
+    frequency_gamma: int = Field(
+        ...,
+        description="Frequency Resonance gamma_fr (1=grounded reality, 5=reality crafting)",
+    )
+    token_economy_tau: str = Field(
+        ...,
+        description="Token Economy tau_max (e.g. 'Pass (1 Sentence)', 'Exception (2 Sentences)')",
+    )
+
+
+class SovereignReplyStructuredOutput(BaseModel):
+    """Strict JSON schema enforcing structured output from the Gemini API."""
+    reply_text: str = Field(
+        ...,
+        description="Strictly 1-sentence sovereign persona response in Lumi's authentic creator voice. No corporate boilerplate, no AI disclaimers.",
+    )
+    applied_vectors: AppliedSentimentVectors = Field(
+        ...,
+        description="4D sentiment vector calibrations applied to match the exact tone of the classification step.",
+    )
+    cultural_alignment_flag: bool = Field(
+        ...,
+        description="True if the response strictly adheres to creator authenticity, unbothered tone, and zero corporate artifacts.",
+    )
+    rationale: str = Field(
+        default="",
+        description="Brief explanation of how the semiotic intent and lore grounding guided the reply.",
+    )
 
 
 @dataclass
@@ -75,6 +116,10 @@ class HiveResponse:
     is_refusal: bool = False
     retrieved_lore_ids: List[str] = field(default_factory=list)
     generation_latency_ms: float = 0.0
+    applied_vectors: Optional[Dict[str, Any]] = None
+    cultural_alignment_flag: bool = True
+    rationale: str = ""
+    structured_payload: Optional[Dict[str, Any]] = None
 
 
 @dataclass

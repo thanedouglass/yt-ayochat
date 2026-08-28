@@ -9,18 +9,21 @@ from src.telemetry.logger import audit_logger
 from src.telemetry.schema import AuditLogRecord, DispatchStatus
 
 
-def log_to_synthetic_memory(category, input_comment, lumi_response, intent, energy):
+def log_to_synthetic_memory(category, input_comment, lumi_response, intent, energy, applied_vectors: Optional[dict] = None):
     """Appends successful swarm dispatches to a secondary learning corpus."""
+    cat_str = category.value if hasattr(category, "value") else str(category)
     new_record = {
         "id": f"LUMI-SYNTH-{uuid.uuid4().hex[:8].upper()}",
-        "category": category,
+        "category": cat_str,
         "input_comment": input_comment,
         "context_lore": "Autonomously generated via Swarm routing",
         "lumi_response": lumi_response,
         "semiotic_intent": intent,
-        "energy_level": energy
+        "energy_level": energy,
     }
-    
+    if applied_vectors:
+        new_record["applied_vectors"] = applied_vectors
+
     # Append-only mode prevents file-locking crashes during live polling
     with open("lumi_synthetic_memory.jsonl", "a", encoding="utf-8") as f:
         f.write(json.dumps(new_record) + "\n")
