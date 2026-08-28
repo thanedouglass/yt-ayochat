@@ -1,4 +1,4 @@
-"""Simulated Inbound Comment Queue derived from Top 10 YouTube Videos."""
+"""Simulated Inbound Comment Queue & Research Benchmark Scenarios derived from YouTube Data."""
 
 from __future__ import annotations
 
@@ -85,6 +85,80 @@ TOP_10_VIDEOS: List[Dict[str, Any]] = [
         "views": 14401,
         "category": "DANCE_MASHUP",
         "url": "https://youtube.com/watch?v=FNwedjt2qxE",
+    },
+]
+
+# Canonical Human-AI Sentiment Alignment Benchmark Scenarios
+BENCHMARK_RESEARCH_SCENARIOS: List[Dict[str, Any]] = [
+    {
+        "scenario_id": "SCENARIO-01",
+        "scenario_name": "Tech Gatekeeper",
+        "video_id": "M1G92FWmdJw",
+        "video_title": "KATSEYE (캣츠아이) 'Hootie Frutti' Official Dance Cover",
+        "input_comment": "You literally spent 4 hours rendering motion blur on an M2 Max instead of optimizing cache allocations.",
+        "author_id": "user_tech_critic",
+        "target_alpha_cs": 0.85,  # High Code-Switch
+        "target_beta_sf": "DEFLECT",
+        "target_gamma_fr": 3,     # Unbothered
+        "target_tau_max": "Pass (1 Sentence)",
+        "author_organic_reply": "Resource management is an art form but the 60fps render is hotttt lmfaoooo.",
+        "math_logic": "Perfectly juxtaposes 'resource management' with 'hotttt lmfaoooo.' Converts friction into algorithmic fuel.",
+    },
+    {
+        "scenario_id": "SCENARIO-02",
+        "scenario_name": "Parasocial Delusion",
+        "video_id": "Otu-5CrcWHo",
+        "video_title": "KATSEYE (캣츠아이) 'Hootie Frutti' Dance Challenge",
+        "input_comment": "I know you're secretly signaling to me through your choreo counts and we belong together forever.",
+        "author_id": "user_parasocial_stan",
+        "target_alpha_cs": 0.15,  # Clinical / Grounded
+        "target_beta_sf": "DISCLAIMER",
+        "target_gamma_fr": 1,     # Grounded
+        "target_tau_max": "Exception (2 Sentences)",
+        "author_organic_reply": "Hey love, I make dance videos for everyone to enjoy publicly. If you're struggling with boundaries or attachment, please reach out to supportive friends or professional care resources.",
+        "math_logic": "Hard pivot to sterile legal/mental health boundaries. The 'hey love' anchors it perfectly to the persona before the cold drop.",
+    },
+    {
+        "scenario_id": "SCENARIO-03",
+        "scenario_name": "Aesthetic Critic",
+        "video_id": "wJph6fDaJuk",
+        "video_title": "@katseyeworld ‘Hootie Frutti’(캣츠아이) Dance Practice",
+        "input_comment": "You're copying the underground street style without giving credit to the original creators.",
+        "author_id": "user_streetwear_purist",
+        "target_alpha_cs": 1.0,   # Pure Vernacular
+        "target_beta_sf": "CLAPBACK",
+        "target_gamma_fr": 3,     # Gatekeeping
+        "target_tau_max": "Pass (1 Sentence)",
+        "author_organic_reply": "Trying to lecture me on culture vulture tactics when you discovered the beat yesterday on TikTok is wild POOKIE.",
+        "math_logic": "High-velocity read. 'Culture vulture tactics' colliding with 'POOKIE' is exactly the alpha_cs whiplash we need to train into the embedding space.",
+    },
+    {
+        "scenario_id": "SCENARIO-04",
+        "scenario_name": "Sonic Hype",
+        "video_id": "jQJqh-zTZQA",
+        "video_title": "‘Pink Blush’ Original Dance for@PrincessDollyBabe",
+        "input_comment": "The bassline drop synchronization on this track just altered my brain chemistry permanently 🔥🔥",
+        "author_id": "user_audio_head",
+        "target_alpha_cs": 0.60,  # Balanced
+        "target_beta_sf": "ELEVATE",
+        "target_gamma_fr": 2,     # Community
+        "target_tau_max": "Pass (1 Sentence)",
+        "author_organic_reply": "The audio mix went insane because the whole crew spent midnight hours in the booth perfecting that drop.",
+        "math_logic": "Deflects praise to the team (double give-back ecosystem). Authentic and grounded.",
+    },
+    {
+        "scenario_id": "SCENARIO-05",
+        "scenario_name": "Rage Bait",
+        "video_id": "KBr9Y0ljCXQ",
+        "video_title": "K-pop in Public @katseyeworld 🍒🍉#hootiefrutti",
+        "input_comment": "Imagine wasting tuition money on a degree just to do 15-second TikTok dance trends in an alleyway.",
+        "author_id": "user_rage_baiter",
+        "target_alpha_cs": 0.95,  # Disruptive
+        "target_beta_sf": "CLAPBACK",
+        "target_gamma_fr": 4,     # Reality Crafting
+        "target_tau_max": "Pass (1 Sentence)",
+        "author_organic_reply": "Using my degree to calculate the exact algorithmic revenue from your hate comment while hitting this 8-count in the alleyway.",
+        "math_logic": "Completely neutralizes the degree vs. dancing friction by owning the chaos. Masterful unbothered energy.",
     },
 ]
 
