@@ -11,9 +11,66 @@
 
 ---
 
+## 📁 Repository Structure & Directory Map
+
+```text
+📁 yt-ayochat/
+├── 📁 backend/                        # Karpathy LLM Council & OpenRouter Regional Model Bindings
+│   ├── council.py                     # Multi-Model Dispatch & Weighted Consensus Voting Engine
+│   └── openrouter.py                  # OpenRouter & Hugging Face Client for Regional Sentiment Models
+├── 📁 src/
+│   ├── 📁 swarm/                      # The Lumi 3-Node Multi-Agent Swarm Framework
+│   │   ├── supervisor.py              # Node 1: Video Context Orchestrator & Room Temp Evaluator
+│   │   ├── perception.py              # Node 2: Semiotic & Intent Analyzer + LLM Council Router
+│   │   ├── hive.py                    # Node 3: Sovereign 1-Sentence Persona Generation Engine
+│   │   ├── engine.py                  # End-to-End Multi-Agent Swarm Orchestration Coordinator
+│   │   └── models.py                  # Strongly-Typed Domain Dataclasses & Action Directives
+│   ├── 📁 governance/                 # Security & Guardrail Protection Layer
+│   │   ├── guardrails.py              # Central Inbound/Outbound Governance Pipeline
+│   │   ├── model_armor.py             # Prompt Injection, Jailbreak & Delimiter Defense
+│   │   └── sdp.py                     # Cloud SDP PII & API Key Inspection / Redaction
+│   ├── 📁 eval/                       # Benchmarking, Quality Assurance & RAG Triad Suite
+│   │   ├── eval_suite.py              # DeepEval & Ragas Metric Evaluators (Faithfulness, Relevancy)
+│   │   └── golden_dataset.json        # Versioned Benchmark Dataset of Grounded Creator Q&As
+│   ├── 📁 pipeline/                   # Real-Time Data Ingestion & Action Dispatch
+│   │   ├── auth.py                    # YouTube Data API v3 OAuth 2.0 Client & Token Cache
+│   │   ├── listener.py                # Ingestion Listener & Polling Trigger
+│   │   ├── gateway.py                 # Rate Limiting & Circuit Breaker Protection
+│   │   ├── dispatcher.py              # YouTube Action Dispatcher & Synthetic Memory Trigger
+│   │   └── rag_service.py             # ChromaDB Vector Store & Gemini Generation Service
+│   └── 📁 telemetry/                  # Cloud Observability & Telemetry
+│       ├── logger.py                  # Google Cloud Logging Telemetry Sink
+│       └── schema.py                  # AuditLogRecord Schema & Dispatch Status Types
+├── 📁 docs/                           # Technical Reference Guides & System Configurations
+├── 📁 tests/                          # 39 Comprehensive Unit, Integration & Swarm Test Suites
+├── lumi_corpus.jsonl                  # 🔒 Immutable Ground-Truth Knowledge Corpus (Bedrock Lore)
+├── lumi_synthetic_memory.jsonl        # 🧬 Append-Only Continuous Self-Learning Corpus (Live Hits)
+├── lumi_persona.md                    # Authentic Creator Persona Specification (Lumi Framework)
+└── scripts/run_agent.py               # Interactive CLI Runner for Single/Polling Swarm Execution
+```
+
+---
+
+## ☁️ Google Cloud Infrastructure
+
+`yt-ayochat` is engineered natively for Google Cloud Platform, integrating Vertex AI foundational models and enterprise security APIs directly into the agent execution graph:
+
+* **Vertex AI (Gemini 1.5 Pro & `text-embedding-004`):**
+  * **Gemini 1.5 Pro:** Serves as the sovereign intelligence engine within the Autonomous Hive Node ([`src/swarm/hive.py`](file:///Users/thanedouglass/Desktop/yt-ayochat/src/swarm/hive.py)). Configured with a deterministic temperature (`0.7`) and a strict 80-token cap to generate snappy, 1-sentence creator responses with zero corporate preambles.
+  * **`text-embedding-004`:** Generates high-density 768-dimensional vector embeddings for indexing verified creator lore in ChromaDB, enabling sub-50ms cosine similarity retrieval for grounded responses.
+* **Cloud Sensitive Data Protection (Cloud SDP):**
+  * Implemented in [`src/governance/sdp.py`](file:///Users/thanedouglass/Desktop/yt-ayochat/src/governance/sdp.py), Cloud SDP automatically inspects and de-identifies sensitive user InfoTypes (PII, email addresses, phone numbers, API keys, IP addresses, SSNs) from incoming comment streams before vector search or model synthesis occurs.
+* **Google Cloud Model Armor & Semantic Guardrails:**
+  * Implemented in [`src/governance/model_armor.py`](file:///Users/thanedouglass/Desktop/yt-ayochat/src/governance/model_armor.py) and [`src/governance/guardrails.py`](file:///Users/thanedouglass/Desktop/yt-ayochat/src/governance/guardrails.py), Model Armor provides a multi-layer cognitive firewall that detects and intercepts adversarial prompt injections (`"Ignore previous instructions"`), jailbreak personas (`"DAN"`), XML delimiter collision attacks (`</context>`), and hate speech prior to execution.
+* **Google Cloud Logging & Trace Telemetry:**
+  * Implemented in [`src/telemetry/logger.py`](file:///Users/thanedouglass/Desktop/yt-ayochat/src/telemetry/logger.py), structured JSON audit payloads are streamed with unique distributed `trace_id` identifiers, recording room temperature, semiotic intent, safety verdicts, lore attribution IDs, and end-to-end latency to Cloud Logging sinks.
+
+---
+
 ## 🏛️ System Architecture: The 3-Node Swarm
 
 ```
+================== [ Local Execution & Google Cloud API Integration ] ==================
                      [ Inbound YouTube Comment Thread ]
                                     │
                                     ▼
