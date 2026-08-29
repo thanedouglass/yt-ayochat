@@ -1,0 +1,34 @@
+# Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python Cache & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local Git & Environment Secrets
+.git/
+.gitignore
+.github/
+.env
+.env.*
+!.env.example
+client_secret.json
+token.json
+
+# IDE & Editor metadata
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.swo
+
+# Antigravity & Agentic Logs
+.gemini/

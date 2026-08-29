@@ -1,5 +1,9 @@
-# Core Dependencies for yt-ayochat Governed RAG Pipeline
+# Core Server & Swarm Dependencies for yt-ayochat
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
 pydantic>=2.10.0
+pydantic-settings>=2.0.0
+python-dotenv>=1.0.0
 pytest>=8.0.0
 chromadb>=0.5.0
 google-cloud-logging>=3.11.0
@@ -7,6 +11,7 @@ google-genai>=0.1.0
 google-api-python-client>=2.150.0
 google-auth-httplib2>=0.2.0
 google-auth-oauthlib>=1.2.0
+requests>=2.31.0
 
 # Evaluation & Quality Assurance Framework
 deepeval>=4.2.0
