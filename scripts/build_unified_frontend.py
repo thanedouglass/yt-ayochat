@@ -196,11 +196,18 @@ def generate_unified_html() -> str:
   /* ==========================================================================
      3. DEVELOPER VIEW STYLES (SCROLLCRAFT ACTS)
      ========================================================================== */
-  .hero-stage { display: block; }
+  .hero-stage {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 100svh;
+    padding-bottom: clamp(3.5rem, 10vh, 7rem);
+    position: relative;
+  }
   .hero-mark {
     position: absolute;
     top: clamp(1.25rem, 4vh, 3rem);
-    left: var(--sc-gutter);
+    left: clamp(1.5rem, 5vw, 4rem);
   }
   .hero-mark .microlabel { color: var(--sc-ink-soft); }
   .hero-mark strong {
@@ -212,29 +219,34 @@ def generate_unified_html() -> str:
     letter-spacing: 0.02em;
   }
   .hero-copy {
-    position: absolute;
-    left: var(--sc-gutter);
-    right: var(--sc-gutter);
-    bottom: clamp(2.5rem, 11vh, 8rem);
+    position: relative;
+    max-width: min(1200px, 94vw);
+    margin-inline: auto;
+    width: 100%;
+    padding-inline: clamp(1.25rem, 4vw, 3rem);
     z-index: var(--sc-z-copy);
   }
   .hero-h1 {
     font-family: var(--sc-font-display);
     font-weight: 800;
-    font-size: clamp(2.4rem, 6.4vw, 5.8rem);
-    line-height: 1.04;
-    letter-spacing: var(--sc-track-tight);
+    font-size: clamp(2.4rem, 5.6vw, 5.2rem);
+    line-height: 1.16;
+    letter-spacing: -0.03em;
     text-wrap: balance;
     margin: 0;
-    max-width: 15ch;
+    max-width: 28ch;
     transform: scale(calc(1 + var(--sc-p, 0) * 0.04));
     transform-origin: left bottom;
   }
   .hero-sub {
-    margin: var(--sc-6) 0 0;
-    max-width: 34ch;
-    font-size: var(--sc-t-lg);
+    font-family: var(--sc-font-display);
+    margin: 1.5rem 0 0;
+    max-width: 65ch;
+    font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+    line-height: 1.55;
     color: var(--sc-ink-soft);
+    font-weight: 400;
+    letter-spacing: -0.01em;
     text-wrap: pretty;
   }
 
@@ -1165,7 +1177,7 @@ def generate_unified_html() -> str:
         </div>
         <div class="hero-copy" data-sc-cue="0 0.82 0">
           <h1 class="hero-h1" data-sc-kinetic="lines">What if you could respond to thousands of comments with just one command?</h1>
-          <p class="hero-sub">YT-AyoChat turns millions of YouTube Shorts views into loyal community. An autonomous, governed 3-node multi-agent swarm that answers your viewers and delivers the invite.</p>
+          <p class="hero-sub">YT-AyoChat turns millions of YouTube Shorts views into loyal community. An autonomous, governed 3-node multi-agent swarm that authentically answers your viewers and cultivates community.</p>
           <div class="hero-cta-row">
             <button type="button" class="hero-switch-btn" onclick="setDualityMode('researcher')">
               <span>🔬 Open Glass Box Telemetry Visualizer ➔</span>
