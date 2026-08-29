@@ -496,8 +496,11 @@ The swarm can be executed via the unified CLI interface ([`scripts/run_agent.py`
 # Single Comment Execution with Video Context
 python -m scripts.run_agent --query "¡Increíble coreografía reina, devoraste con esos pasos! 🔥" --author "maria_dance" --title "Estudio de Danza Vlog"
 
-# Live YouTube Data API v3 Polling Cycle
+# Live YouTube Data API v3 Polling Cycle for a Specific Video
 python -m scripts.run_agent --poll --video-id "choreo_vlog_01"
+
+# Run Polling Cycle on all uploaded videos of the entire YouTube Channel
+python -m scripts.run_agent --poll --all-channel
 ```
 
 ### Sample Terminal Execution Transcripts
@@ -581,7 +584,7 @@ In accordance with CodePath academic and development guidelines:
 
 ## 🧪 10. Test Suite & Verification
 
-The repository contains 38 unit and integration tests across 4 test suites:
+The repository contains 67 unit and integration tests across 8 test suites:
 
 ```bash
 # Run the complete test suite
@@ -589,12 +592,55 @@ pytest -v
 ```
 
 ```text
-======================= 38 passed, 34 warnings in 144.66s =======================
-tests/test_lumi_swarm.py (10/10 tests) PASSED
+======================= 67 passed, 34 warnings in 37.15s =======================
+tests/test_gemini_structured_hive.py (5/5 tests) PASSED
+tests/test_glass_box_api.py (7/7 tests) PASSED
 tests/test_governance_pipeline.py (14/14 tests) PASSED
+tests/test_hitl_lab.py (7/7 tests) PASSED
+tests/test_lumi_swarm.py (10/10 tests) PASSED
 tests/test_rag_evaluation.py (4/4 tests) PASSED
-tests/test_youtube_oauth_listener.py (10/10 tests) PASSED
+tests/test_video_audit.py (9/9 tests) PASSED
+tests/test_youtube_oauth_listener.py (11/11 tests) PASSED
 ```
+
+---
+
+## ☁️ 11. Google Cloud Production Deployment (Proof of GCP Hosting)
+
+Per hackathon guidelines, the backend and the **Glass Box Telemetry Server** are fully containerized and hosted natively on **Google Cloud Platform (GCP)**.
+
+*   **Live Cloud Run Endpoint:** [https://yt-ayochat-848283871943.us-central1.run.app](https://yt-ayochat-848283871943.us-central1.run.app)
+*   **Active Project ID:** `katseye-498018`
+*   **Deployment Target:** Google Cloud Run (Fully Managed Serverless Container Platform)
+*   **Deployment Region:** `us-central1`
+
+### Deployment Workflow (Cloud Build & Artifact Registry)
+1.  **Container Build:** Builds are executed remotely via Google Cloud Build and stored in Artifact Registry.
+    ```bash
+    # Create the Docker repository in Artifact Registry
+    gcloud artifacts repositories create yt-ayochat --repository-format=docker --location=us-central1 --project=katseye-498018
+
+    # Submit the build to Cloud Build
+    gcloud builds submit --tag us-central1-docker.pkg.dev/katseye-498018/yt-ayochat/yt-ayochat:latest
+    ```
+2.  **Container Deploy:** The service is deployed with public access enabled for evaluators to view the live dashboard:
+    ```bash
+    gcloud run deploy yt-ayochat \
+        --image us-central1-docker.pkg.dev/katseye-498018/yt-ayochat/yt-ayochat:latest \
+        --platform managed \
+        --region us-central1 \
+        --allow-unauthenticated \
+        --port 8080 \
+        --memory 1Gi \
+        --cpu 1 \
+        --min-instances 0 \
+        --max-instances 5 \
+        --set-env-vars GEMINI_API_KEY="${GEMINI_API_KEY}"
+    ```
+3.  **Active Verification:** Once deployed, health metrics are queryable:
+    ```bash
+    curl -s "https://yt-ayochat-848283871943.us-central1.run.app/api/health"
+    ```
 
 ---
 
