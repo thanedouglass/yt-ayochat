@@ -19,8 +19,8 @@ def generate_unified_html() -> str:
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<title>YT-AyoChat · The Developer &amp; The Researcher (Dual Experience)</title>
-<meta name="description" content="YT-AyoChat: Sovereign Multi-Agent Swarm, Karpathy LLM Council, Model Armor Governance, and Glass Box Telemetry & Study Visualizer.">
+<title>YT-AyoChat · What if you could respond to thousands of comments with just one command?</title>
+<meta name="description" content="YT-AyoChat: An autonomous, governed 3-node multi-agent swarm turning thousands of YouTube Shorts comments into community with just one command.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230B0A08'/><rect x='6' y='22' width='14' height='4' fill='%23FFB000'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -221,13 +221,12 @@ def generate_unified_html() -> str:
   .hero-h1 {
     font-family: var(--sc-font-display);
     font-weight: 800;
-    font-size: clamp(3.2rem, 12.5vw, 12.5rem);
-    line-height: 0.92;
+    font-size: clamp(2.4rem, 6.4vw, 5.8rem);
+    line-height: 1.04;
     letter-spacing: var(--sc-track-tight);
-    text-transform: uppercase;
     text-wrap: balance;
     margin: 0;
-    max-width: 11ch;
+    max-width: 15ch;
     transform: scale(calc(1 + var(--sc-p, 0) * 0.04));
     transform-origin: left bottom;
   }
@@ -1165,8 +1164,8 @@ def generate_unified_html() -> str:
           <span class="microlabel" style="margin-top: 0.6rem; display: block;">open source 3-node multi-agent swarm</span>
         </div>
         <div class="hero-copy" data-sc-cue="0 0.82 0">
-          <h1 class="hero-h1" data-sc-kinetic="lines">The scroll is dead.</h1>
-          <p class="hero-sub">A manifesto for creators whose Shorts get millions of views and nothing after the view.</p>
+          <h1 class="hero-h1" data-sc-kinetic="lines">What if you could respond to thousands of comments with just one command?</h1>
+          <p class="hero-sub">YT-AyoChat turns millions of YouTube Shorts views into loyal community. An autonomous, governed 3-node multi-agent swarm that answers your viewers and delivers the invite.</p>
           <div class="hero-cta-row">
             <button type="button" class="hero-switch-btn" onclick="setDualityMode('researcher')">
               <span>🔬 Open Glass Box Telemetry Visualizer ➔</span>
@@ -1257,7 +1256,7 @@ def generate_unified_html() -> str:
             <p><span class="voice">“Studio rehearsal 4 at 0:15! Full breakdown dropping in our Discord community.”</span></p>
           </div>
         </div>
-        <p class="peak-close" data-sc-cue="0.58 0.97">One comment in. One DM out. Dead traffic just became your community.</p>
+        <p class="peak-close" data-sc-cue="0.58 0.97">One command in. Thousands of authentic replies out. Dead traffic just became your community.</p>
       </div>
     </section>
 

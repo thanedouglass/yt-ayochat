@@ -121,15 +121,19 @@ def compute_dynamic_temperature(
     """Dynamically scale LLM sampling temperature to prevent repetition and mode collapse.
     
     Mathematical Formulation:
-        T_base = 0.70 + 0.15 * (alpha_cs - 0.5) + 0.05 * (gamma_fr - 3)
-        T_scaled = min(0.95, max(0.65, T_base + 0.05 * min(3, recent_repetition_count)))
+        T_base = 0.68 + 0.18 * (alpha_cs - 0.5) + 0.04 * (gamma_fr - 3)
+        T_scaled = clamp(T_base + 0.05 * min(3, recent_repetition_count), 0.60, 0.95)
+        
+    - High-entropy / Vernacular Clapbacks (alpha_cs >= 0.85, gamma_fr >= 4): T in [0.80, 0.95]
+    - Grounded Process / Fact Sharing (alpha_cs ~ 0.65, gamma_fr ~ 3): T in [0.70, 0.75]
+    - Safety Disclaimers / Out of Scope (alpha_cs <= 0.20, gamma_fr = 1): T = 0.60 (deterministic)
     """
     alpha = float(target_vectors.get("code_switch_alpha", 0.70))
     gamma = int(target_vectors.get("frequency_gamma", 3))
 
-    base_temp = 0.70 + 0.15 * (alpha - 0.5) + 0.05 * (gamma - 3)
+    base_temp = 0.68 + 0.18 * (alpha - 0.5) + 0.04 * (gamma - 3)
     entropy_boost = 0.05 * min(3, recent_repetition_count)
-    return round(min(0.95, max(0.65, base_temp + entropy_boost)), 2)
+    return round(min(0.95, max(0.60, base_temp + entropy_boost)), 2)
 
 
 class AutonomousHiveNode:
@@ -287,12 +291,16 @@ class AutonomousHiveNode:
         if max_overlap >= 3 and best_overlap_entry:
             return best_overlap_entry
 
-        # 2. Query ChromaDB with Maximal Marginal Relevance (MMR)
+        # 2. Query ChromaDB with Adaptive Maximal Marginal Relevance (MMR)
         try:
+            target_vecs = compute_target_sentiment_vectors(perception)
+            alpha = float(target_vecs.get("code_switch_alpha", 0.70))
+            adaptive_lambda = round(min(0.80, max(0.50, 0.70 - 0.12 * (alpha - 0.5))), 2)
+
             mmr_results, _ = self.vector_store.retrieve_mmr(
                 query=perception.raw_text,
                 k=3,
-                lambda_mult=0.70,
+                lambda_mult=adaptive_lambda,
             )
             if mmr_results and mmr_results[0].cosine_score > 0.40:
                 top_meta = mmr_results[0].chunk.metadata
@@ -315,17 +323,22 @@ class AutonomousHiveNode:
         perception: PerceptionResult,
         nearest_exemplar: Optional[Dict[str, Any]],
     ) -> List[Dict[str, Any]]:
-        """Load diverse 2-3 few-shot exemplars using MMR to prevent vector over-grounding."""
+        """Load diverse 2-3 few-shot exemplars using Adaptive MMR to prevent vector over-grounding."""
         exemplars: List[Dict[str, Any]] = []
         if nearest_exemplar:
             exemplars.append(nearest_exemplar)
 
-        # Retrieve diverse candidate chunks via MMR
+        # Retrieve diverse candidate chunks via Adaptive MMR
         try:
+            target_vecs = compute_target_sentiment_vectors(perception)
+            alpha = float(target_vecs.get("code_switch_alpha", 0.70))
+            # Lower lambda for high-vernacular/slang comments to force cross-topic diversity
+            adaptive_lambda = round(min(0.75, max(0.45, 0.60 - 0.15 * (alpha - 0.5))), 2)
+
             diverse_chunks, _ = self.vector_store.retrieve_mmr(
                 query=perception.raw_text,
                 k=4,
-                lambda_mult=0.60,
+                lambda_mult=adaptive_lambda,
             )
             for res in diverse_chunks:
                 meta = res.chunk.metadata
