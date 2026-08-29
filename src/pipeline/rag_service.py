@@ -190,6 +190,75 @@ class VectorStoreService:
         latency_ms = (time.perf_counter() - start_time) * 1000.0
         return top_k, latency_ms
 
+    def retrieve_mmr(
+        self,
+        query: str,
+        k: int = 3,
+        lambda_mult: float = 0.65,
+        fetch_k: int = 15,
+    ) -> Tuple[List[RetrievedResult], float]:
+        """Retrieve diverse knowledge chunks using Maximal Marginal Relevance (MMR).
+        
+        MMR penalizes redundancy and vector over-grounding by iteratively selecting chunks that
+        maximize relevance to the query while minimizing cosine similarity to already selected chunks:
+            MMR(d_i) = lambda_mult * Sim(query, d_i) - (1 - lambda_mult) * max_{d_j in S} Sim(d_i, d_j)
+            
+        Args:
+            query: The inbound comment or question text.
+            k: Number of diverse top chunks to return.
+            lambda_mult: Diversity tradeoff multiplier (1.0 = pure relevance, 0.0 = maximal diversity).
+            fetch_k: Candidate pool size to retrieve before MMR re-ranking.
+            
+        Returns:
+            Tuple of (List of diverse RetrievedResult items, retrieval latency in ms).
+        """
+        start_time = time.perf_counter()
+
+        # Step 1: Ingest candidate pool
+        candidate_pool, _ = self.retrieve(query=query, k=max(fetch_k, k))
+        if len(candidate_pool) <= k:
+            latency_ms = (time.perf_counter() - start_time) * 1000.0
+            return candidate_pool, latency_ms
+
+        # Compute embedding vectors for candidate documents
+        candidate_vectors = [self._mock_embedding(r.chunk.content) for r in candidate_pool]
+        selected_indices: List[int] = []
+        unselected_indices = list(range(len(candidate_pool)))
+
+        # Select first item (highest query relevance score)
+        selected_indices.append(unselected_indices.pop(0))
+
+        # Iteratively select remaining k-1 items via MMR equation
+        while len(selected_indices) < k and unselected_indices:
+            best_idx = None
+            best_mmr_score = -float("inf")
+
+            for idx in unselected_indices:
+                cand_result = candidate_pool[idx]
+                sim_to_query = cand_result.cosine_score
+                cand_vec = candidate_vectors[idx]
+
+                # Max similarity to already selected documents
+                max_sim_to_selected = max(
+                    self._cosine_similarity(cand_vec, candidate_vectors[sel_idx])
+                    for sel_idx in selected_indices
+                )
+
+                mmr_score = (lambda_mult * sim_to_query) - ((1.0 - lambda_mult) * max_sim_to_selected)
+                if mmr_score > best_mmr_score:
+                    best_mmr_score = mmr_score
+                    best_idx = idx
+
+            if best_idx is not None:
+                selected_indices.append(best_idx)
+                unselected_indices.remove(best_idx)
+            else:
+                break
+
+        diverse_results = [candidate_pool[i] for i in selected_indices]
+        latency_ms = (time.perf_counter() - start_time) * 1000.0
+        return diverse_results, latency_ms
+
 
 class VertexAIGenerator:
     """Generates strictly grounded replies using Gemini via Vertex AI."""
