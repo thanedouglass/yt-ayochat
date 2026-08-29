@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="104" viewBox="0 0 192 104">
+  <defs>
+    <pattern id="brick-pattern" width="192" height="104" patternUnits="userSpaceOnUse">
+      <rect width="192" height="104" fill="#0B0A08"/>
+      <!-- Row 1 -->
+      <rect x="2" y="2" width="90" height="46" rx="2" fill="rgba(206, 26, 50, 0.18)" stroke="rgba(255, 46, 77, 0.35)" stroke-width="1"/>
+      <line x1="2" y1="2" x2="92" y2="2" stroke="rgba(255, 120, 140, 0.4)" stroke-width="1"/>
+      
+      <rect x="98" y="2" width="90" height="46" rx="2" fill="rgba(206, 26, 50, 0.18)" stroke="rgba(255, 46, 77, 0.35)" stroke-width="1"/>
+      <line x1="98" y1="2" x2="188" y2="2" stroke="rgba(255, 120, 140, 0.4)" stroke-width="1"/>
+      
+      <!-- Row 2 (offset running bond) -->
+      <rect x="-46" y="54" width="90" height="46" rx="2" fill="rgba(206, 26, 50, 0.18)" stroke="rgba(255, 46, 77, 0.35)" stroke-width="1"/>
+      <rect x="50" y="54" width="90" height="46" rx="2" fill="rgba(206, 26, 50, 0.18)" stroke="rgba(255, 46, 77, 0.35)" stroke-width="1"/>
+      <line x1="50" y1="54" x2="140" y2="54" stroke="rgba(255, 120, 140, 0.4)" stroke-width="1"/>
+      
+      <rect x="146" y="54" width="90" height="46" rx="2" fill="rgba(206, 26, 50, 0.18)" stroke="rgba(255, 46, 77, 0.35)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#brick-pattern)"/>
+</svg>
