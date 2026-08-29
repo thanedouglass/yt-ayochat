@@ -167,3 +167,37 @@ class YouTubeCommentListener:
     def mark_processed(self, comment_id: str) -> None:
         """Mark a comment ID as processed to prevent duplicate replies."""
         self.processed_comment_ids.add(comment_id)
+
+    def get_channel_video_ids(self) -> List[str]:
+        """Fetch all video IDs from the authenticated user's uploads playlist."""
+        client = self._get_client()
+        if client is None:
+            return []
+        try:
+            channel_response = client.channels().list(
+                mine=True,
+                part="contentDetails"
+            ).execute()
+            items = channel_response.get("items", [])
+            if not items:
+                return []
+            uploads_playlist_id = items[0].get("contentDetails", {}).get("relatedPlaylists", {}).get("uploads")
+            if not uploads_playlist_id:
+                return []
+
+            video_ids = []
+            next_page_token = None
+            playlist_request = client.playlistItems().list(
+                playlistId=uploads_playlist_id,
+                part="snippet",
+                maxResults=50,
+                pageToken=next_page_token
+            )
+            playlist_response = playlist_request.execute()
+            for item in playlist_response.get("items", []):
+                vid = item.get("snippet", {}).get("resourceId", {}).get("videoId")
+                if vid:
+                    video_ids.append(vid)
+            return video_ids
+        except Exception:
+            return []
