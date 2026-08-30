@@ -430,6 +430,11 @@ def run_cli() -> None:
         help="Non-interactive mode: skip all prompts after rendering diff table",
     )
     parser.add_argument(
+        "--hitl",
+        action="store_true",
+        help="Explicitly enable interactive HITL terminal calibration mode (default: interactive)",
+    )
+    parser.add_argument(
         "--log-file",
         type=str,
         default="lumi_hitl_alignment.jsonl",

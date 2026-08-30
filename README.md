@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="public/assets/ayochatbanner.jpg" alt="AyoChat Banner" width="100%">
+</p>
+
 # ⚡ yt-ayochat: The Lumi Architecture
 ### Autonomous 3-Node Multi-Agent Swarm & Karpathy LLM Council Framework for Creator Community Governance
 
@@ -344,6 +348,27 @@ if __name__ == "__main__":
        │     • Dispatches Verified Reply to YouTube Comment API  │
        │     • Structured JSON Audit Logs with Trace IDs         │
        └─────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 🎛️ Interactive Human-in-the-Loop (HITL) Terminal Lab
+
+While the **Lumi Swarm** can operate in fully autonomous daemon mode, creators and researchers can engage the **Interactive HITL Terminal Lab** (`scripts/audit_video_replies.py`) for real-time human verification, delta-tuning, and semiotic calibration before live YouTube API dispatch.
+
+<p align="center">
+  <img src="public/assets/hitl-terminal-tui.png" alt="YT-AyoChat HITL Terminal Interface" width="850">
+</p>
+
+### Key TUI Telemetry Features:
+* **🛡️ Pre-Flight Safety & SDP Audit:** Visualizes real-time screening from Google Cloud Model Armor and Sensitive Data Protection (SDP).
+* **📐 4D Semiotic Vector Inspection:** Displays live mathematical mappings ($\alpha_{cs}$ Code-Switching, $\beta_{sf}$ Strategy Form, $\gamma_{fr}$ Frequency Resonance, and $\tau_{max}$ Constraint).
+* **⚡ Gemini 3.7 Flash Structured Outputs:** Displays verified, grounded replies synthesized against the ChromaDB vector store.
+* **✍️ Vector Delta Calibration:** Allows the creator to approve (`[a]`), edit & record fine-tuning deltas (`[e]`), or skip (`[s]`), directly updating the synthetic memory dataset for continuous model alignment.
+
+```bash
+# Run the interactive HITL calibration lab on a specific video
+python scripts/audit_video_replies.py --video-id=dtvsnt10My4 --hitl
 ```
 
 ---
