@@ -93,7 +93,7 @@ def get_youtube_client() -> Any:
 def get_authenticated_channel_id(client: Optional[Any] = None) -> str:
     """Retrieve and cache the channel ID of the authenticated user."""
     global _cached_channel_id
-    if _cached_channel_id is not None:
+    if client is None and _cached_channel_id is not None:
         return _cached_channel_id
 
     yt_client = client or get_youtube_client()
