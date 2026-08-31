@@ -10,10 +10,11 @@ interface CommentCardProps {
   onApprove: () => void;
   onSkip: () => void;
   onEdit: () => void;
+  disabled?: boolean;
   className?: string;
 }
 
-export function CommentCard({ item, onApprove, onSkip, onEdit, className }: CommentCardProps) {
+export function CommentCard({ item, onApprove, onSkip, onEdit, disabled = false, className }: CommentCardProps) {
   const isSafe = item.cultural_alignment_flag;
   
   return (
@@ -93,19 +94,22 @@ export function CommentCard({ item, onApprove, onSkip, onEdit, className }: Comm
       <div className="flex gap-2">
         <button
           onClick={onApprove}
-          className="flex-1 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 py-2 px-3 rounded-lg text-sm font-medium transition-colors"
+          disabled={disabled}
+          className="flex-1 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 py-2 px-3 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Approve
         </button>
         <button
           onClick={onSkip}
-          className="flex-1 bg-gray-500/20 hover:bg-gray-500/30 text-gray-400 py-2 px-3 rounded-lg text-sm font-medium transition-colors"
+          disabled={disabled}
+          className="flex-1 bg-gray-500/20 hover:bg-gray-500/30 text-gray-400 py-2 px-3 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Skip
         </button>
         <button
           onClick={onEdit}
-          className="flex-1 bg-[var(--m3-primary)]/20 hover:bg-[var(--m3-primary)]/30 text-[var(--m3-primary)] py-2 px-3 rounded-lg text-sm font-medium transition-colors"
+          disabled={disabled}
+          className="flex-1 bg-[var(--m3-primary)]/20 hover:bg-[var(--m3-primary)]/30 text-[var(--m3-primary)] py-2 px-3 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Edit
         </button>

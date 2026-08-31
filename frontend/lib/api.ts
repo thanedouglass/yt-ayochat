@@ -1,6 +1,7 @@
-const API_BASE_URL = typeof window !== 'undefined' 
-  ? window.location.origin 
-  : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL
+  || (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:8000');
+
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
 export interface HITLQueueItem {
   id: string;
@@ -73,6 +74,7 @@ async function fetchAPI<T>(
   const defaultOptions: RequestInit = {
     headers: {
       'Content-Type': 'application/json',
+      ...(API_KEY ? { 'X-API-Key': API_KEY } : {}),
       ...options.headers,
     },
     ...options,

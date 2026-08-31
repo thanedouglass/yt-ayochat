@@ -76,6 +76,20 @@ class AppConfig:
         default_factory=lambda: Path(os.getenv("HITL_ALIGNMENT_PATH", "data/lumi_hitl_alignment.jsonl"))
     )
 
+    # Mobile PWA companion API
+    pwa_api_key: str = field(
+        default_factory=lambda: os.getenv("PWA_API_KEY", "")
+    )
+    cors_allowed_origins: list[str] = field(
+        default_factory=lambda: [
+            o.strip()
+            for o in os.getenv(
+                "CORS_ALLOWED_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000"
+            ).split(",")
+            if o.strip()
+        ]
+    )
+
     # Closed-Domain Refusal Response String
     refusal_message: str = (
         "Thanks for reaching out! I don't have information on that in our current "

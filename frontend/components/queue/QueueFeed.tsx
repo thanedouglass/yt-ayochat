@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { CommentCard } from "./CommentCard";
-import { api, HITLQueueItem } from "@/lib/api";
+import { api, HITLQueueItem, PWAResolveRequest } from "@/lib/api";
 import { RefreshCw, Home, Clock } from "lucide-react";
 import { M3Button } from "@/components/ui/M3Button";
 import { GlassBottomSheet } from "@/components/ui/GlassBottomSheet";
@@ -16,6 +16,7 @@ export function QueueFeed() {
   const [editingItem, setEditingItem] = useState<HITLQueueItem | null>(null);
   const [editedText, setEditedText] = useState("");
   const [processing, setProcessing] = useState(false);
+  const [pendingIds, setPendingIds] = useState<string[]>([]);
 
   const fetchQueue = async () => {
     try {
@@ -41,39 +42,37 @@ export function QueueFeed() {
     await fetchQueue();
   };
 
-  const handleApprove = async (item: HITLQueueItem) => {
+  const resolve = async (request: PWAResolveRequest, failureMessage: string) => {
+    if (pendingIds.includes(request.record_id)) return false;
+
+    setPendingIds(ids => [...ids, request.record_id]);
     setProcessing(true);
     try {
-      await api.resolveComment({
-        record_id: item.id,
-        action: "approve",
-        notes: "Approved via Mobile PWA"
-      });
-      // Remove from queue
-      setQueue(queue.filter(i => i.id !== item.id));
+      await api.resolveComment(request);
+      setQueue(current => current.filter(i => i.id !== request.record_id));
+      return true;
     } catch (error) {
-      console.error("Failed to approve:", error);
-      alert("Failed to approve comment");
+      console.error(failureMessage, error);
+      alert(failureMessage);
+      return false;
     } finally {
+      setPendingIds(ids => ids.filter(id => id !== request.record_id));
       setProcessing(false);
     }
   };
 
+  const handleApprove = async (item: HITLQueueItem) => {
+    await resolve(
+      { record_id: item.id, action: "approve", notes: "Approved via Mobile PWA" },
+      "Failed to approve comment"
+    );
+  };
+
   const handleSkip = async (item: HITLQueueItem) => {
-    setProcessing(true);
-    try {
-      await api.resolveComment({
-        record_id: item.id,
-        action: "skip",
-        notes: "Skipped via Mobile PWA"
-      });
-      setQueue(queue.filter(i => i.id !== item.id));
-    } catch (error) {
-      console.error("Failed to skip:", error);
-      alert("Failed to skip comment");
-    } finally {
-      setProcessing(false);
-    }
+    await resolve(
+      { record_id: item.id, action: "skip", notes: "Skipped via Mobile PWA" },
+      "Failed to skip comment"
+    );
   };
 
   const handleEdit = (item: HITLQueueItem) => {
@@ -83,23 +82,19 @@ export function QueueFeed() {
 
   const handleSaveEdit = async () => {
     if (!editingItem) return;
-    
-    setProcessing(true);
-    try {
-      await api.resolveComment({
+
+    const succeeded = await resolve(
+      {
         record_id: editingItem.id,
         action: "edit",
         edited_reply: editedText,
-        notes: "Edited via Mobile PWA"
-      });
-      setQueue(queue.filter(i => i.id !== editingItem.id));
+        notes: "Edited via Mobile PWA",
+      },
+      "Failed to edit comment"
+    );
+    if (succeeded) {
       setEditingItem(null);
       setEditedText("");
-    } catch (error) {
-      console.error("Failed to edit:", error);
-      alert("Failed to edit comment");
-    } finally {
-      setProcessing(false);
     }
   };
 
@@ -157,6 +152,7 @@ export function QueueFeed() {
               onApprove={() => handleApprove(item)}
               onSkip={() => handleSkip(item)}
               onEdit={() => handleEdit(item)}
+              disabled={pendingIds.includes(item.id)}
             />
           ))
         )}

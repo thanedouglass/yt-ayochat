@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import difflib
+import hmac
 import html
 import json
 import logging
@@ -12,7 +13,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from fastapi import BackgroundTasks, FastAPI, Header, HTTPException, Query, Request
+from fastapi import BackgroundTasks, Depends, FastAPI, Header, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
@@ -33,6 +34,7 @@ from src.api.models import (
 from src.api.telegram_service import telegram_service
 from src.config import config
 from src.pipeline.dispatcher import ActionDispatcher
+from src.telemetry.schema import DispatchStatus
 
 logger = logging.getLogger("yt_ayochat.api")
 
@@ -58,10 +60,10 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=config.cors_allowed_origins,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type", "X-API-Key"],
 )
 
 
@@ -628,74 +630,78 @@ async def manual_skip_record(record_id: str) -> TelegramActionResponse:
 # PWA Mobile Companion Endpoints
 # --------------------------------------------------------------------------
 
-class PWAQueueRequest(BaseModel):
-    """Request model for PWA queue endpoint."""
-    limit: int = Field(default=20, ge=1, le=50, description="Maximum number of queue items to return")
-    video_id: Optional[str] = Field(default=None, description="Filter by specific video ID")
+MAX_EDITED_REPLY_CHARS = 2000
+MAX_NOTES_CHARS = 500
 
 
 class PWAResolveRequest(BaseModel):
     """Request model for PWA unified resolution endpoint."""
-    record_id: str = Field(..., description="ID of the HITL record to resolve")
+    record_id: str = Field(..., min_length=1, max_length=128, description="ID of the HITL record to resolve")
     action: str = Field(..., description="Action to take: 'approve', 'skip', or 'edit'")
-    edited_reply: Optional[str] = Field(default=None, description="Edited reply text (for edit action)")
+    edited_reply: Optional[str] = Field(
+        default=None,
+        max_length=MAX_EDITED_REPLY_CHARS,
+        description="Edited reply text (for edit action)",
+    )
     target_alpha: Optional[float] = Field(default=None, ge=0.0, le=1.0, description="Target code-switch vector (for edit action)")
-    notes: Optional[str] = Field(default="Resolved via Mobile PWA", description="Optional notes for the resolution")
-
-
-@app.get("/api/queue", response_model=List[HITLCommentRecord], tags=["PWA Mobile"])
-async def get_pwa_queue(request: PWAQueueRequest) -> List[HITLCommentRecord]:
-    """Get PENDING_APPROVAL comments for mobile PWA queue interface.
-    
-    This endpoint provides a streamlined interface for the mobile PWA to fetch
-    the current queue of comments awaiting creator review.
-    """
-    return db.list_hitl_comments(
-        status="PENDING_APPROVAL", 
-        video_id=request.video_id, 
-        limit=request.limit
+    notes: Optional[str] = Field(
+        default="Resolved via Mobile PWA",
+        max_length=MAX_NOTES_CHARS,
+        description="Optional notes for the resolution",
     )
 
 
+def require_pwa_api_key(x_api_key: Optional[str] = Header(default=None, alias="X-API-Key")) -> None:
+    """Authenticate mobile PWA callers against the configured shared API key."""
+    if not config.pwa_api_key:
+        logger.warning("PWA_API_KEY is not configured; mobile companion endpoints are unauthenticated.")
+        return
+    if not x_api_key or not hmac.compare_digest(x_api_key, config.pwa_api_key):
+        raise HTTPException(status_code=401, detail="Invalid or missing API key.")
+
+
+@app.get("/api/queue", response_model=List[HITLCommentRecord], tags=["PWA Mobile"])
+async def get_pwa_queue(
+    limit: int = Query(20, ge=1, le=50, description="Maximum number of queue items to return"),
+    video_id: Optional[str] = Query(None, description="Filter by specific video ID"),
+    _: None = Depends(require_pwa_api_key),
+) -> List[HITLCommentRecord]:
+    """Get PENDING_APPROVAL comments for mobile PWA queue interface.
+
+    This endpoint provides a streamlined interface for the mobile PWA to fetch
+    the current queue of comments awaiting creator review.
+    """
+    return db.list_hitl_comments(status="PENDING_APPROVAL", video_id=video_id, limit=limit)
+
+
 @app.post("/api/resolve", response_model=TelegramActionResponse, tags=["PWA Mobile"])
-async def resolve_hitl_comment_pwa(req: PWAResolveRequest) -> TelegramActionResponse:
+async def resolve_hitl_comment_pwa(
+    req: PWAResolveRequest,
+    _: None = Depends(require_pwa_api_key),
+) -> TelegramActionResponse:
     """Unified endpoint for HITL resolution from mobile PWA.
     
     This consolidates approve, skip, and edit actions into a single endpoint
     optimized for the mobile PWA interface while maintaining backward compatibility
     with existing Telegram webhook and REST endpoints.
     """
+    if req.action not in {"approve", "skip", "edit"}:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Invalid action: {req.action}. Must be 'approve', 'skip', or 'edit'.",
+        )
+
     record = db.get_hitl_comment(req.record_id)
     if not record:
         raise HTTPException(status_code=404, detail="Record not found.")
+    if record.status != HITLStatus.PENDING_APPROVAL:
+        raise HTTPException(
+            status_code=409,
+            detail=f"Record {record.id} is already resolved ({record.status.value}).",
+        )
 
-    dispatcher = ActionDispatcher(dry_run=True)
-    
-    if req.action == "approve":
-        final_reply = record.model_draft_reply
-        db.update_hitl_comment_decision(
-            record_id=record.id,
-            status=HITLStatus.APPROVED,
-            human_verdict=HITLVerdict.YES,
-            final_reply=final_reply,
-            human_score=5.0,
-            alignment_delta=0.0,
-        )
-        append_fine_tuning_record(record, final_reply, HITLVerdict.YES, notes=req.notes)
-        
-        return TelegramActionResponse(
-            status="success",
-            action="approved",
-            record_id=record.id,
-            comment_id=record.comment_id,
-            reply_text=final_reply,
-            alignment_delta=0.0,
-            dispatched=True,
-            message="Comment approved via Mobile PWA",
-        )
-    
-    elif req.action == "skip":
-        db.update_hitl_comment_decision(
+    if req.action == "skip":
+        claimed = db.claim_pending_hitl_comment(
             record_id=record.id,
             status=HITLStatus.SKIPPED,
             human_verdict=HITLVerdict.SKIP,
@@ -703,7 +709,9 @@ async def resolve_hitl_comment_pwa(req: PWAResolveRequest) -> TelegramActionResp
             human_score=3.0,
             alignment_delta=0.0,
         )
-        
+        if not claimed:
+            raise HTTPException(status_code=409, detail=f"Record {record.id} is already resolved.")
+
         return TelegramActionResponse(
             status="success",
             action="skipped",
@@ -714,12 +722,23 @@ async def resolve_hitl_comment_pwa(req: PWAResolveRequest) -> TelegramActionResp
             dispatched=False,
             message="Comment skipped via Mobile PWA",
         )
-    
-    elif req.action == "edit":
-        if not req.edited_reply:
+
+    if req.action == "approve":
+        final_reply = record.model_draft_reply
+        verdict = HITLVerdict.YES
+        status = HITLStatus.APPROVED
+        human_score = 5.0
+        delta = 0.0
+        diff_payload = None
+    else:
+        edited_reply = (req.edited_reply or "").strip()
+        if not edited_reply:
             raise HTTPException(status_code=400, detail="edited_reply is required for edit action")
-        
-        edited_reply = req.edited_reply.strip()
+
+        final_reply = edited_reply
+        verdict = HITLVerdict.YES_WITH_EDITS
+        status = HITLStatus.EDITED
+        human_score = 4.5
         matcher = difflib.SequenceMatcher(None, record.model_draft_reply, edited_reply)
         diff_payload = {
             "original": record.model_draft_reply,
@@ -727,36 +746,59 @@ async def resolve_hitl_comment_pwa(req: PWAResolveRequest) -> TelegramActionResp
             "char_delta": len(edited_reply) - len(record.model_draft_reply),
             "edit_ratio": round(matcher.ratio(), 4),
         }
-        
-        # Calculate alignment delta with target alpha if provided
         delta = calculate_alignment_delta(
             record.applied_vectors,
-            author_alpha=req.target_alpha or 0.90,
+            author_alpha=req.target_alpha if req.target_alpha is not None else 0.90,
             author_beta="CLAPBACK",
             author_gamma=4,
         )
-        
-        db.update_hitl_comment_decision(
-            record_id=record.id,
-            status=HITLStatus.EDITED,
-            human_verdict=HITLVerdict.YES_WITH_EDITS,
-            final_reply=edited_reply,
-            diff_json=diff_payload,
-            alignment_delta=delta,
-            human_score=4.5,
+
+    claimed = db.claim_pending_hitl_comment(
+        record_id=record.id,
+        status=status,
+        human_verdict=verdict,
+        final_reply=final_reply,
+        diff_json=diff_payload,
+        alignment_delta=delta,
+        human_score=human_score,
+    )
+    if not claimed:
+        raise HTTPException(status_code=409, detail=f"Record {record.id} is already resolved.")
+
+    dispatcher = ActionDispatcher(dry_run=True)
+    dispatch_res = dispatcher.dispatch_reply(
+        comment_id=record.comment_id,
+        reply_text=final_reply,
+        require_citation=False,
+    )
+    if dispatch_res.status != DispatchStatus.SUCCESS:
+        db.release_hitl_comment_claim(record.id)
+        raise HTTPException(
+            status_code=502,
+            detail=f"Reply dispatch failed: {dispatch_res.error_message or dispatch_res.status.value}",
         )
-        append_fine_tuning_record(record, edited_reply, HITLVerdict.YES_WITH_EDITS, alignment_delta=delta, notes=req.notes)
-        
+
+    append_fine_tuning_record(record, final_reply, verdict, alignment_delta=delta, notes=req.notes)
+
+    if req.action == "approve":
         return TelegramActionResponse(
             status="success",
-            action="edited",
+            action="approved",
             record_id=record.id,
             comment_id=record.comment_id,
-            reply_text=edited_reply,
-            alignment_delta=delta,
+            reply_text=final_reply,
+            alignment_delta=0.0,
             dispatched=True,
-            message=f"Comment edited via Mobile PWA with delta {delta}",
+            message="Comment approved and dispatched via Mobile PWA",
         )
-    
-    else:
-        raise HTTPException(status_code=400, detail=f"Invalid action: {req.action}. Must be 'approve', 'skip', or 'edit'.")
+
+    return TelegramActionResponse(
+        status="success",
+        action="edited",
+        record_id=record.id,
+        comment_id=record.comment_id,
+        reply_text=final_reply,
+        alignment_delta=delta,
+        dispatched=True,
+        message=f"Comment edited and dispatched via Mobile PWA with delta {delta}",
+    )
