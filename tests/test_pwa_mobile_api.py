@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import pytest
@@ -28,9 +29,10 @@ def client(temp_hitl_db: HITLDatabase, monkeypatch: pytest.MonkeyPatch) -> TestC
     monkeypatch.setattr(main_mod, "db", temp_hitl_db)
     monkeypatch.setattr(db_mod, "db", temp_hitl_db)
     monkeypatch.setattr(config, "hitl_alignment_path", temp_hitl_db.db_path.parent / "test_alignment.jsonl")
-    monkeypatch.setattr(config, "pwa_api_key", "")
+    monkeypatch.setattr(config, "pwa_api_key", "s3cret")
+    monkeypatch.setattr(config, "pwa_allow_unauthenticated", False)
 
-    return TestClient(app)
+    return TestClient(app, headers={"X-API-Key": "s3cret"})
 
 
 def _seed_record(db: HITLDatabase, record_id: str = "rec_pwa_1") -> HITLCommentRecord:
@@ -73,20 +75,34 @@ def test_queue_endpoint_reads_query_parameters(client: TestClient, temp_hitl_db:
     assert client.get("/api/queue?limit=500").status_code == 422
 
 
-def test_pwa_endpoints_require_api_key_when_configured(
-    client: TestClient, temp_hitl_db: HITLDatabase, monkeypatch: pytest.MonkeyPatch
-):
-    """Configured PWA_API_KEY gates both the queue and resolve endpoints."""
+def test_pwa_endpoints_require_api_key(client: TestClient, temp_hitl_db: HITLDatabase):
+    """PWA_API_KEY gates both the queue and resolve endpoints."""
     _seed_record(temp_hitl_db)
-    monkeypatch.setattr(config, "pwa_api_key", "s3cret")
 
-    assert client.get("/api/queue").status_code == 401
+    assert client.get("/api/queue", headers={"X-API-Key": ""}).status_code == 401
     assert client.get("/api/queue", headers={"X-API-Key": "wrong"}).status_code == 401
-    assert client.get("/api/queue", headers={"X-API-Key": "s3cret"}).status_code == 200
+    assert client.get("/api/queue").status_code == 200
 
-    unauthorized = client.post("/api/resolve", json={"record_id": "rec_pwa_1", "action": "approve"})
+    unauthorized = client.post(
+        "/api/resolve",
+        headers={"X-API-Key": "wrong"},
+        json={"record_id": "rec_pwa_1", "action": "approve"},
+    )
     assert unauthorized.status_code == 401
     assert temp_hitl_db.get_hitl_comment("rec_pwa_1").status == HITLStatus.PENDING_APPROVAL
+
+
+def test_pwa_endpoints_fail_closed_without_configured_key(
+    client: TestClient, temp_hitl_db: HITLDatabase, monkeypatch: pytest.MonkeyPatch
+):
+    """An unset PWA_API_KEY blocks access instead of silently disabling auth."""
+    _seed_record(temp_hitl_db)
+    monkeypatch.setattr(config, "pwa_api_key", "")
+
+    assert client.get("/api/queue").status_code == 503
+
+    monkeypatch.setattr(config, "pwa_allow_unauthenticated", True)
+    assert client.get("/api/queue").status_code == 200
 
 
 def test_resolve_approve_dispatches_and_blocks_duplicates(client: TestClient, temp_hitl_db: HITLDatabase):
@@ -125,6 +141,9 @@ def test_resolve_edit_honours_zero_target_alpha(client: TestClient, temp_hitl_db
     assert body["action"] == "edited"
     assert body["alignment_delta"] == pytest.approx(0.85, abs=1e-4)
     assert temp_hitl_db.get_hitl_comment("rec_pwa_2").status == HITLStatus.EDITED
+
+    training_row = json.loads(config.hitl_alignment_path.read_text().splitlines()[-1])
+    assert training_row["human_score"] == 4.5
 
 
 def test_resolve_rejects_oversized_payloads(client: TestClient, temp_hitl_db: HITLDatabase):

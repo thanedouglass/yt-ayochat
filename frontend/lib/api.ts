@@ -1,7 +1,6 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL
-  || (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:8000');
-
-const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+// Requests go to the Next.js route handlers under /app/api, which proxy to the
+// FastAPI backend server-side so the backend API key never reaches the browser.
+const API_BASE_URL = typeof window !== 'undefined' ? '' : 'http://localhost:3000';
 
 export interface HITLQueueItem {
   id: string;
@@ -74,7 +73,6 @@ async function fetchAPI<T>(
   const defaultOptions: RequestInit = {
     headers: {
       'Content-Type': 'application/json',
-      ...(API_KEY ? { 'X-API-Key': API_KEY } : {}),
       ...options.headers,
     },
     ...options,

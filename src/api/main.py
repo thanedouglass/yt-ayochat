@@ -654,8 +654,13 @@ class PWAResolveRequest(BaseModel):
 def require_pwa_api_key(x_api_key: Optional[str] = Header(default=None, alias="X-API-Key")) -> None:
     """Authenticate mobile PWA callers against the configured shared API key."""
     if not config.pwa_api_key:
-        logger.warning("PWA_API_KEY is not configured; mobile companion endpoints are unauthenticated.")
-        return
+        if config.pwa_allow_unauthenticated:
+            logger.warning("PWA_API_KEY is not configured; mobile companion endpoints are unauthenticated.")
+            return
+        raise HTTPException(
+            status_code=503,
+            detail="Mobile companion API is not configured. Set PWA_API_KEY.",
+        )
     if not x_api_key or not hmac.compare_digest(x_api_key, config.pwa_api_key):
         raise HTTPException(status_code=401, detail="Invalid or missing API key.")
 
@@ -765,7 +770,7 @@ async def resolve_hitl_comment_pwa(
     if not claimed:
         raise HTTPException(status_code=409, detail=f"Record {record.id} is already resolved.")
 
-    dispatcher = ActionDispatcher(dry_run=True)
+    dispatcher = ActionDispatcher(dry_run=config.dispatch_dry_run)
     dispatch_res = dispatcher.dispatch_reply(
         comment_id=record.comment_id,
         reply_text=final_reply,
@@ -778,7 +783,7 @@ async def resolve_hitl_comment_pwa(
             detail=f"Reply dispatch failed: {dispatch_res.error_message or dispatch_res.status.value}",
         )
 
-    append_fine_tuning_record(record, final_reply, verdict, alignment_delta=delta, notes=req.notes)
+    append_fine_tuning_record(claimed, final_reply, verdict, alignment_delta=delta, notes=req.notes)
 
     if req.action == "approve":
         return TelegramActionResponse(

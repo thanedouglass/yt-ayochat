@@ -80,6 +80,12 @@ class AppConfig:
     pwa_api_key: str = field(
         default_factory=lambda: os.getenv("PWA_API_KEY", "")
     )
+    pwa_allow_unauthenticated: bool = field(
+        default_factory=lambda: os.getenv("PWA_ALLOW_UNAUTHENTICATED", "false").lower() == "true"
+    )
+    dispatch_dry_run: bool = field(
+        default_factory=lambda: os.getenv("DISPATCH_DRY_RUN", "true").lower() == "true"
+    )
     cors_allowed_origins: list[str] = field(
         default_factory=lambda: [
             o.strip()
