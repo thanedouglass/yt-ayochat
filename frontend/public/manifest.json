@@ -1,0 +1,35 @@
+{
+  "name": "AyoChat Mobile Companion",
+  "short_name": "AyoChat",
+  "description": "Mobile dashboard for Human-in-the-Loop YouTube comment moderation with AI-powered insights",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#030407",
+  "theme_color": "#6366f1",
+  "orientation": "portrait",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "social"],
+  "shortcuts": [
+    {
+      "name": "View Queue",
+      "short_name": "Queue",
+      "description": "Open pending comment queue",
+      "url": "/queue",
+      "icons": [{ "src": "/icon-192x192.png", "sizes": "192x192" }]
+    }
+  ]
+}

@@ -1,0 +1,254 @@
+@import "tailwindcss";
+
+/* ============================================================================
+   Gemini AI Liquid Glass Aesthetic & Material 3 Expressive Design Tokens
+   ============================================================================ */
+
+:root {
+  /* Gemini AI Liquid Glass Theme Variables */
+  --glass-bg: rgba(15, 23, 42, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shine: rgba(255, 255, 255, 0.05);
+  --luminescent-glow: rgba(99, 102, 241, 0.3);
+  --shiny-edge: rgba(255, 255, 255, 0.2);
+  
+  /* Material 3 Expressive Colors */
+  --m3-primary: #6366f1;
+  --m3-on-primary: #ffffff;
+  --m3-primary-container: #e0e7ff;
+  --m3-on-primary-container: #1e1b4b;
+  --m3-secondary: #62571e;
+  --m3-on-secondary: #ffffff;
+  --m3-secondary-container: #e8e1a3;
+  --m3-on-secondary-container: #1d1b00;
+  --m3-tertiary: #7c5800;
+  --m3-on-tertiary: #ffffff;
+  --m3-tertiary-container: #ffde9d;
+  --m3-on-tertiary-container: #271900;
+  --m3-error: #ba1a1a;
+  --m3-on-error: #ffffff;
+  --m3-error-container: #ffdad6;
+  --m3-on-error-container: #410002;
+  
+  /* Surface Colors */
+  --surface-dim: #030407;
+  --surface: #030407;
+  --surface-bright: #1a1d26;
+  
+  /* Typography */
+  --font-display: var(--font-geist-sans);
+  --font-body: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  
+  /* Spacing (Material 3) */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  
+  /* Radius (Material 3 Expressive) */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+  
+  /* Elevation (Material 3) */
+  --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --elevation-2: 0 3px 6px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12);
+  --elevation-3: 0 10px 20px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.10);
+  --elevation-4: 0 15px 25px rgba(0, 0, 0, 0.15), 0 5px 10px rgba(0, 0, 0, 0.05);
+  
+  /* Motion (Material 3 Expressive) */
+  --motion-emphasized: cubic-bezier(0.2, 0.0, 0.0, 1.0);
+  --motion-standard: cubic-bezier(0.2, 0.0, 0.0, 1.0);
+  --motion-emphasized-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1.0);
+  --motion-emphasized-accelerate: cubic-bezier(0.3, 0.0, 0.8, 0.15);
+  
+  /* Duration */
+  --duration-short: 150ms;
+  --duration-medium: 250ms;
+  --duration-long: 350ms;
+  --duration-extra-long: 500ms;
+}
+
+/* ============================================================================
+   Liquid Glass Effects
+   ============================================================================ */
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--elevation-2);
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.glass-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.glass-shine:hover::after {
+  left: 100%;
+}
+
+.luminescent-glow {
+  box-shadow: 0 0 20px var(--luminescent-glow);
+}
+
+.shiny-edge {
+  position: relative;
+}
+
+.shiny-edge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--shiny-edge),
+    transparent
+  );
+  opacity: 0.5;
+}
+
+/* ============================================================================
+   Material 3 Expressive Component Styles
+   ============================================================================ */
+
+.m3-fab {
+  border-radius: var(--radius-xl);
+  box-shadow: var(--elevation-3);
+  transition: all var(--duration-medium) var(--motion-emphasized);
+}
+
+.m3-fab:hover {
+  box-shadow: var(--elevation-4);
+  transform: translateY(-2px);
+}
+
+.m3-fab:active {
+  transform: translateY(0) scale(0.95);
+}
+
+.m3-button {
+  border-radius: var(--radius-full);
+  font-weight: 500;
+  transition: all var(--duration-short) var(--motion-standard);
+}
+
+.m3-button:hover {
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.m3-progress {
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.m3-progress-bar {
+  border-radius: var(--radius-full);
+  transition: width var(--duration-long) var(--motion-emphasized-decelerate);
+}
+
+/* ============================================================================
+   Base Styles
+   ============================================================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--surface-dim);
+  color: #e2e8f0;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================================================
+   Utilities
+   ============================================================================ */
+
+.glass-effect {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+}
+
+.text-glow {
+  text-shadow: 0 0 10px var(--luminescent-glow);
+}
+
+.animate-pulse-slow {
+  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ============================================================================
+   Mobile Optimizations
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  :root {
+    --spacing-md: 12px;
+    --spacing-lg: 16px;
+    --spacing-xl: 24px;
+  }
+  
+  .glass-card {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+}

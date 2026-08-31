@@ -15,6 +15,7 @@ from typing import Any, Dict, List, Optional
 from fastapi import BackgroundTasks, FastAPI, Header, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from pydantic import BaseModel, Field
 
 from scripts.audit_video_replies import VideoReplyAuditor, parse_video_id
 from src.api.db import db
@@ -621,3 +622,141 @@ async def manual_skip_record(record_id: str) -> TelegramActionResponse:
         dispatched=False,
         message=f"Record {record.id} skipped.",
     )
+
+
+# --------------------------------------------------------------------------
+# PWA Mobile Companion Endpoints
+# --------------------------------------------------------------------------
+
+class PWAQueueRequest(BaseModel):
+    """Request model for PWA queue endpoint."""
+    limit: int = Field(default=20, ge=1, le=50, description="Maximum number of queue items to return")
+    video_id: Optional[str] = Field(default=None, description="Filter by specific video ID")
+
+
+class PWAResolveRequest(BaseModel):
+    """Request model for PWA unified resolution endpoint."""
+    record_id: str = Field(..., description="ID of the HITL record to resolve")
+    action: str = Field(..., description="Action to take: 'approve', 'skip', or 'edit'")
+    edited_reply: Optional[str] = Field(default=None, description="Edited reply text (for edit action)")
+    target_alpha: Optional[float] = Field(default=None, ge=0.0, le=1.0, description="Target code-switch vector (for edit action)")
+    notes: Optional[str] = Field(default="Resolved via Mobile PWA", description="Optional notes for the resolution")
+
+
+@app.get("/api/queue", response_model=List[HITLCommentRecord], tags=["PWA Mobile"])
+async def get_pwa_queue(request: PWAQueueRequest) -> List[HITLCommentRecord]:
+    """Get PENDING_APPROVAL comments for mobile PWA queue interface.
+    
+    This endpoint provides a streamlined interface for the mobile PWA to fetch
+    the current queue of comments awaiting creator review.
+    """
+    return db.list_hitl_comments(
+        status="PENDING_APPROVAL", 
+        video_id=request.video_id, 
+        limit=request.limit
+    )
+
+
+@app.post("/api/resolve", response_model=TelegramActionResponse, tags=["PWA Mobile"])
+async def resolve_hitl_comment_pwa(req: PWAResolveRequest) -> TelegramActionResponse:
+    """Unified endpoint for HITL resolution from mobile PWA.
+    
+    This consolidates approve, skip, and edit actions into a single endpoint
+    optimized for the mobile PWA interface while maintaining backward compatibility
+    with existing Telegram webhook and REST endpoints.
+    """
+    record = db.get_hitl_comment(req.record_id)
+    if not record:
+        raise HTTPException(status_code=404, detail="Record not found.")
+
+    dispatcher = ActionDispatcher(dry_run=True)
+    
+    if req.action == "approve":
+        final_reply = record.model_draft_reply
+        db.update_hitl_comment_decision(
+            record_id=record.id,
+            status=HITLStatus.APPROVED,
+            human_verdict=HITLVerdict.YES,
+            final_reply=final_reply,
+            human_score=5.0,
+            alignment_delta=0.0,
+        )
+        append_fine_tuning_record(record, final_reply, HITLVerdict.YES, notes=req.notes)
+        
+        return TelegramActionResponse(
+            status="success",
+            action="approved",
+            record_id=record.id,
+            comment_id=record.comment_id,
+            reply_text=final_reply,
+            alignment_delta=0.0,
+            dispatched=True,
+            message="Comment approved via Mobile PWA",
+        )
+    
+    elif req.action == "skip":
+        db.update_hitl_comment_decision(
+            record_id=record.id,
+            status=HITLStatus.SKIPPED,
+            human_verdict=HITLVerdict.SKIP,
+            final_reply=None,
+            human_score=3.0,
+            alignment_delta=0.0,
+        )
+        
+        return TelegramActionResponse(
+            status="success",
+            action="skipped",
+            record_id=record.id,
+            comment_id=record.comment_id,
+            reply_text=None,
+            alignment_delta=0.0,
+            dispatched=False,
+            message="Comment skipped via Mobile PWA",
+        )
+    
+    elif req.action == "edit":
+        if not req.edited_reply:
+            raise HTTPException(status_code=400, detail="edited_reply is required for edit action")
+        
+        edited_reply = req.edited_reply.strip()
+        matcher = difflib.SequenceMatcher(None, record.model_draft_reply, edited_reply)
+        diff_payload = {
+            "original": record.model_draft_reply,
+            "edited": edited_reply,
+            "char_delta": len(edited_reply) - len(record.model_draft_reply),
+            "edit_ratio": round(matcher.ratio(), 4),
+        }
+        
+        # Calculate alignment delta with target alpha if provided
+        delta = calculate_alignment_delta(
+            record.applied_vectors,
+            author_alpha=req.target_alpha or 0.90,
+            author_beta="CLAPBACK",
+            author_gamma=4,
+        )
+        
+        db.update_hitl_comment_decision(
+            record_id=record.id,
+            status=HITLStatus.EDITED,
+            human_verdict=HITLVerdict.YES_WITH_EDITS,
+            final_reply=edited_reply,
+            diff_json=diff_payload,
+            alignment_delta=delta,
+            human_score=4.5,
+        )
+        append_fine_tuning_record(record, edited_reply, HITLVerdict.YES_WITH_EDITS, alignment_delta=delta, notes=req.notes)
+        
+        return TelegramActionResponse(
+            status="success",
+            action="edited",
+            record_id=record.id,
+            comment_id=record.comment_id,
+            reply_text=edited_reply,
+            alignment_delta=delta,
+            dispatched=True,
+            message=f"Comment edited via Mobile PWA with delta {delta}",
+        )
+    
+    else:
+        raise HTTPException(status_code=400, detail=f"Invalid action: {req.action}. Must be 'approve', 'skip', or 'edit'.")
