@@ -13,7 +13,10 @@ from __future__ import annotations
 import re
 from typing import Any, Dict, List, Optional, Tuple
 
-from backend.council import evaluate_os_sentiment_council
+try:
+    from src.backend.council import evaluate_os_sentiment_council
+except ImportError:
+    from backend.council import evaluate_os_sentiment_council
 from src.swarm.models import (
     CommentCategory,
     PerceptionResult,

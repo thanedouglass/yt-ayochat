@@ -70,10 +70,10 @@ class AppConfig:
         default_factory=lambda: os.getenv("TELEGRAM_WEBHOOK_SECRET", "")
     )
     hitl_db_path: Path = field(
-        default_factory=lambda: Path(os.getenv("HITL_DB_PATH", "hitl_state.db"))
+        default_factory=lambda: Path(os.getenv("HITL_DB_PATH", "data/hitl_state.db"))
     )
     hitl_alignment_path: Path = field(
-        default_factory=lambda: Path(os.getenv("HITL_ALIGNMENT_PATH", "lumi_hitl_alignment.jsonl"))
+        default_factory=lambda: Path(os.getenv("HITL_ALIGNMENT_PATH", "data/lumi_hitl_alignment.jsonl"))
     )
 
     # Closed-Domain Refusal Response String

@@ -7,7 +7,10 @@ import pytest
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
-from backend.council import evaluate_os_sentiment_council
+try:
+    from src.backend.council import evaluate_os_sentiment_council
+except ImportError:
+    from backend.council import evaluate_os_sentiment_council
 from src.agent import GovernedYouTubeAgent
 from src.pipeline.listener import InboundComment
 from src.swarm.engine import LumiSwarmEngine

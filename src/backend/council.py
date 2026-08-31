@@ -29,11 +29,18 @@ from collections import Counter
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
-from backend.openrouter import (
-    CouncilModelConfig,
-    REGIONAL_COUNCIL_REGISTRY,
-    openrouter_client,
-)
+try:
+    from src.backend.openrouter import (
+        CouncilModelConfig,
+        REGIONAL_COUNCIL_REGISTRY,
+        openrouter_client,
+    )
+except ImportError:
+    from backend.openrouter import (
+        CouncilModelConfig,
+        REGIONAL_COUNCIL_REGISTRY,
+        openrouter_client,
+    )
 
 
 @dataclass

@@ -165,13 +165,30 @@ class AutonomousHiveNode:
 
     def _load_persona_and_corpus(self) -> None:
         """Load persona markdown specification and populate ChromaDB vector store."""
-        if self.persona_path.exists():
-            self._persona_text = self.persona_path.read_text(encoding="utf-8")
+        # Resolve persona path with fallback to docs/
+        resolved_persona = self.persona_path
+        if not resolved_persona.exists():
+            for candidate in [Path("docs") / self.persona_path.name, Path("docs/lumi_persona.md")]:
+                if candidate.exists():
+                    resolved_persona = candidate
+                    break
 
-        if self.corpus_path.exists():
+        if resolved_persona.exists():
+            self._persona_text = resolved_persona.read_text(encoding="utf-8")
+
+        # Resolve corpus path with fallback to data/
+        resolved_corpus = self.corpus_path
+        if not resolved_corpus.exists():
+            for candidate in [Path("data") / self.corpus_path.name, Path("data/lumi_corpus.jsonl")]:
+                if candidate.exists():
+                    resolved_corpus = candidate
+                    break
+
+        if resolved_corpus.exists():
+            self.corpus_path = resolved_corpus
             entries = []
             chunks = []
-            for line in self.corpus_path.read_text(encoding="utf-8").splitlines():
+            for line in resolved_corpus.read_text(encoding="utf-8").splitlines():
                 line = line.strip()
                 if line:
                     try:

@@ -8,6 +8,11 @@ from typing import Any, Callable, Dict, List, Optional, Set
 
 from src.config import config
 
+try:
+    from googleapiclient.discovery import build as build_youtube_service
+except ImportError:
+    build_youtube_service = None
+
 
 @dataclass
 class InboundComment:
@@ -71,11 +76,10 @@ class YouTubeCommentListener:
             self._youtube_client = get_youtube_client()
             return self._youtube_client
         except Exception:
-            if not self.api_key:
+            if not self.api_key or build_youtube_service is None:
                 return None
             try:
-                from googleapiclient.discovery import build
-                self._youtube_client = build("youtube", "v3", developerKey=self.api_key)
+                self._youtube_client = build_youtube_service("youtube", "v3", developerKey=self.api_key)
                 return self._youtube_client
             except Exception:
                 return None
