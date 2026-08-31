@@ -9,6 +9,16 @@ from src.telemetry.logger import audit_logger
 from src.telemetry.schema import AuditLogRecord, DispatchStatus
 
 
+from pathlib import Path
+
+
+def _get_synthetic_memory_path() -> Path:
+    data_path = Path("data/lumi_synthetic_memory.jsonl")
+    if data_path.parent.exists():
+        return data_path
+    return Path("lumi_synthetic_memory.jsonl")
+
+
 def log_to_synthetic_memory(category, input_comment, lumi_response, intent, energy, applied_vectors: Optional[dict] = None):
     """Appends successful swarm dispatches to a secondary learning corpus."""
     cat_str = category.value if hasattr(category, "value") else str(category)
@@ -25,7 +35,8 @@ def log_to_synthetic_memory(category, input_comment, lumi_response, intent, ener
         new_record["applied_vectors"] = applied_vectors
 
     # Append-only mode prevents file-locking crashes during live polling
-    with open("lumi_synthetic_memory.jsonl", "a", encoding="utf-8") as f:
+    synth_path = _get_synthetic_memory_path()
+    with open(synth_path, "a", encoding="utf-8") as f:
         f.write(json.dumps(new_record) + "\n")
 
 

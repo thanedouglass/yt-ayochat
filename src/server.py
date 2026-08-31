@@ -13,11 +13,18 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
-from backend.council import (
-    CouncilPerceptionVerdict,
-    REGIONAL_COUNCIL_REGISTRY,
-    evaluate_os_sentiment_council,
-)
+try:
+    from src.backend.council import (
+        CouncilPerceptionVerdict,
+        REGIONAL_COUNCIL_REGISTRY,
+        evaluate_os_sentiment_council,
+    )
+except ImportError:
+    from backend.council import (
+        CouncilPerceptionVerdict,
+        REGIONAL_COUNCIL_REGISTRY,
+        evaluate_os_sentiment_council,
+    )
 from src.governance.guardrails import guardrails_pipeline
 from src.governance.sdp_sanitizer import sdp_sanitizer
 from src.governance.model_armor import model_armor
@@ -45,9 +52,17 @@ app.add_middleware(
 )
 
 WORKSPACE_ROOT = Path(__file__).resolve().parent.parent
-EVAL_REPORT_PATH = WORKSPACE_ROOT / "eval_report.json"
-SYNTHETIC_MEMORY_PATH = WORKSPACE_ROOT / "lumi_synthetic_memory.jsonl"
-HITL_ALIGNMENT_PATH = WORKSPACE_ROOT / "lumi_hitl_alignment.jsonl"
+
+def _resolve_data_path(filename: str) -> Path:
+    """Resolve file path checking data/ subdirectory first, then root."""
+    data_candidate = WORKSPACE_ROOT / "data" / filename
+    if data_candidate.exists():
+        return data_candidate
+    return WORKSPACE_ROOT / filename
+
+EVAL_REPORT_PATH = _resolve_data_path("eval_report.json")
+SYNTHETIC_MEMORY_PATH = _resolve_data_path("lumi_synthetic_memory.jsonl")
+HITL_ALIGNMENT_PATH = _resolve_data_path("lumi_hitl_alignment.jsonl")
 
 
 class SwarmSimulateRequest(BaseModel):

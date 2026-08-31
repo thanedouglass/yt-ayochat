@@ -1,11 +1,19 @@
-"""Re-export of backend/openrouter.py for src.swarm package."""
+"""Re-export of src/backend/openrouter.py for src.swarm package."""
 
-from backend.openrouter import (
-    CouncilModelConfig,
-    OpenRouterClient,
-    REGIONAL_COUNCIL_REGISTRY,
-    openrouter_client,
-)
+try:
+    from src.backend.openrouter import (
+        CouncilModelConfig,
+        OpenRouterClient,
+        REGIONAL_COUNCIL_REGISTRY,
+        openrouter_client,
+    )
+except ImportError:
+    from backend.openrouter import (
+        CouncilModelConfig,
+        OpenRouterClient,
+        REGIONAL_COUNCIL_REGISTRY,
+        openrouter_client,
+    )
 
 __all__ = [
     "CouncilModelConfig",
@@ -13,3 +21,4 @@ __all__ = [
     "REGIONAL_COUNCIL_REGISTRY",
     "openrouter_client",
 ]
+

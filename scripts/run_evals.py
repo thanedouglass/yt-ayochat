@@ -98,6 +98,7 @@ def compare_with_baseline(current_report: dict, baseline_file: str) -> None:
 
 
 def main() -> int:
+    default_output = "data/eval_report.json" if Path("data").exists() else "eval_report.json"
     parser = argparse.ArgumentParser(
         description="Run RAG Triad & Governance Evaluation Gate for yt-ayochat"
     )
@@ -122,8 +123,8 @@ def main() -> int:
     parser.add_argument(
         "--output-json",
         type=str,
-        default="eval_report.json",
-        help="Output JSON file path for CI/CD test reports (default: eval_report.json)",
+        default=default_output,
+        help=f"Output JSON file path for CI/CD test reports (default: {default_output})",
     )
     parser.add_argument(
         "--compare-baseline",

@@ -157,13 +157,18 @@ class VideoReplyAuditor:
         self,
         video_id: str,
         limit: int = 10,
-        log_file_path: str = "lumi_hitl_alignment.jsonl",
+        log_file_path: Optional[str] = None,
         dry_run: bool = True,
     ) -> None:
         self.raw_video_id = video_id
         self.video_id = parse_video_id(video_id)
         self.limit = limit
-        self.log_file_path = Path(log_file_path)
+        if log_file_path:
+            self.log_file_path = Path(log_file_path)
+        elif Path("data/lumi_hitl_alignment.jsonl").parent.exists():
+            self.log_file_path = Path("data/lumi_hitl_alignment.jsonl")
+        else:
+            self.log_file_path = Path("lumi_hitl_alignment.jsonl")
         self.dry_run = dry_run
 
         # Multi-Agent Swarm Components
@@ -437,8 +442,8 @@ def run_cli() -> None:
     parser.add_argument(
         "--log-file",
         type=str,
-        default="lumi_hitl_alignment.jsonl",
-        help="Log file path for alignment telemetry (default: lumi_hitl_alignment.jsonl)",
+        default="data/lumi_hitl_alignment.jsonl" if Path("data").exists() else "lumi_hitl_alignment.jsonl",
+        help="Log file path for alignment telemetry (default: data/lumi_hitl_alignment.jsonl)",
     )
     args = parser.parse_args()
 

@@ -1,0 +1,2722 @@
+[
+  {
+    "insertId": "6a93398c0007dd0bfa319eea",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-08-29T19:57:00.646146497Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:57730 - \"GET /favicon.ico HTTP/1.1\" 404 Not Found",
+    "timestamp": "2026-08-29T19:57:00.515339Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.002302730s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://yt-ayochat-imjqk6pqlq-uc.a.run.app/",
+      "remoteIp": "138.238.254.99",
+      "requestMethod": "GET",
+      "requestSize": "1003",
+      "requestUrl": "https://yt-ayochat-imjqk6pqlq-uc.a.run.app/favicon.ico",
+      "responseSize": "122",
+      "serverIp": "34.143.74.2",
+      "status": 404,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36"
+    },
+    "insertId": "6a93398c0007df98d5541eb4",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-08-29T19:57:00.655717315Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "WARNING",
+    "spanId": "24f5994614c6f78a",
+    "timestamp": "2026-08-29T19:57:00.511567Z",
+    "trace": "projects/katseye-498018/traces/535ba799936751fe987fddc8dbabeddc"
+  },
+  {
+    "insertId": "6a93398c0001fa67234547e5",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-08-29T19:57:00.313374372Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:57716 - \"GET /api/memory/synthetic HTTP/1.1\" 200 OK",
+    "timestamp": "2026-08-29T19:57:00.129639Z"
+  },
+  {
+    "insertId": "6a93398c0001b5fb050f85af",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-08-29T19:57:00.313374372Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:57710 - \"GET /api/governance/armor HTTP/1.1\" 200 OK",
+    "timestamp": "2026-08-29T19:57:00.112123Z"
+  },
+  {
+    "insertId": "6a93398c0001b4da5623cb45",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-08-29T19:57:00.313374372Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:57696 - \"GET /api/metrics/triad HTTP/1.1\" 200 OK",
+    "timestamp": "2026-08-29T19:57:00.111834Z"
+  },
+  {
+    "insertId": "6a93398c0001b02a3dd7ce04",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-08-29T19:57:00.313374372Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:57686 - \"GET /api/ledger/council HTTP/1.1\" 200 OK",
+    "timestamp": "2026-08-29T19:57:00.110634Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.034924879s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://yt-ayochat-imjqk6pqlq-uc.a.run.app/",
+      "remoteIp": "138.238.254.99",
+      "requestMethod": "GET",
+      "requestSize": "948",
+      "requestUrl": "https://yt-ayochat-imjqk6pqlq-uc.a.run.app/api/memory/synthetic",
+      "responseSize": "58791",
+      "serverIp": "34.143.74.2",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36"
+    },
+    "insertId": "6a93398c0001fe5059750e57",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-08-29T19:57:00.322178238Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "1ac1c1f58ab5bed2",
+    "timestamp": "2026-08-29T19:57:00.093717Z",
+    "trace": "projects/katseye-498018/traces/008fb3caf8ed0fac987fddc8dbabe5fe"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.017840100s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://yt-ayochat-imjqk6pqlq-uc.a.run.app/",
+      "remoteIp": "138.238.254.99",
+      "requestMethod": "GET",
+      "requestSize": "945",
+      "requestUrl": "https://yt-ayochat-imjqk6pqlq-uc.a.run.app/api/governance/armor",
+      "responseSize": "2789",
+      "serverIp": "34.143.74.2",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36"
+    },
+    "insertId": "6a93398c0001b8daf7f8577c",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-08-29T19:57:00.322178238Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "161b5d2da3d90d6e",
+    "timestamp": "2026-08-29T19:57:00.093336Z",
+    "trace": "projects/katseye-498018/traces/d6c85fa39bdfd5a4987fddc8dbabe1c4"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.018327600s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://yt-ayochat-imjqk6pqlq-uc.a.run.app/",
+      "remoteIp": "138.238.254.99",
+      "requestMethod": "GET",
+      "requestSize": "944",
+      "requestUrl": "https://yt-ayochat-imjqk6pqlq-uc.a.run.app/api/metrics/triad",
+      "responseSize": "17093",
+      "serverIp": "34.143.74.2",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36"
+    },
+    "insertId": "6a93398c0001b8bcd552af10",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-08-29T19:57:00.322178238Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "9b4d8e1a2437bded",
+    "timestamp": "2026-08-29T19:57:00.092509Z",
+    "trace": "projects/katseye-498018/traces/4cac7c3bae06cb7c987fddc8dbabed8a"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.018280950s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://yt-ayochat-imjqk6pqlq-uc.a.run.app/",
+      "remoteIp": "138.238.254.99",
+      "requestMethod": "GET",
+      "requestSize": "946",
+      "requestUrl": "https://yt-ayochat-imjqk6pqlq-uc.a.run.app/api/ledger/council",
+      "responseSize": "5927",
+      "serverIp": "34.143.74.2",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36"
+    },
+    "insertId": "6a93398c0001b35a68d7ddf2",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-08-29T19:57:00.322178238Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "3a18168334362ebc",
+    "timestamp": "2026-08-29T19:57:00.091033Z",
+    "trace": "projects/katseye-498018/traces/74a375d5ebd70c06987fddc8dbabe950"
+  },
+  {
+    "insertId": "6a93398b000e1a8708cda36d",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-08-29T19:56:59.987487982Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:57678 - \"GET /ayochatreveal.png HTTP/1.1\" 404 Not Found",
+    "timestamp": "2026-08-29T19:56:59.924295Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.002517360s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://yt-ayochat-imjqk6pqlq-uc.a.run.app/",
+      "remoteIp": "138.238.254.99",
+      "requestMethod": "GET",
+      "requestSize": "1004",
+      "requestUrl": "https://yt-ayochat-imjqk6pqlq-uc.a.run.app/ayochatreveal.png",
+      "responseSize": "122",
+      "serverIp": "34.143.74.2",
+      "status": 404,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36"
+    },
+    "insertId": "6a93398b000e1d905a17a4b4",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-08-29T19:56:59.989471261Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "WARNING",
+    "spanId": "552673e06e37db68",
+    "timestamp": "2026-08-29T19:56:59.920034Z",
+    "trace": "projects/katseye-498018/traces/339edd0e54afcc30987fddc8dbabeb1d",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6a93398b0009fba3811220bc",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-08-29T19:56:59.987487982Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:14788 - \"GET /api/health HTTP/1.1\" 200 OK",
+    "timestamp": "2026-08-29T19:56:59.654243Z"
+  },
+  {
+    "insertId": "6a93398b0009c4d7b05d1b67",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-08-29T19:56:59.645801760Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:14780 - \"GET / HTTP/1.1\" 200 OK",
+    "timestamp": "2026-08-29T19:56:59.640215Z"
+  },
+  {
+    "insertId": "6a93398b00082150da61fbb3",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fvarlog%2Fsystem",
+    "receiveTimestamp": "2026-08-29T19:56:59.538470705Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "textPayload": "Default STARTUP TCP probe succeeded after 1 attempt for container \"yt-ayochat-1\" on port 8080.",
+    "timestamp": "2026-08-29T19:56:59.532816Z"
+  },
+  {
+    "insertId": "6a93398b00081f8d205958d2",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T19:56:59.619713177Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)",
+    "timestamp": "2026-08-29T19:56:59.532365Z"
+  },
+  {
+    "insertId": "6a93398b00081825d2a245e1",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T19:56:59.619713177Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     Application startup complete.",
+    "timestamp": "2026-08-29T19:56:59.530469Z"
+  },
+  {
+    "insertId": "6a93398b000814c6f91ca2d2",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T19:56:59.619713177Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     Waiting for application startup.",
+    "timestamp": "2026-08-29T19:56:59.529606Z"
+  },
+  {
+    "insertId": "6a93398b00081499602e5c46",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T19:56:59.619713177Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     Started server process [2]",
+    "timestamp": "2026-08-29T19:56:59.529561Z"
+  },
+  {
+    "insertId": "6a9339860002f38155b4eeed",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T19:56:54.291861940Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz: 100%|██████████| 79.3M/79.3M [00:01<00:00, 49.5MiB/s]",
+    "timestamp": "2026-08-29T19:56:54.193409Z"
+  },
+  {
+    "insertId": "6a9339860002f3701b001ecf",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T19:56:54.291861940Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  94%|█████████▍| 74.5M/79.3M [00:01<00:00, 56.6MiB/s]",
+    "timestamp": "2026-08-29T19:56:54.193392Z"
+  },
+  {
+    "insertId": "6a9339860001b1de26fb62b6",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T19:56:54.291861940Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  87%|████████▋ | 68.9M/79.3M [00:01<00:00, 56.0MiB/s]",
+    "timestamp": "2026-08-29T19:56:54.111070Z"
+  },
+  {
+    "insertId": "6a93398600002aebfa942215",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T19:56:54.291861940Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  79%|███████▉  | 62.8M/79.3M [00:01<00:00, 52.9MiB/s]",
+    "timestamp": "2026-08-29T19:56:54.010987Z"
+  },
+  {
+    "insertId": "6a933985000de1dc465556d8",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T19:56:53.960608423Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  73%|███████▎  | 57.6M/79.3M [00:01<00:00, 52.7MiB/s]",
+    "timestamp": "2026-08-29T19:56:53.909788Z"
+  },
+  {
+    "insertId": "6a933985000c5a4ece601e98",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T19:56:53.960608423Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  65%|██████▍   | 51.4M/79.3M [00:01<00:00, 48.9MiB/s]",
+    "timestamp": "2026-08-29T19:56:53.809550Z"
+  },
+  {
+    "insertId": "6a933985000abf198cc1ee1a",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T19:56:53.960608423Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  58%|█████▊    | 46.3M/79.3M [00:01<00:00, 47.2MiB/s]",
+    "timestamp": "2026-08-29T19:56:53.704281Z"
+  },
+  {
+    "insertId": "6a9339850009383a0324c233",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T19:56:53.624584729Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  52%|█████▏    | 40.9M/79.3M [00:00<00:00, 56.3MiB/s]",
+    "timestamp": "2026-08-29T19:56:53.604218Z"
+  },
+  {
+    "insertId": "6a9339850006b7bbc7616e87",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T19:56:53.624584729Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  45%|████▍     | 35.5M/79.3M [00:00<00:00, 56.5MiB/s]",
+    "timestamp": "2026-08-29T19:56:53.440251Z"
+  },
+  {
+    "insertId": "6a933985000529d679d53c07",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T19:56:53.624584729Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  37%|███▋      | 29.2M/79.3M [00:00<00:01, 52.1MiB/s]",
+    "timestamp": "2026-08-29T19:56:53.338390Z"
+  },
+  {
+    "insertId": "6a9339850003a2353d4caed6",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T19:56:53.292830221Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  30%|███       | 24.0M/79.3M [00:00<00:01, 52.0MiB/s]",
+    "timestamp": "2026-08-29T19:56:53.238133Z"
+  },
+  {
+    "insertId": "6a9339850002095691ddc1ce",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T19:56:53.292830221Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  23%|██▎       | 18.1M/79.3M [00:00<00:01, 47.5MiB/s]",
+    "timestamp": "2026-08-29T19:56:53.133462Z"
+  },
+  {
+    "insertId": "6a93398500008b18a2a8fe91",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T19:56:53.292830221Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  16%|█▌        | 12.4M/79.3M [00:00<00:01, 40.3MiB/s]",
+    "timestamp": "2026-08-29T19:56:53.035608Z"
+  },
+  {
+    "insertId": "6a933984000e3e0a8a8d4707",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T19:56:52.959417487Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:   8%|▊         | 6.47M/79.3M [00:00<00:02, 27.1MiB/s]",
+    "timestamp": "2026-08-29T19:56:52.933386Z"
+  },
+  {
+    "insertId": "6a933984000cb6e43516c5cd",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T19:56:52.959417487Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:   2%|▏         | 1.40M/79.3M [00:00<00:10, 7.49MiB/s]",
+    "timestamp": "2026-08-29T19:56:52.833252Z"
+  },
+  {
+    "insertId": "6a933984000b3126ad1129f7",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T19:56:52.959417487Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:   0%|          | 155k/79.3M [00:00<00:55, 1.49MiB/s]",
+    "timestamp": "2026-08-29T19:56:52.733478Z"
+  },
+  {
+    "insertId": "6a933984000970786d201734",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T19:56:52.624871787Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:   0%|          | 0.00/79.3M [00:00<?, ?iB/s]",
+    "timestamp": "2026-08-29T19:56:52.618616Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.004821459s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "138.238.254.99",
+      "requestMethod": "GET",
+      "requestSize": "289",
+      "requestUrl": "https://yt-ayochat-848283871943.us-central1.run.app/api/health",
+      "responseSize": "275",
+      "serverIp": "34.143.72.2",
+      "status": 200,
+      "userAgent": "curl/8.7.1"
+    },
+    "insertId": "6a93398b0009fbfed4a44b96",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-08-29T19:56:59.989471261Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "14958832a7b33d26",
+    "timestamp": "2026-08-29T19:56:47.225574Z",
+    "trace": "projects/katseye-498018/traces/3d78eab8b6c24f700cf2fdd74e3591b1"
+  },
+  {
+    "insertId": "6a9339790003d16f6bca20b5",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76",
+      "scaling_reason": "AUTOSCALING"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fvarlog%2Fsystem",
+    "receiveTimestamp": "2026-08-29T19:56:41.258611525Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "textPayload": "Starting new instance. Reason: AUTOSCALING - Instance started due to configured scaling factors (e.g. CPU utilization, request throughput, etc.) or no existing capacity for current traffic.",
+    "timestamp": "2026-08-29T19:56:41.250223Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "18.269898498s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "138.238.254.99",
+      "requestMethod": "GET",
+      "requestSize": "1055",
+      "requestUrl": "https://yt-ayochat-imjqk6pqlq-uc.a.run.app/",
+      "responseSize": "34871",
+      "serverIp": "34.143.74.2",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36"
+    },
+    "insertId": "6a93398b0009e77bd723d024",
+    "labels": {
+      "instanceId": "00a41e8c1d76e7ecbdfa07dae3231888f79b827c014bc89b9e3b97ec2df1367977e22aea006793afde289685521d2515a8519a2b9704b73b89a8d7d581973c88ddf54630554b229aad30044260cc76"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-08-29T19:56:59.657293396Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "3dffc4bb3a65895c",
+    "timestamp": "2026-08-29T19:56:41.212481Z",
+    "trace": "projects/katseye-498018/traces/06d91f28c70a4de25838ca7275bf8b0b",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6a92f0dc00090e1b3c5ef42a",
+    "labels": {
+      "instanceId": "00a41e8c1d6ff79b74805d368c92221de557d283eeef827c92869efd432e3e90165dd6dad43fbd7fff9754bc3f0fea66d007b2187304a027ffb5407442118c6e38ffd70befab7181a6d3e4c5bd086a"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-08-29T14:46:52.600709720Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:32128 - \"GET /api/health HTTP/1.1\" 200 OK",
+    "timestamp": "2026-08-29T14:46:52.593435Z"
+  },
+  {
+    "insertId": "6a92f0dc000840ce3a2a89e5",
+    "labels": {
+      "instanceId": "00a41e8c1d6ff79b74805d368c92221de557d283eeef827c92869efd432e3e90165dd6dad43fbd7fff9754bc3f0fea66d007b2187304a027ffb5407442118c6e38ffd70befab7181a6d3e4c5bd086a"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fvarlog%2Fsystem",
+    "receiveTimestamp": "2026-08-29T14:46:52.550570072Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "textPayload": "Default STARTUP TCP probe succeeded after 1 attempt for container \"yt-ayochat-1\" on port 8080.",
+    "timestamp": "2026-08-29T14:46:52.540878Z"
+  },
+  {
+    "insertId": "6a92f0dc00083f5040739f9d",
+    "labels": {
+      "instanceId": "00a41e8c1d6ff79b74805d368c92221de557d283eeef827c92869efd432e3e90165dd6dad43fbd7fff9754bc3f0fea66d007b2187304a027ffb5407442118c6e38ffd70befab7181a6d3e4c5bd086a"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T14:46:52.849116511Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)",
+    "timestamp": "2026-08-29T14:46:52.540496Z"
+  },
+  {
+    "insertId": "6a92f0dc000839a3b4bde726",
+    "labels": {
+      "instanceId": "00a41e8c1d6ff79b74805d368c92221de557d283eeef827c92869efd432e3e90165dd6dad43fbd7fff9754bc3f0fea66d007b2187304a027ffb5407442118c6e38ffd70befab7181a6d3e4c5bd086a"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T14:46:52.849116511Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     Application startup complete.",
+    "timestamp": "2026-08-29T14:46:52.539043Z"
+  },
+  {
+    "insertId": "6a92f0dc000836828bf1414c",
+    "labels": {
+      "instanceId": "00a41e8c1d6ff79b74805d368c92221de557d283eeef827c92869efd432e3e90165dd6dad43fbd7fff9754bc3f0fea66d007b2187304a027ffb5407442118c6e38ffd70befab7181a6d3e4c5bd086a"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T14:46:52.849116511Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     Waiting for application startup.",
+    "timestamp": "2026-08-29T14:46:52.538242Z"
+  },
+  {
+    "insertId": "6a92f0dc0008363b4a4758ca",
+    "labels": {
+      "instanceId": "00a41e8c1d6ff79b74805d368c92221de557d283eeef827c92869efd432e3e90165dd6dad43fbd7fff9754bc3f0fea66d007b2187304a027ffb5407442118c6e38ffd70befab7181a6d3e4c5bd086a"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T14:46:52.849116511Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     Started server process [2]",
+    "timestamp": "2026-08-29T14:46:52.538171Z"
+  },
+  {
+    "insertId": "6a92f0d7000914c2a4db2771",
+    "labels": {
+      "instanceId": "00a41e8c1d6ff79b74805d368c92221de557d283eeef827c92869efd432e3e90165dd6dad43fbd7fff9754bc3f0fea66d007b2187304a027ffb5407442118c6e38ffd70befab7181a6d3e4c5bd086a"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T14:46:47.854422584Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz: 100%|██████████| 79.3M/79.3M [00:01<00:00, 54.7MiB/s]",
+    "timestamp": "2026-08-29T14:46:47.595138Z"
+  },
+  {
+    "insertId": "6a92f0d7000914b491d106e1",
+    "labels": {
+      "instanceId": "00a41e8c1d6ff79b74805d368c92221de557d283eeef827c92869efd432e3e90165dd6dad43fbd7fff9754bc3f0fea66d007b2187304a027ffb5407442118c6e38ffd70befab7181a6d3e4c5bd086a"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T14:46:47.854422584Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  93%|█████████▎| 73.8M/79.3M [00:01<00:00, 63.9MiB/s]",
+    "timestamp": "2026-08-29T14:46:47.595124Z"
+  },
+  {
+    "insertId": "6a92f0d70007be5ff8c8c988",
+    "labels": {
+      "instanceId": "00a41e8c1d6ff79b74805d368c92221de557d283eeef827c92869efd432e3e90165dd6dad43fbd7fff9754bc3f0fea66d007b2187304a027ffb5407442118c6e38ffd70befab7181a6d3e4c5bd086a"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T14:46:47.521369272Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  85%|████████▌ | 67.5M/79.3M [00:01<00:00, 62.8MiB/s]",
+    "timestamp": "2026-08-29T14:46:47.507487Z"
+  },
+  {
+    "insertId": "6a92f0d7000637b5645d74b4",
+    "labels": {
+      "instanceId": "00a41e8c1d6ff79b74805d368c92221de557d283eeef827c92869efd432e3e90165dd6dad43fbd7fff9754bc3f0fea66d007b2187304a027ffb5407442118c6e38ffd70befab7181a6d3e4c5bd086a"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T14:46:47.521369272Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  78%|███████▊  | 61.5M/79.3M [00:01<00:00, 63.0MiB/s]",
+    "timestamp": "2026-08-29T14:46:47.407477Z"
+  },
+  {
+    "insertId": "6a92f0d70004aa482fec168d",
+    "labels": {
+      "instanceId": "00a41e8c1d6ff79b74805d368c92221de557d283eeef827c92869efd432e3e90165dd6dad43fbd7fff9754bc3f0fea66d007b2187304a027ffb5407442118c6e38ffd70befab7181a6d3e4c5bd086a"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T14:46:47.521369272Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  69%|██████▉   | 55.0M/79.3M [00:01<00:00, 60.8MiB/s]",
+    "timestamp": "2026-08-29T14:46:47.305736Z"
+  },
+  {
+    "insertId": "6a92f0d70003235658ba43ef",
+    "labels": {
+      "instanceId": "00a41e8c1d6ff79b74805d368c92221de557d283eeef827c92869efd432e3e90165dd6dad43fbd7fff9754bc3f0fea66d007b2187304a027ffb5407442118c6e38ffd70befab7181a6d3e4c5bd086a"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T14:46:47.521369272Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  62%|██████▏   | 48.9M/79.3M [00:01<00:00, 60.9MiB/s]",
+    "timestamp": "2026-08-29T14:46:47.205654Z"
+  },
+  {
+    "insertId": "6a92f0d700018c88052891e2",
+    "labels": {
+      "instanceId": "00a41e8c1d6ff79b74805d368c92221de557d283eeef827c92869efd432e3e90165dd6dad43fbd7fff9754bc3f0fea66d007b2187304a027ffb5407442118c6e38ffd70befab7181a6d3e4c5bd086a"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T14:46:47.189223295Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  54%|█████▍    | 42.9M/79.3M [00:00<00:00, 59.7MiB/s]",
+    "timestamp": "2026-08-29T14:46:47.101512Z"
+  },
+  {
+    "insertId": "6a92f0d7000005cc3b571ad8",
+    "labels": {
+      "instanceId": "00a41e8c1d6ff79b74805d368c92221de557d283eeef827c92869efd432e3e90165dd6dad43fbd7fff9754bc3f0fea66d007b2187304a027ffb5407442118c6e38ffd70befab7181a6d3e4c5bd086a"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T14:46:47.189223295Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  47%|████▋     | 37.2M/79.3M [00:00<00:00, 59.8MiB/s]",
+    "timestamp": "2026-08-29T14:46:47.001484Z"
+  },
+  {
+    "insertId": "6a92f0d6000dbdd9bc6e442e",
+    "labels": {
+      "instanceId": "00a41e8c1d6ff79b74805d368c92221de557d283eeef827c92869efd432e3e90165dd6dad43fbd7fff9754bc3f0fea66d007b2187304a027ffb5407442118c6e38ffd70befab7181a6d3e4c5bd086a"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T14:46:47.189223295Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  39%|███▉      | 30.8M/79.3M [00:00<00:00, 56.6MiB/s]",
+    "timestamp": "2026-08-29T14:46:46.900569Z"
+  },
+  {
+    "insertId": "6a92f0d6000c37fc5d2eb017",
+    "labels": {
+      "instanceId": "00a41e8c1d6ff79b74805d368c92221de557d283eeef827c92869efd432e3e90165dd6dad43fbd7fff9754bc3f0fea66d007b2187304a027ffb5407442118c6e38ffd70befab7181a6d3e4c5bd086a"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T14:46:46.861091451Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  31%|███       | 24.7M/79.3M [00:00<00:01, 53.4MiB/s]",
+    "timestamp": "2026-08-29T14:46:46.800764Z"
+  },
+  {
+    "insertId": "6a92f0d6000aaf0886ae2fa4",
+    "labels": {
+      "instanceId": "00a41e8c1d6ff79b74805d368c92221de557d283eeef827c92869efd432e3e90165dd6dad43fbd7fff9754bc3f0fea66d007b2187304a027ffb5407442118c6e38ffd70befab7181a6d3e4c5bd086a"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T14:46:46.861091451Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  23%|██▎       | 18.5M/79.3M [00:00<00:01, 47.4MiB/s]",
+    "timestamp": "2026-08-29T14:46:46.700168Z"
+  },
+  {
+    "insertId": "6a92f0d6000928ae73d85b1b",
+    "labels": {
+      "instanceId": "00a41e8c1d6ff79b74805d368c92221de557d283eeef827c92869efd432e3e90165dd6dad43fbd7fff9754bc3f0fea66d007b2187304a027ffb5407442118c6e38ffd70befab7181a6d3e4c5bd086a"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T14:46:46.861091451Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  16%|█▌        | 12.4M/79.3M [00:00<00:01, 40.5MiB/s]",
+    "timestamp": "2026-08-29T14:46:46.600238Z"
+  },
+  {
+    "insertId": "6a92f0d60007809cb08f9a77",
+    "labels": {
+      "instanceId": "00a41e8c1d6ff79b74805d368c92221de557d283eeef827c92869efd432e3e90165dd6dad43fbd7fff9754bc3f0fea66d007b2187304a027ffb5407442118c6e38ffd70befab7181a6d3e4c5bd086a"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T14:46:46.522151869Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:   8%|▊         | 6.61M/79.3M [00:00<00:02, 28.2MiB/s]",
+    "timestamp": "2026-08-29T14:46:46.491676Z"
+  },
+  {
+    "insertId": "6a92f0d60005fa00879a13ae",
+    "labels": {
+      "instanceId": "00a41e8c1d6ff79b74805d368c92221de557d283eeef827c92869efd432e3e90165dd6dad43fbd7fff9754bc3f0fea66d007b2187304a027ffb5407442118c6e38ffd70befab7181a6d3e4c5bd086a"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T14:46:46.522151869Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:   2%|▏         | 1.39M/79.3M [00:00<00:10, 7.63MiB/s]",
+    "timestamp": "2026-08-29T14:46:46.391680Z"
+  },
+  {
+    "insertId": "6a92f0d6000473c133d8dd7a",
+    "labels": {
+      "instanceId": "00a41e8c1d6ff79b74805d368c92221de557d283eeef827c92869efd432e3e90165dd6dad43fbd7fff9754bc3f0fea66d007b2187304a027ffb5407442118c6e38ffd70befab7181a6d3e4c5bd086a"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T14:46:46.522151869Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:   0%|          | 147k/79.3M [00:00<00:57, 1.44MiB/s]",
+    "timestamp": "2026-08-29T14:46:46.291777Z"
+  },
+  {
+    "insertId": "6a92f0d60002c2dfa5a94594",
+    "labels": {
+      "instanceId": "00a41e8c1d6ff79b74805d368c92221de557d283eeef827c92869efd432e3e90165dd6dad43fbd7fff9754bc3f0fea66d007b2187304a027ffb5407442118c6e38ffd70befab7181a6d3e4c5bd086a"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T14:46:46.193797576Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:   0%|          | 0.00/79.3M [00:00<?, ?iB/s]",
+    "timestamp": "2026-08-29T14:46:46.180959Z"
+  },
+  {
+    "insertId": "6a92f0cb000810b2265ccbe5",
+    "labels": {
+      "instanceId": "00a41e8c1d6ff79b74805d368c92221de557d283eeef827c92869efd432e3e90165dd6dad43fbd7fff9754bc3f0fea66d007b2187304a027ffb5407442118c6e38ffd70befab7181a6d3e4c5bd086a",
+      "scaling_reason": "AUTOSCALING"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fvarlog%2Fsystem",
+    "receiveTimestamp": "2026-08-29T14:46:35.536975881Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "textPayload": "Starting new instance. Reason: AUTOSCALING - Instance started due to configured scaling factors (e.g. CPU utilization, request throughput, etc.) or no existing capacity for current traffic.",
+    "timestamp": "2026-08-29T14:46:35.528562Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "16.952351481s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "98.91.77.46",
+      "requestMethod": "GET",
+      "requestSize": "582",
+      "requestUrl": "https://yt-ayochat-848283871943.us-central1.run.app/api/health",
+      "responseSize": "275",
+      "serverIp": "34.143.73.2",
+      "status": 200,
+      "userAgent": "Mozilla/5.0 (compatible)"
+    },
+    "insertId": "6a92f0dc0009324f85888ee1",
+    "labels": {
+      "instanceId": "00a41e8c1d6ff79b74805d368c92221de557d283eeef827c92869efd432e3e90165dd6dad43fbd7fff9754bc3f0fea66d007b2187304a027ffb5407442118c6e38ffd70befab7181a6d3e4c5bd086a"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-08-29T14:46:52.608752022Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "d351925b434bcfc9",
+    "timestamp": "2026-08-29T14:46:35.487936Z",
+    "trace": "projects/katseye-498018/traces/720e5e4847c62f928a93f7baa54b390c",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6a92e27a0007579b001c76fc",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-08-29T13:45:30.629039754Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:58120 - \"GET /favicon.ico HTTP/1.1\" 404 Not Found",
+    "timestamp": "2026-08-29T13:45:30.481179Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.001988110s",
+      "protocol": "HTTP/1.1",
+      "referer": "https://yt-ayochat-848283871943.us-central1.run.app/api/health](https://yt-ayochat-848283871943.us-central1.run.app/api/health)",
+      "remoteIp": "138.238.254.99",
+      "requestMethod": "GET",
+      "requestSize": "1105",
+      "requestUrl": "https://yt-ayochat-848283871943.us-central1.run.app/favicon.ico",
+      "responseSize": "122",
+      "serverIp": "34.143.73.2",
+      "status": 404,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36"
+    },
+    "insertId": "6a92e27a0007599893cc2b5a",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-08-29T13:45:30.628843351Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "WARNING",
+    "spanId": "c69283c2f966ed12",
+    "timestamp": "2026-08-29T13:45:30.477866Z",
+    "trace": "projects/katseye-498018/traces/d879a330a1b8d3d65f0ec1af09f61f6f"
+  },
+  {
+    "insertId": "6a92e27a000468c700c2ef86",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-08-29T13:45:30.298117690Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:58106 - \"GET /api/health%5D%28https%3A//yt-ayochat-848283871943.us-central1.run.app/api/health%29 HTTP/1.1\" 404 Not Found",
+    "timestamp": "2026-08-29T13:45:30.288967Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.002853649s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "138.238.254.99",
+      "requestMethod": "GET",
+      "requestSize": "1149",
+      "requestUrl": "https://yt-ayochat-848283871943.us-central1.run.app/api/health](https://yt-ayochat-848283871943.us-central1.run.app/api/health)",
+      "responseSize": "122",
+      "serverIp": "34.143.73.2",
+      "status": 404,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36"
+    },
+    "insertId": "6a92e27a00046b99d41ed089",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-08-29T13:45:30.298217018Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "WARNING",
+    "spanId": "46e94c1c4a632484",
+    "timestamp": "2026-08-29T13:45:30.279178Z",
+    "trace": "projects/katseye-498018/traces/a5d62e6cff761a015f0ec1af09f6191e",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6a92df7800040516cc89ab45",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-08-29T13:32:40.265017577Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:44966 - \"GET /api/health HTTP/1.1\" 200 OK",
+    "timestamp": "2026-08-29T13:32:40.263446Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.031312688s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "138.238.254.99",
+      "requestMethod": "GET",
+      "requestSize": "289",
+      "requestUrl": "https://yt-ayochat-848283871943.us-central1.run.app/api/health",
+      "responseSize": "275",
+      "serverIp": "34.143.76.2",
+      "status": 200,
+      "userAgent": "curl/8.7.1"
+    },
+    "insertId": "6a92df78000408f17fb18aeb",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-08-29T13:32:40.287505037Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "abc96256ff0a5ada",
+    "timestamp": "2026-08-29T13:32:40.223029Z",
+    "trace": "projects/katseye-498018/traces/f5e6c6b02b9fdfd8b3d71d436cc68141",
+    "traceSampled": true
+  },
+  {
+    "insertId": "-wqh6nsd14d8",
+    "logName": "projects/katseye-498018/logs/cloudaudit.googleapis.com%2Fsystem_event",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "methodName": "/Services.ReplaceService",
+      "resourceName": "namespaces/katseye-498018/services/yt-ayochat",
+      "response": {
+        "@type": "type.googleapis.com/google.cloud.run.v1.Service",
+        "apiVersion": "serving.knative.dev/v1",
+        "kind": "Service",
+        "metadata": {
+          "annotations": {
+            "run.googleapis.com/client-name": "gcloud",
+            "run.googleapis.com/client-version": "569.0.0",
+            "run.googleapis.com/ingress": "all",
+            "run.googleapis.com/ingress-status": "all",
+            "run.googleapis.com/maxScale": "20",
+            "run.googleapis.com/operation-id": "dfb9b3e1-7daf-4180-a606-3855d2d61900",
+            "run.googleapis.com/urls": "[\"https://yt-ayochat-848283871943.us-central1.run.app\",\"https://yt-ayochat-imjqk6pqlq-uc.a.run.app\"]",
+            "serving.knative.dev/creator": "douglass.ayodeji@gmail.com",
+            "serving.knative.dev/lastModifier": "douglass.ayodeji@gmail.com"
+          },
+          "creationTimestamp": "2026-08-29T13:27:22.171374Z",
+          "generation": 2,
+          "labels": {
+            "cloud.googleapis.com/location": "us-central1"
+          },
+          "name": "yt-ayochat",
+          "namespace": "848283871943",
+          "resourceVersion": "AAZaL5o7gIU",
+          "selfLink": "/apis/serving.knative.dev/v1/namespaces/848283871943/services/yt-ayochat",
+          "uid": "d3c73eae-5ecc-4bae-8e5f-59be4a6b8290"
+        },
+        "spec": {
+          "template": {
+            "metadata": {
+              "annotations": {
+                "autoscaling.knative.dev/maxScale": "5",
+                "run.googleapis.com/client-name": "gcloud",
+                "run.googleapis.com/client-version": "569.0.0",
+                "run.googleapis.com/startup-cpu-boost": "true"
+              },
+              "labels": {
+                "client.knative.dev/nonce": "nbahpartwa",
+                "run.googleapis.com/startupProbeType": "Default"
+              }
+            },
+            "spec": {
+              "containerConcurrency": 80,
+              "containers": [
+                {
+                  "env": [
+                    {
+                      "name": "GEMINI_API_KEY",
+                      "value": "[REDACTED_API_KEY]"
+                    }
+                  ],
+                  "image": "us-central1-docker.pkg.dev/katseye-498018/yt-ayochat/yt-ayochat:latest",
+                  "ports": [
+                    {
+                      "containerPort": 8080,
+                      "name": "http1"
+                    }
+                  ],
+                  "resources": {
+                    "limits": {
+                      "cpu": "1",
+                      "memory": "1Gi"
+                    }
+                  },
+                  "startupProbe": {
+                    "failureThreshold": 1,
+                    "periodSeconds": 240,
+                    "tcpSocket": {
+                      "port": 8080
+                    },
+                    "timeoutSeconds": 240
+                  }
+                }
+              ],
+              "serviceAccountName": "848283871943-compute@developer.gserviceaccount.com",
+              "timeoutSeconds": 300
+            }
+          },
+          "traffic": [
+            {
+              "latestRevision": true,
+              "percent": 100
+            }
+          ]
+        },
+        "status": {
+          "address": {
+            "url": "https://yt-ayochat-imjqk6pqlq-uc.a.run.app"
+          },
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-08-29T13:32:37.817477Z",
+              "status": "True",
+              "type": "Ready"
+            },
+            {
+              "lastTransitionTime": "2026-08-29T13:31:54.704946Z",
+              "status": "True",
+              "type": "ConfigurationsReady"
+            },
+            {
+              "lastTransitionTime": "2026-08-29T13:32:37.786207Z",
+              "status": "True",
+              "type": "RoutesReady"
+            }
+          ],
+          "latestCreatedRevisionName": "yt-ayochat-00002-m64",
+          "latestReadyRevisionName": "yt-ayochat-00002-m64",
+          "observedGeneration": 2,
+          "traffic": [
+            {
+              "latestRevision": true,
+              "percent": 100,
+              "revisionName": "yt-ayochat-00002-m64"
+            }
+          ],
+          "url": "https://yt-ayochat-imjqk6pqlq-uc.a.run.app"
+        }
+      },
+      "serviceName": "run.googleapis.com",
+      "status": {
+        "message": "Ready condition status changed to True for Service yt-ayochat."
+      }
+    },
+    "receiveTimestamp": "2026-08-29T13:32:38.266960352Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-08-29T13:32:37.829990Z"
+  },
+  {
+    "insertId": "e7l2fudoqlu",
+    "logName": "projects/katseye-498018/logs/cloudaudit.googleapis.com%2Fsystem_event",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "methodName": "/Services.ReplaceService",
+      "resourceName": "namespaces/katseye-498018/revisions/yt-ayochat-00002-m64",
+      "response": {
+        "@type": "type.googleapis.com/google.cloud.run.v1.Revision",
+        "apiVersion": "serving.knative.dev/v1",
+        "kind": "Revision",
+        "metadata": {
+          "annotations": {
+            "autoscaling.knative.dev/maxScale": "5",
+            "run.googleapis.com/client-name": "gcloud",
+            "run.googleapis.com/client-version": "569.0.0",
+            "run.googleapis.com/operation-id": "dfb9b3e1-7daf-4180-a606-3855d2d61900",
+            "run.googleapis.com/startup-cpu-boost": "true",
+            "serving.knative.dev/creator": "douglass.ayodeji@gmail.com"
+          },
+          "creationTimestamp": "2026-08-29T13:31:19.168819Z",
+          "generation": 1,
+          "labels": {
+            "client.knative.dev/nonce": "nbahpartwa",
+            "cloud.googleapis.com/location": "us-central1",
+            "run.googleapis.com/startupProbeType": "Default",
+            "serving.knative.dev/configuration": "yt-ayochat",
+            "serving.knative.dev/configurationGeneration": "2",
+            "serving.knative.dev/route": "yt-ayochat",
+            "serving.knative.dev/service": "yt-ayochat",
+            "serving.knative.dev/serviceUid": "d3c73eae-5ecc-4bae-8e5f-59be4a6b8290"
+          },
+          "name": "yt-ayochat-00002-m64",
+          "namespace": "848283871943",
+          "ownerReferences": [
+            {
+              "apiVersion": "serving.knative.dev/v1",
+              "blockOwnerDeletion": true,
+              "controller": true,
+              "kind": "Configuration",
+              "name": "yt-ayochat",
+              "uid": "fa7ec049-9875-4582-ae41-ab461a98d2a2"
+            }
+          ],
+          "resourceVersion": "AAZaL5opZCE",
+          "selfLink": "/apis/serving.knative.dev/v1/namespaces/848283871943/revisions/yt-ayochat-00002-m64",
+          "uid": "6c716085-2d2d-44a7-ad79-9ee7464cc13c"
+        },
+        "spec": {
+          "containerConcurrency": 80,
+          "containers": [
+            {
+              "env": [
+                {
+                  "name": "GEMINI_API_KEY",
+                  "value": "[REDACTED_API_KEY]"
+                }
+              ],
+              "image": "us-central1-docker.pkg.dev/katseye-498018/yt-ayochat/yt-ayochat@sha256:e34ecffbd2eb0a855886bf0b788a97a88fed75be0d3246c29bd103ca3fbff90d",
+              "name": "yt-ayochat-1",
+              "ports": [
+                {
+                  "containerPort": 8080,
+                  "name": "http1"
+                }
+              ],
+              "resources": {
+                "limits": {
+                  "cpu": "1",
+                  "memory": "1Gi"
+                }
+              },
+              "startupProbe": {
+                "failureThreshold": 1,
+                "periodSeconds": 240,
+                "tcpSocket": {
+                  "port": 8080
+                },
+                "timeoutSeconds": 240
+              }
+            }
+          ],
+          "serviceAccountName": "848283871943-compute@developer.gserviceaccount.com",
+          "timeoutSeconds": 300
+        },
+        "status": {
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-08-29T13:32:36.630561Z",
+              "message": "Deploying revision succeeded in 1m17.46s.",
+              "status": "True",
+              "type": "Ready"
+            },
+            {
+              "lastTransitionTime": "2026-08-29T13:32:36.583855Z",
+              "message": "Containers became healthy in 14.25s.",
+              "status": "True",
+              "type": "ContainerHealthy"
+            },
+            {
+              "lastTransitionTime": "2026-08-29T13:31:54.600960Z",
+              "message": "Container image import completed in 34.61s.",
+              "status": "True",
+              "type": "ContainerReady"
+            },
+            {
+              "lastTransitionTime": "2026-08-29T13:32:22.098671Z",
+              "message": "Provisioning imported containers completed in 27.5s. Checking container health. This will wait for up to 4m for the configured startup probe, including an initial delay of 0s.",
+              "status": "True",
+              "type": "ResourcesAvailable"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "imageDigest": "us-central1-docker.pkg.dev/katseye-498018/yt-ayochat/yt-ayochat@sha256:e34ecffbd2eb0a855886bf0b788a97a88fed75be0d3246c29bd103ca3fbff90d",
+              "name": "yt-ayochat-1"
+            }
+          ],
+          "imageDigest": "us-central1-docker.pkg.dev/katseye-498018/yt-ayochat/yt-ayochat@sha256:e34ecffbd2eb0a855886bf0b788a97a88fed75be0d3246c29bd103ca3fbff90d",
+          "logUrl": "https://console.cloud.google.com/logs/viewer?project=katseye-498018&resource=cloud_run_revision/service_name/yt-ayochat/revision_name/yt-ayochat-00002-m64&advancedFilter=resource.type%3D%22cloud_run_revision%22%0Aresource.labels.service_name%3D%22yt-ayochat%22%0Aresource.labels.revision_name%3D%22yt-ayochat-00002-m64%22",
+          "observedGeneration": 1
+        }
+      },
+      "serviceName": "run.googleapis.com",
+      "status": {
+        "message": "Ready condition status changed to True for Revision yt-ayochat-00002-m64 with message: Deploying revision succeeded in 1m17.46s."
+      }
+    },
+    "receiveTimestamp": "2026-08-29T13:32:37.307504742Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-08-29T13:32:36.639371Z"
+  },
+  {
+    "insertId": "6a92df740008c1203a97033f",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fvarlog%2Fsystem",
+    "receiveTimestamp": "2026-08-29T13:32:36.866595612Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "textPayload": "Default STARTUP TCP probe succeeded after 1 attempt for container \"yt-ayochat-1\" on port 8080.",
+    "timestamp": "2026-08-29T13:32:36.573728Z"
+  },
+  {
+    "insertId": "6a92df740008bfef7bf04f7c",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T13:32:36.776703032Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)",
+    "timestamp": "2026-08-29T13:32:36.573423Z"
+  },
+  {
+    "insertId": "6a92df740008b89043cc5b12",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T13:32:36.776703032Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     Application startup complete.",
+    "timestamp": "2026-08-29T13:32:36.571536Z"
+  },
+  {
+    "insertId": "6a92df740008b5e81e2036e7",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T13:32:36.776703032Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     Waiting for application startup.",
+    "timestamp": "2026-08-29T13:32:36.570856Z"
+  },
+  {
+    "insertId": "6a92df740008b5acb1fd3235",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T13:32:36.776703032Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     Started server process [2]",
+    "timestamp": "2026-08-29T13:32:36.570796Z"
+  },
+  {
+    "insertId": "6a92df6f000e1a454346eee9",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T13:32:32.114829725Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz: 100%|██████████| 79.3M/79.3M [00:01<00:00, 52.3MiB/s]",
+    "timestamp": "2026-08-29T13:32:31.924229Z"
+  },
+  {
+    "insertId": "6a92df6f000e1a37f9125cc9",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T13:32:32.114829725Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  96%|█████████▌| 75.8M/79.3M [00:01<00:00, 66.8MiB/s]",
+    "timestamp": "2026-08-29T13:32:31.924215Z"
+  },
+  {
+    "insertId": "6a92df6f000d3c5c5d368fdd",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T13:32:32.114829725Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  87%|████████▋ | 69.3M/79.3M [00:01<00:00, 66.0MiB/s]",
+    "timestamp": "2026-08-29T13:32:31.867420Z"
+  },
+  {
+    "insertId": "6a92df6f000bb582d717cd82",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T13:32:31.781531479Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  79%|███████▉  | 62.7M/79.3M [00:01<00:00, 65.0MiB/s]",
+    "timestamp": "2026-08-29T13:32:31.767362Z"
+  },
+  {
+    "insertId": "6a92df6f000a2e8e29d1c0b0",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T13:32:31.781531479Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  71%|███████   | 56.0M/79.3M [00:01<00:00, 62.4MiB/s]",
+    "timestamp": "2026-08-29T13:32:31.667278Z"
+  },
+  {
+    "insertId": "6a92df6f0008acd4bf2c6195",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T13:32:31.781531479Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  63%|██████▎   | 49.8M/79.3M [00:01<00:00, 61.6MiB/s]",
+    "timestamp": "2026-08-29T13:32:31.568532Z"
+  },
+  {
+    "insertId": "6a92df6f00072119837226b1",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T13:32:31.781531479Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  55%|█████▍    | 43.5M/79.3M [00:01<00:00, 59.3MiB/s]",
+    "timestamp": "2026-08-29T13:32:31.467225Z"
+  },
+  {
+    "insertId": "6a92df6f00059af02ae06668",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T13:32:31.454984609Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  47%|████▋     | 37.3M/79.3M [00:00<00:00, 57.4MiB/s]",
+    "timestamp": "2026-08-29T13:32:31.367344Z"
+  },
+  {
+    "insertId": "6a92df6f00040f4b5a47fd73",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T13:32:31.454984609Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  39%|███▉      | 30.8M/79.3M [00:00<00:00, 52.6MiB/s]",
+    "timestamp": "2026-08-29T13:32:31.266059Z"
+  },
+  {
+    "insertId": "6a92df6f0002882836d8c590",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T13:32:31.454984609Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  32%|███▏      | 25.0M/79.3M [00:00<00:01, 48.7MiB/s]",
+    "timestamp": "2026-08-29T13:32:31.165928Z"
+  },
+  {
+    "insertId": "6a92df6f000100c2abb0a35b",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T13:32:31.114617665Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  24%|██▍       | 19.3M/79.3M [00:00<00:01, 43.3MiB/s]",
+    "timestamp": "2026-08-29T13:32:31.065730Z"
+  },
+  {
+    "insertId": "6a92df6e000ebc02fcc57cfe",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T13:32:31.114617665Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  17%|█▋        | 13.8M/79.3M [00:00<00:01, 36.6MiB/s]",
+    "timestamp": "2026-08-29T13:32:30.965634Z"
+  },
+  {
+    "insertId": "6a92df6e000d3264d163098f",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T13:32:31.114617665Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:  11%|█         | 8.42M/79.3M [00:00<00:02, 26.0MiB/s]",
+    "timestamp": "2026-08-29T13:32:30.864868Z"
+  },
+  {
+    "insertId": "6a92df6e000bab18c0c2983f",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T13:32:30.782580763Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:   6%|▋         | 5.00M/79.3M [00:00<00:03, 20.4MiB/s]",
+    "timestamp": "2026-08-29T13:32:30.764696Z"
+  },
+  {
+    "insertId": "6a92df6e000a19e5bfc04f43",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T13:32:30.782580763Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:   1%|▏         | 1.19M/79.3M [00:00<00:13, 6.16MiB/s]",
+    "timestamp": "2026-08-29T13:32:30.661989Z"
+  },
+  {
+    "insertId": "6a92df6e000892ccfcee1ac8",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T13:32:30.782580763Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:   0%|          | 130k/79.3M [00:00<01:08, 1.21MiB/s]",
+    "timestamp": "2026-08-29T13:32:30.561868Z"
+  },
+  {
+    "insertId": "6a92df6e0006c1e48429b72b",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-08-29T13:32:30.449391866Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz:   0%|          | 0.00/79.3M [00:00<?, ?iB/s]",
+    "timestamp": "2026-08-29T13:32:30.442852Z"
+  },
+  {
+    "insertId": "6a92df6600032a43650dad4b",
+    "labels": {
+      "instanceId": "00a41e8c1d24237c64ff3716ec7dfe30b6013b761200431823f3b69d95dab46288779a29f5136e02a50ad9a126e205b60c41ce9335c36dad4f4a45ffa4a63cce2489e1b41864bc06d443961a6fb760",
+      "scaling_reason": "DEPLOYMENT_ROLLOUT"
+    },
+    "logName": "projects/katseye-498018/logs/run.googleapis.com%2Fvarlog%2Fsystem",
+    "receiveTimestamp": "2026-08-29T13:32:22.214430585Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "yt-ayochat",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "yt-ayochat-00002-m64",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "textPayload": "Starting new instance. Reason: DEPLOYMENT_ROLLOUT - Instance started due to traffic shifting between revisions due to deployment, traffic split adjustment, or deployment health check.",
+    "timestamp": "2026-08-29T13:32:22.207427Z"
+  },
+  {
+    "insertId": "hik6s2d1n2h",
+    "logName": "projects/katseye-498018/logs/cloudaudit.googleapis.com%2Factivity",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "32555940559.apps.googleusercontent.com"
+        },
+        "principalEmail": "douglass.ayodeji@gmail.com",
+        "principalSubject": "user:douglass.ayodeji@gmail.com"
+      },
+      "authorizationInfo": [
+        {
+          "granted": true,
+          "permission": "run.services.update",
+          "permissionType": "ADMIN_WRITE",
+          "resource": "namespaces/katseye-498018/services/yt-ayochat",
+          "resourceAttributes": {}
+        },
+        {
+          "granted": true,
+          "permission": "run.services.update",
+          "permissionType": "ADMIN_WRITE",
+          "resource": "namespaces/katseye-498018/services/yt-ayochat",
+          "resourceAttributes": {
+            "name": "namespaces/katseye-498018/services/yt-ayochat",
+            "service": "run.googleapis.com/",
+            "type": "run.googleapis.com/Service"
+          }
+        }
+      ],
+      "methodName": "google.cloud.run.v1.Services.ReplaceService",
+      "request": {
+        "@type": "type.googleapis.com/google.cloud.run.v1.ReplaceServiceRequest",
+        "name": "namespaces/katseye-498018/services/yt-ayochat",
+        "service": {
+          "apiVersion": "serving.knative.dev/v1",
+          "kind": "Service",
+          "metadata": {
+            "annotations": {
+              "run.googleapis.com/client-name": "gcloud",
+              "run.googleapis.com/client-version": "569.0.0",
+              "run.googleapis.com/ingress": "all",
+              "run.googleapis.com/ingress-status": "all",
+              "run.googleapis.com/maxScale": "20",
+              "run.googleapis.com/operation-id": "61114043-f829-4772-bbcc-375f54d5f289",
+              "run.googleapis.com/urls": "[\"https://yt-ayochat-848283871943.us-central1.run.app\"]",
+              "serving.knative.dev/creator": "douglass.ayodeji@gmail.com",
+              "serving.knative.dev/lastModifier": "douglass.ayodeji@gmail.com"
+            },
+            "creationTimestamp": "2026-08-29T13:27:22.171374Z",
+            "generation": 1,
+            "labels": {
+              "cloud.googleapis.com/location": "us-central1"
+            },
+            "name": "yt-ayochat",
+            "namespace": "848283871943",
+            "resourceVersion": "AAZaL4eRiHA",
+            "selfLink": "/apis/serving.knative.dev/v1/namespaces/848283871943/services/yt-ayochat",
+            "uid": "d3c73eae-5ecc-4bae-8e5f-59be4a6b8290"
+          },
+          "spec": {
+            "template": {
+              "metadata": {
+                "annotations": {
+                  "autoscaling.knative.dev/maxScale": "5",
+                  "run.googleapis.com/client-name": "gcloud",
+                  "run.googleapis.com/client-version": "569.0.0",
+                  "run.googleapis.com/startup-cpu-boost": "true"
+                },
+                "labels": {
+                  "client.knative.dev/nonce": "nbahpartwa",
+                  "run.googleapis.com/startupProbeType": "Default"
+                }
+              },
+              "spec": {
+                "containerConcurrency": 80,
+                "containers": [
+                  {
+                    "image": "us-central1-docker.pkg.dev/katseye-498018/yt-ayochat/yt-ayochat:latest",
+                    "resources": {
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                      }
+                    }
+                  }
+                ],
+                "serviceAccountName": "848283871943-compute@developer.gserviceaccount.com",
+                "timeoutSeconds": 300
+              }
+            },
+            "traffic": [
+              {
+                "latestRevision": true,
+                "percent": 100
+              }
+            ]
+          },
+          "status": {
+            "conditions": [
+              {
+                "lastTransitionTime": "2026-08-29T13:27:24.645951Z",
+                "reason": "RevisionFailed",
+                "status": "False",
+                "type": "Ready"
+              },
+              {
+                "lastTransitionTime": "2026-08-29T13:27:22.490091Z",
+                "status": "False",
+                "type": "ConfigurationsReady"
+              },
+              {
+                "lastTransitionTime": "2026-08-29T13:27:24.645951Z",
+                "reason": "RevisionFailed",
+                "status": "False",
+                "type": "RoutesReady"
+              }
+            ],
+            "latestCreatedRevisionName": "yt-ayochat-00001-k5q",
+            "observedGeneration": 1
+          }
+        }
+      },
+      "requestMetadata": {
+        "callerIp": "138.238.254.99",
+        "callerSuppliedUserAgent": "google-cloud-sdk gcloud/569.0.0 agent-name/antigravity command/gcloud.run.deploy invocation-id/c2cf2f4ac61844a3b075eeb772f80ef5 environment/None environment-version/None client-os/MACOSX client-os-ver/25.5.0 client-pltf-arch/arm interactive/False from-script/False python/3.13.7 term/  (Macintosh; Intel Mac OS X 25.5.0),gzip(gfe)",
+        "destinationAttributes": {},
+        "requestAttributes": {
+          "auth": {},
+          "time": "2026-08-29T13:31:19.110635Z"
+        }
+      },
+      "resourceLocation": {
+        "currentLocations": [
+          "us-central1"
+        ]
+      },
+      "resourceName": "namespaces/katseye-498018/services/yt-ayochat",
+      "serviceName": "run.googleapis.com",
+      "status": {}
+    },
+    "receiveTimestamp": "2026-08-29T13:31:19.488939458Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "NOTICE",
+    "timestamp": "2026-08-29T13:31:18.925603Z"
+  },
+  {
+    "insertId": "-30w1xee190sw",
+    "logName": "projects/katseye-498018/logs/cloudaudit.googleapis.com%2Fsystem_event",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "methodName": "/Services.CreateService",
+      "resourceName": "namespaces/katseye-498018/services/yt-ayochat",
+      "response": {
+        "@type": "type.googleapis.com/google.cloud.run.v1.Service",
+        "apiVersion": "serving.knative.dev/v1",
+        "kind": "Service",
+        "metadata": {
+          "annotations": {
+            "run.googleapis.com/client-name": "gcloud",
+            "run.googleapis.com/client-version": "569.0.0",
+            "run.googleapis.com/ingress": "all",
+            "run.googleapis.com/maxScale": "20",
+            "run.googleapis.com/operation-id": "61114043-f829-4772-bbcc-375f54d5f289",
+            "run.googleapis.com/urls": "[\"https://yt-ayochat-848283871943.us-central1.run.app\"]",
+            "serving.knative.dev/creator": "douglass.ayodeji@gmail.com",
+            "serving.knative.dev/lastModifier": "douglass.ayodeji@gmail.com"
+          },
+          "creationTimestamp": "2026-08-29T13:27:22.171374Z",
+          "generation": 1,
+          "labels": {
+            "cloud.googleapis.com/location": "us-central1"
+          },
+          "name": "yt-ayochat",
+          "namespace": "848283871943",
+          "resourceVersion": "AAZaL4dwjow",
+          "selfLink": "/apis/serving.knative.dev/v1/namespaces/848283871943/services/yt-ayochat",
+          "uid": "d3c73eae-5ecc-4bae-8e5f-59be4a6b8290"
+        },
+        "spec": {
+          "template": {
+            "metadata": {
+              "annotations": {
+                "autoscaling.knative.dev/maxScale": "5",
+                "run.googleapis.com/client-name": "gcloud",
+                "run.googleapis.com/client-version": "569.0.0",
+                "run.googleapis.com/startup-cpu-boost": "true"
+              },
+              "labels": {
+                "client.knative.dev/nonce": "qywszpsbvy",
+                "run.googleapis.com/startupProbeType": "Default"
+              }
+            },
+            "spec": {
+              "containerConcurrency": 80,
+              "containers": [
+                {
+                  "env": [
+                    {
+                      "name": "GEMINI_API_KEY",
+                      "value": "[REDACTED_API_KEY]"
+                    }
+                  ],
+                  "image": "gcr.io/katseye-498018/yt-ayochat:latest",
+                  "ports": [
+                    {
+                      "containerPort": 8080,
+                      "name": "http1"
+                    }
+                  ],
+                  "resources": {
+                    "limits": {
+                      "cpu": "1",
+                      "memory": "1Gi"
+                    }
+                  },
+                  "startupProbe": {
+                    "failureThreshold": 1,
+                    "periodSeconds": 240,
+                    "tcpSocket": {
+                      "port": 8080
+                    },
+                    "timeoutSeconds": 240
+                  }
+                }
+              ],
+              "serviceAccountName": "848283871943-compute@developer.gserviceaccount.com",
+              "timeoutSeconds": 300
+            }
+          },
+          "traffic": [
+            {
+              "latestRevision": true,
+              "percent": 100
+            }
+          ]
+        },
+        "status": {
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-08-29T13:27:22.490091Z",
+              "message": "Image 'gcr.io/katseye-498018/yt-ayochat:latest' not found.",
+              "status": "False",
+              "type": "Ready"
+            },
+            {
+              "lastTransitionTime": "2026-08-29T13:27:22.490091Z",
+              "message": "Image 'gcr.io/katseye-498018/yt-ayochat:latest' not found.",
+              "status": "False",
+              "type": "ConfigurationsReady"
+            },
+            {
+              "lastTransitionTime": "2026-08-29T13:27:22.340156Z",
+              "message": "Initializing project for the current region.",
+              "status": "Unknown",
+              "type": "RoutesReady"
+            }
+          ],
+          "latestCreatedRevisionName": "yt-ayochat-00001-k5q",
+          "observedGeneration": 1
+        }
+      },
+      "serviceName": "run.googleapis.com",
+      "status": {
+        "code": 5,
+        "message": "Ready condition status changed to False for Service yt-ayochat with message: Image 'gcr.io/katseye-498018/yt-ayochat:latest' not found."
+      }
+    },
+    "receiveTimestamp": "2026-08-29T13:27:22.766156892Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "ERROR",
+    "timestamp": "2026-08-29T13:27:22.540320Z"
+  },
+  {
+    "insertId": "egadcwddwnc",
+    "logName": "projects/katseye-498018/logs/cloudaudit.googleapis.com%2Factivity",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "32555940559.apps.googleusercontent.com"
+        },
+        "principalEmail": "douglass.ayodeji@gmail.com",
+        "principalSubject": "user:douglass.ayodeji@gmail.com"
+      },
+      "authorizationInfo": [
+        {
+          "granted": true,
+          "permission": "run.services.create",
+          "permissionType": "ADMIN_WRITE",
+          "resource": "namespaces/katseye-498018/services/yt-ayochat",
+          "resourceAttributes": {}
+        },
+        {
+          "granted": true,
+          "permission": "run.services.create",
+          "permissionType": "ADMIN_WRITE",
+          "resource": "namespaces/katseye-498018/services/yt-ayochat",
+          "resourceAttributes": {
+            "name": "namespaces/katseye-498018/services/yt-ayochat",
+            "service": "run.googleapis.com/",
+            "type": "run.googleapis.com/Service"
+          }
+        }
+      ],
+      "methodName": "google.cloud.run.v1.Services.CreateService",
+      "request": {
+        "@type": "type.googleapis.com/google.cloud.run.v1.CreateServiceRequest",
+        "parent": "namespaces/katseye-498018",
+        "service": {
+          "apiVersion": "serving.knative.dev/v1",
+          "kind": "Service",
+          "metadata": {
+            "annotations": {
+              "run.googleapis.com/client-name": "gcloud",
+              "run.googleapis.com/client-version": "569.0.0"
+            },
+            "name": "yt-ayochat",
+            "namespace": "katseye-498018"
+          },
+          "spec": {
+            "template": {
+              "metadata": {
+                "annotations": {
+                  "autoscaling.knative.dev/maxScale": "5",
+                  "run.googleapis.com/client-name": "gcloud",
+                  "run.googleapis.com/client-version": "569.0.0",
+                  "run.googleapis.com/startup-cpu-boost": "True"
+                },
+                "labels": {
+                  "client.knative.dev/nonce": "qywszpsbvy"
+                }
+              },
+              "spec": {
+                "containers": [
+                  {
+                    "image": "gcr.io/katseye-498018/yt-ayochat:latest",
+                    "name": "",
+                    "resources": {
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "status": {}
+        }
+      },
+      "requestMetadata": {
+        "callerIp": "138.238.254.99",
+        "callerSuppliedUserAgent": "google-cloud-sdk gcloud/569.0.0 command/gcloud.run.deploy invocation-id/84c6c4098c384eecbbb0fbe254d06e9a environment/None environment-version/None client-os/MACOSX client-os-ver/25.5.0 client-pltf-arch/arm interactive/True from-script/False python/3.13.7 term/xterm-256color  (Macintosh; Intel Mac OS X 25.5.0),gzip(gfe)",
+        "destinationAttributes": {},
+        "requestAttributes": {
+          "auth": {},
+          "time": "2026-08-29T13:27:22.277963Z"
+        }
+      },
+      "resourceLocation": {
+        "currentLocations": [
+          "us-central1"
+        ]
+      },
+      "resourceName": "namespaces/katseye-498018/services/yt-ayochat",
+      "serviceName": "run.googleapis.com",
+      "status": {}
+    },
+    "receiveTimestamp": "2026-08-29T13:27:22.574004430Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "",
+        "location": "us-central1",
+        "project_id": "katseye-498018",
+        "revision_name": "",
+        "service_name": "yt-ayochat"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "NOTICE",
+    "timestamp": "2026-08-29T13:27:22.068426Z"
+  }
+]
