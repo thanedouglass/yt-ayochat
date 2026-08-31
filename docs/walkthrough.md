@@ -32,8 +32,66 @@ We added unit tests in **[`tests/test_youtube_oauth_listener.py`](file:///Users/
 1. `YouTubeCommentListener` successfully connects via mock authenticated client and filters out comment threads already replied to by the channel author.
 2. `ActionDispatcher` correctly constructs and triggers `comments().insert()` requests to post replies under parent comments.
 
-All **20 tests** passed successfully:
+All **82 tests** passed successfully:
 ```bash
 pytest tests/
-================= 20 passed, 34 warnings in 148.31s (0:02:28) ==================
+================= 82 passed, 34 warnings in 51.08s ==================
 ```
+
+---
+
+## 🛡️ Strict Schema Enforcement Pipeline
+
+To prevent delimiter tampering, hallucinations, or unformatted text from ever reaching the live YouTube Data API v3, the Hive Node implements a dual-gate **Strict Schema Enforcement Pipeline** combining the **Google GenAI SDK Structured Outputs** with **Pydantic v2 validation**.
+
+```mermaid
+flowchart TD
+    A["Inbound Prompt + 4D Vectors"] --> B["[Step 2c] Construct GenerateContentConfig<br/>(response_mime_type='application/json')"]
+    B --> C["[Step 2d] Bind Pydantic Schema<br/>response_schema=SovereignReplyStructuredOutput"]
+    C --> D["Gemini 3.7 Flash Model Invocation<br/>(Generates constrained JSON tokens)"]
+    D --> E["Raw Text Extraction<br/>(raw_text = response.text.strip())"]
+    E --> F["JSON Parsing<br/>data = json.loads(raw_text)"]
+    F --> G["[Step 4d] Pydantic Model Validation<br/>SovereignReplyStructuredOutput.model_validate(data)"]
+    G --> H{"Validation Successful?"}
+    H -- Yes --> I["[Step 4e] Verify & Enforce 1-Sentence<br/>_verify_and_clean_reply()"]
+    H -- No / Fallback --> J["Safe Autonomous Persona Synthesizer<br/>(Deterministic Fallback Reply)"]
+    I --> K["YouTube Action Dispatcher<br/>(comments.insert)"]
+    J --> K
+```
+
+### End-to-End Data Sanitization Loop
+
+1. **Step 2c — Building the Generation Config (`hive.py:505`):**
+   The Hive node constructs `types.GenerateContentConfig` with strict MIME formatting and dynamic temperature scaling:
+   ```python
+   gen_config = types.GenerateContentConfig(
+       system_instruction=system_instruction,
+       temperature=temperature,
+       max_output_tokens=256,
+       response_mime_type="application/json",
+       response_schema=SovereignReplyStructuredOutput,
+       thinking_config=self.planner.thinking_config,
+   )
+   ```
+
+2. **Step 2d — Forcing Gemini Structured Output Schema (`hive.py:510`):**
+   By passing `response_schema=SovereignReplyStructuredOutput`, the Gemini engine restricts its token sampling distribution strictly to valid JSON tokens conforming to the schema definition:
+   ```python
+   class SovereignReplyStructuredOutput(BaseModel):
+       reply_text: str = Field(..., description="Strictly 1-sentence sovereign persona response.")
+       applied_vectors: AppliedSentimentVectors = Field(..., description="4D sentiment calibrations.")
+       cultural_alignment_flag: bool = Field(..., description="Authenticity and unbothered tone compliance.")
+       rationale: str = Field(default="", description="Reasoning grounding explanation.")
+   ```
+
+3. **Step 4d — Pydantic Type Validation & Sanitization (`hive.py:539`):**
+   Upon receiving the payload, the Hive node verifies the object graph via `model_validate`:
+   ```python
+   data = json.loads(raw_text)
+   structured = SovereignReplyStructuredOutput.model_validate(data)
+   ```
+   If any field is missing, malformed, or violates data constraints, the exception is caught, and the system transparently shifts to the verified deterministic fallback synthesizer.
+
+4. **Step 4e & 4f — Downstream Type Safety:**
+   The validated `reply_text` undergoes secondary lexical verification (`_verify_and_clean_reply`) to guarantee strict 1-sentence termination and strip any inadvertent markdown delimiters before returning a strongly typed `HiveResponse` directly to the YouTube API dispatcher.
+

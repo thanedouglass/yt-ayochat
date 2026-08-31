@@ -76,3 +76,47 @@ Mean Vector Alignment Delta:   0.931
 ## 4. Fine-Tuning Dataset Export
 
 All interactions and creator calibrations are continuously compiled to `lumi_hitl_alignment.jsonl` as structured prompt-completion pairs to serve as the foundational instruction dataset for distillation and fine-tuning.
+
+---
+
+## 5. 4D Sentiment Calibration & Adaptive MMR Retrieval
+
+To eliminate robotic response loops and vector over-grounding, the Lumi Swarm deploys an **Adaptive Maximal Marginal Relevance (MMR)** retrieval pipeline coupled with **Dynamic Temperature Scaling**.
+
+```mermaid
+graph TD
+    A["Inbound Comment"] --> B["Perception Classification<br/>(Category, Energy, Polarity)"]
+    B --> C["[Step 3f] Compute 4D Vectors<br/>(α_cs, β_sf, γ_fr, τ_max)"]
+    C --> D["[Step 3a] Find Base Exemplar<br/>(Direct Keyword Overlap)"]
+    C --> E["[Step 3b] Adaptive MMR Retrieval<br/>λ = clamp(0.70 - 0.12*(α_cs - 0.5), 0.50, 0.80)"]
+    E --> F["[Step 3c] Ingest Candidate Pool<br/>(k = max(fetch_k, k) from ChromaDB)"]
+    F --> G["[Step 3d] MMR Scoring Equation<br/>Score = λ*Sim(q, d) - (1-λ)*max(Sim(d, d_selected))"]
+    G --> H["[Step 3e] Select Diverse Exemplars<br/>(2-3 Orthogonal Few-Shot Prompts)"]
+    H --> I["Gemini 3.7 Flash + ADK BuiltInPlanner<br/>(Structured 1-Sentence Synthesis)"]
+```
+
+### Retrieval Sequence & Vector Mathematics
+
+1. **Step 3f — 4D Sentiment Vector Computation (`hive.py:248`):**
+   The incoming comment is parsed by the Perception node, yielding category $C$, intent $I$, energy level $E \in [1, 5]$, and polarity $P \in [-1.0, 1.0]$. The Hive maps these to:
+   - $\alpha_{cs} \in [0.20, 1.00]$: Code-switching depth (vernacular vs. standard English).
+   - $\beta_{sf} \in \{\text{CELEBRATE}, \text{ELEVATE}, \text{CLAPBACK}, \text{DEFLECT}, \text{DISCLAIMER}, \text{SHARE\_STYLING}\}$: Sovereignty strategy.
+   - $\gamma_{fr} \in [1, 5]$: Frequency resonance.
+   - $\tau_{max} \in \{\text{'Pass (1 Sentence)'}, \text{'Exception (2 Sentences)'}\}$: Token economy constraint.
+
+2. **Step 3a — Base Exemplar Resolution (`hive.py:253`):**
+   A fast lexical match checks `lumi_corpus.jsonl` for exact keyword intersections, identifying a primary anchor exemplar ($d_0$).
+
+3. **Step 3b — Adaptive Lambda Tuning (`hive.py:335`):**
+   The MMR diversity parameter $\lambda$ dynamically scales with the vernacular density ($\alpha_{cs}$):
+   $$\lambda = \text{clamp}(0.70 - 0.12 \cdot (\alpha_{cs} - 0.5), 0.50, 0.80)$$
+   High-slang queries receive lower $\lambda$ values (higher diversity weight) to force cross-topic exemplar retrieval and avoid syntactic repetition.
+
+4. **Step 3c & 3d — MMR Candidate Scoring (`rag_service.py:218, 247`):**
+   A candidate pool $\mathcal{D}_{cand}$ ($|\mathcal{D}_{cand}| \ge 4$) is retrieved from ChromaDB. For each unselected candidate $d_i$, its MMR objective score is calculated:
+   $$\text{MMR}(d_i) = \lambda \cdot \text{Sim}(q, d_i) - (1 - \lambda) \cdot \max_{d_j \in \mathcal{S}} \text{Sim}(d_i, d_j)$$
+   where $\mathcal{S}$ is the set of already selected exemplars and $\text{Sim}(\cdot, \cdot)$ is cosine similarity in vector embedding space.
+
+5. **Step 3e — Few-Shot Prompt Assembly (`hive.py:373`):**
+   The algorithm selects $k=3$ mathematically orthogonal exemplars, guaranteeing that the prompt presents the LLM with diverse phrasing, distinct lexical openers, and authentic cultural vernacular without repetitive boilerplate.
+

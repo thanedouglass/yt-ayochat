@@ -245,6 +245,73 @@ class HITLDatabase:
             conn.commit()
         return self.get_hitl_comment(record_id)
 
+    def claim_pending_hitl_comment(
+        self,
+        record_id: str,
+        status: HITLStatus,
+        human_verdict: HITLVerdict,
+        final_reply: Optional[str] = None,
+        diff_json: Optional[Dict[str, Any]] = None,
+        alignment_delta: Optional[float] = None,
+        human_score: Optional[float] = 5.0,
+    ) -> Optional[HITLCommentRecord]:
+        """Atomically transition a PENDING_APPROVAL record to a resolved state.
+
+        Returns None when the record is missing or already resolved, so concurrent
+        callers cannot both resolve the same comment.
+        """
+        now = datetime.now(timezone.utc).isoformat()
+        with self._get_connection() as conn:
+            cur = conn.execute(
+                """
+                UPDATE hitl_comments SET
+                    status = ?,
+                    human_verdict = ?,
+                    final_dispatched_reply = ?,
+                    diff_json = ?,
+                    alignment_delta = ?,
+                    human_score = ?,
+                    updated_at = ?
+                WHERE id = ? AND status = ?;
+                """,
+                (
+                    status.value,
+                    human_verdict.value,
+                    final_reply,
+                    json.dumps(diff_json) if diff_json else None,
+                    alignment_delta,
+                    human_score,
+                    now,
+                    record_id,
+                    HITLStatus.PENDING_APPROVAL.value,
+                ),
+            )
+            conn.commit()
+            if cur.rowcount == 0:
+                return None
+        return self.get_hitl_comment(record_id)
+
+    def release_hitl_comment_claim(self, record_id: str) -> Optional[HITLCommentRecord]:
+        """Return a claimed record to PENDING_APPROVAL after a failed resolution."""
+        now = datetime.now(timezone.utc).isoformat()
+        with self._get_connection() as conn:
+            conn.execute(
+                """
+                UPDATE hitl_comments SET
+                    status = ?,
+                    human_verdict = NULL,
+                    final_dispatched_reply = NULL,
+                    diff_json = NULL,
+                    alignment_delta = NULL,
+                    human_score = NULL,
+                    updated_at = ?
+                WHERE id = ?;
+                """,
+                (HITLStatus.PENDING_APPROVAL.value, now, record_id),
+            )
+            conn.commit()
+        return self.get_hitl_comment(record_id)
+
     def list_hitl_comments(
         self,
         status: Optional[str] = None,

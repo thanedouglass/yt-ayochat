@@ -170,3 +170,68 @@ def test_gemini_mocked_structured_output_generation(hive_node: AutonomousHiveNod
         assert hive_res.applied_vectors["sovereignty_beta"] == "CELEBRATE"
         assert hive_res.cultural_alignment_flag is True
         assert hive_res.rationale == "Matches extreme hype energy with unbothered vernacular."
+
+
+def test_adk_builtin_planner_initialization(hive_node: AutonomousHiveNode):
+    """Verify ADK BuiltInPlanner is properly initialized with thinking_budget=1024 and include_thoughts=True."""
+    from google.adk.planners import BuiltInPlanner
+    assert hasattr(hive_node, "planner")
+    assert isinstance(hive_node.planner, BuiltInPlanner)
+    assert hive_node.planner.thinking_config.thinking_budget == 1024
+    assert hive_node.planner.thinking_config.include_thoughts is True
+
+
+def test_adk_thinking_phase_prompt_and_config(hive_node: AutonomousHiveNode):
+    """Verify that generate_content receives thinking_config and explicit thinking phase instructions."""
+    mock_json = json.dumps({
+        "reply_text": "We were locked in during choreography rehearsals all week!",
+        "applied_vectors": {
+            "code_switch_alpha": 0.85,
+            "sovereignty_beta": "CELEBRATE",
+            "frequency_gamma": 5,
+            "token_economy_tau": "Pass (1 Sentence)"
+        },
+        "cultural_alignment_flag": True,
+        "rationale": "Reasoned via thinking phase mapping CELEBRATE against 4D vectors."
+    })
+
+    mock_client = MagicMock()
+    mock_response = MagicMock()
+    mock_response.text = mock_json
+    mock_candidate = MagicMock()
+    mock_part_thought = MagicMock()
+    mock_part_thought.thought = True
+    mock_part_thought.text = "Mapping CELEBRATE intent to alpha=0.85 and beta=CELEBRATE."
+    mock_candidate.content.parts = [mock_part_thought]
+    mock_response.candidates = [mock_candidate]
+    mock_client.models.generate_content.return_value = mock_response
+
+    with patch("google.genai.Client", return_value=mock_client):
+        p_res = PerceptionResult(
+            comment_id="think_1",
+            raw_text="The dance routine was absolutely legendary!",
+            category=CommentCategory.HYPE,
+            semiotic_intent="CELEBRATE",
+            energy_level=5,
+            polarity=0.95,
+        )
+        res = hive_node.generate_response(p_res)
+        assert res.response_text == "We were locked in during choreography rehearsals all week!"
+        assert hive_node._last_reasoning_thoughts == "Mapping CELEBRATE intent to alpha=0.85 and beta=CELEBRATE."
+
+        # Verify arguments passed to generate_content
+        call_kwargs = mock_client.models.generate_content.call_args.kwargs
+        contents = call_kwargs["contents"]
+        gen_config = call_kwargs["config"]
+
+        # Requirement 3 verification: Prompt includes thinking phase mapping instruction
+        assert "=== ADK PLANNER & THINKING PHASE INSTRUCTION ===" in contents
+        assert "Use your thinking phase to map the incoming Perception intents" in contents
+        assert "mathematically weigh the 4D semiotic vectors" in contents
+        assert "CELEBRATE" in contents
+
+        # Requirement 2 verification: GenerateContentConfig has thinking_config with 1024 budget
+        assert gen_config.thinking_config is not None
+        assert gen_config.thinking_config.thinking_budget == 1024
+        assert gen_config.thinking_config.include_thoughts is True
+
