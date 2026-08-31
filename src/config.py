@@ -59,6 +59,23 @@ class AppConfig:
         ]
     )
 
+    # Telegram Bot & Mobile HITL Pipeline
+    telegram_bot_token: str = field(
+        default_factory=lambda: os.getenv("TELEGRAM_BOT_TOKEN", "")
+    )
+    telegram_chat_id: str = field(
+        default_factory=lambda: os.getenv("TELEGRAM_CHAT_ID", "")
+    )
+    telegram_webhook_secret: str = field(
+        default_factory=lambda: os.getenv("TELEGRAM_WEBHOOK_SECRET", "")
+    )
+    hitl_db_path: Path = field(
+        default_factory=lambda: Path(os.getenv("HITL_DB_PATH", "hitl_state.db"))
+    )
+    hitl_alignment_path: Path = field(
+        default_factory=lambda: Path(os.getenv("HITL_ALIGNMENT_PATH", "lumi_hitl_alignment.jsonl"))
+    )
+
     # Closed-Domain Refusal Response String
     refusal_message: str = (
         "Thanks for reaching out! I don't have information on that in our current "
