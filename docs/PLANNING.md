@@ -177,3 +177,84 @@ Building on top of our append-only synthetic memory layer, the next iteration wi
    * The Supervisor Node adjusts the **Room Temperature** dynamically based on conversation progression (e.g. escalating from `CASUAL_CHILL` to `DANCE_STUDIO` technical depth).
 3. **Sliding-Window Context Compression:**
    * Maintains a hard limit of 3 conversation turns (~250 tokens) to ensure generation latency remains under 600ms while keeping responses strictly 1 sentence.
+
+---
+
+## 7. Official Comment Lifecycle Architecture (End-to-End Trace)
+
+Below is the verified end-to-end trace mapping each comment's journey from initial YouTube webhook/polling ingestion, through 3-node multi-agent swarm calibration, ADK BuiltInPlanner cognitive reasoning, adaptive MMR retrieval, Pydantic schema validation, and out to the Glass Box telemetry visualizer and HITL review queues.
+
+```mermaid
+flowchart TD
+    subgraph Phase1["1. Ingestion & Swarm Orchestration"]
+        A["YouTube Comment Arrives"] --> B["[Step 1a] GovernedYouTubeAgent<br/>agent.py:147"]
+        B --> C["[Step 1b] Supervisor Video Context<br/>engine.py:58"]
+        C --> D["[Step 1c] Perception Intent & Council<br/>engine.py:66"]
+        D --> E["[Step 1d] Hive Response Trigger<br/>engine.py:73"]
+        E --> F["[Step 1e/3f] 4D Vector Calibration<br/>hive.py:248"]
+    end
+
+    subgraph Phase2["2. Adaptive MMR Retrieval (ChromaDB)"]
+        F --> G["[Step 3a] Find Base Exemplar<br/>hive.py:253"]
+        G --> H["[Step 3b] Adaptive MMR Parameter<br/>hive.py:335"]
+        H --> I["[Step 3c] Fetch Candidate Pool<br/>rag_service.py:218"]
+        I --> J["[Step 3d] Compute MMR Scoring<br/>rag_service.py:247"]
+        J --> K["[Step 3e] Assemble Few-Shot Prompts<br/>hive.py:373"]
+    end
+
+    subgraph Phase3["3. ADK BuiltInPlanner & Gemini Synthesis"]
+        K --> L["[Step 2a] Instantiate BuiltInPlanner<br/>hive.py:165"]
+        L --> M["[Step 2b/2c] GenerateContentConfig<br/>hive.py:497, 505"]
+        M --> N["[Step 2d] Bind Sovereign Schema<br/>hive.py:510"]
+        N --> O["[Step 2e/4a] Gemini 3.7 Flash Call<br/>hive.py:514"]
+    end
+
+    subgraph Phase4["4. Cognitive Interception & Verification"]
+        O --> P["[Step 4b] Extract Reasoning Thoughts<br/>hive.py:529"]
+        P --> Q["[Step 4c] Parse Raw JSON<br/>hive.py:538"]
+        Q --> R["[Step 4d] Pydantic Schema Validation<br/>hive.py:539"]
+        R --> S["[Step 4e] Lexical 1-Sentence Enforcer<br/>hive.py:282"]
+        S --> T["[Step 4f] Return HiveResponse<br/>hive.py:289"]
+    end
+
+    subgraph Phase5["5. API Surface & Telemetry"]
+        T --> U["[Step 5d] Glass Box Simulation<br/>server.py:286 POST /api/simulate/swarm"]
+        T --> V["[Step 5e] HITL Async Database<br/>main.py POST /api/poll-comments"]
+        T --> W["YouTube Action Dispatcher<br/>dispatcher.py comments.insert"]
+    end
+```
+
+### Chronological Execution Breakdown
+
+1. **Phase 1 — Ingestion & Orchestration:**
+   - `[Step 1a]` `GovernedYouTubeAgent.process_single_comment()` receives the raw inbound comment thread and delegates processing to `LumiSwarmEngine` (`agent.py:147`).
+   - `[Step 1b]` **Supervisor Node** establishes holistic video room atmosphere (`RoomTemperature`) and topic context (`engine.py:58`).
+   - `[Step 1c]` **Perception Node** evaluates category, emotional polarity, energy level (1–5), and executes Karpathy LLM Council dialect routing (`engine.py:66`).
+   - `[Step 1d]` `LumiSwarmEngine` forwards the perception payload to `AutonomousHiveNode.generate_response()` (`engine.py:73`).
+   - `[Step 1e / 3f]` `compute_target_sentiment_vectors()` resolves target parameters: $\alpha_{cs}$ (Code-Switching), $\beta_{sf}$ (Sovereignty Strategy), $\gamma_{fr}$ (Frequency Resonance), and $\tau_{max}$ (Token Economy) (`hive.py:248`).
+
+2. **Phase 2 — Adaptive MMR ChromaDB Retrieval:**
+   - `[Step 3a]` `_find_nearest_corpus_exemplar()` resolves primary canonical lore anchor (`hive.py:253`).
+   - `[Step 3b]` `retrieve_mmr()` calculates dynamic diversity weighting $\lambda = \text{clamp}(0.70 - 0.12(\alpha_{cs}-0.5), 0.50, 0.80)$ (`hive.py:335`).
+   - `[Step 3c]` `VectorStoreService.retrieve()` extracts top candidate pool from ChromaDB (`rag_service.py:218`).
+   - `[Step 3d]` MMR algorithm scores candidates via $\text{MMR}(d) = \lambda \cdot \text{Sim}(q, d) - (1-\lambda) \cdot \max_{s \in \mathcal{S}} \text{Sim}(d, s)$ (`rag_service.py:247`).
+   - `[Step 3e]` Injects 2–3 mathematically orthogonal exemplars into the few-shot context window (`hive.py:373`).
+
+3. **Phase 3 — ADK BuiltInPlanner & Gemini Synthesis:**
+   - `[Step 2a]` `AutonomousHiveNode.__init__()` instantiates `BuiltInPlanner(thinking_config=ThinkingConfig(thinking_budget=1024, include_thoughts=True))` (`hive.py:165`).
+   - `[Step 2b]` `_generate_with_gemini()` reuses the planner's configured thinking budget (`hive.py:497`).
+   - `[Step 2c]` Constructs `types.GenerateContentConfig` with dynamic temperature scaling ($T = 0.70 + 0.15 \cdot \alpha_{cs}$) (`hive.py:505`).
+   - `[Step 2d]` Binds `response_schema=SovereignReplyStructuredOutput` to enforce strict JSON output token sampling (`hive.py:510`).
+   - `[Step 2e / 4a]` Invokes `client.models.generate_content()` with cognitive thinking directive in prompt (`hive.py:514`).
+
+4. **Phase 4 — Cognitive Interception & Pydantic Validation:**
+   - `[Step 4b]` Intercepts native reasoning thoughts from `response.candidates[0].content.parts` (`self._last_reasoning_thoughts = "\n".join(reasoning_thoughts)`) before JSON parsing (`hive.py:529`).
+   - `[Step 4c]` Parses raw response text into JSON dictionary via `json.loads(raw_text)` (`hive.py:538`).
+   - `[Step 4d]` Validates payload against `SovereignReplyStructuredOutput.model_validate(data)` (`hive.py:539`).
+   - `[Step 4e]` `_verify_and_clean_reply()` enforces terminal punctuation and strict 1-sentence constraints (`hive.py:282`).
+   - `[Step 4f]` Returns strongly typed `HiveResponse` object with applied vectors and rationale (`hive.py:289`).
+
+5. **Phase 5 — Testing & API Surface Delivery:**
+   - `[Step 5a–5c]` Unit tests (`tests/test_gemini_structured_hive.py:218-234`) verify planner type, thinking prompt instructions, and config objects.
+   - `[Step 5d]` Glass Box Simulation endpoint (`POST /api/simulate/swarm` in `src/server.py:286`) executes end-to-end swarm loop for live web visualizers.
+   - `[Step 5e]` HITL polling endpoint (`POST /api/poll-comments` in `src/api/main.py`) stores pending drafts in SQLite for Telegram & Mobile PWA review.

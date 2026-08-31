@@ -76,6 +76,28 @@ response = client.models.generate_content(
 )
 ```
 
+### 🧠 4D Sentiment Calibration & Adaptive MMR Retrieval
+
+To eliminate robotic response loops and vector over-grounding, the Lumi Hive node deploys an **Adaptive Maximal Marginal Relevance (MMR)** retrieval pipeline coupled with **4D Mathematical Sentiment Vectors**:
+
+```mermaid
+graph LR
+    A["Inbound Comment"] --> B["[Step 3f] Compute 4D Vectors<br/>(α_cs, β_sf, γ_fr, τ_max)"]
+    B --> C["[Step 3a] Find Base Exemplar<br/>(Lexical Keyword Match)"]
+    B --> D["[Step 3b] Adaptive MMR Query<br/>λ = clamp(0.70 - 0.12*(α_cs - 0.5), 0.50, 0.80)"]
+    D --> E["[Step 3c] Ingest Candidate Pool<br/>(k = max(fetch_k, k) from ChromaDB)"]
+    E --> F["[Step 3d] Compute MMR Objective Score<br/>Score = λ*Sim(q, d) - (1-λ)*max(Sim(d, d_selected))"]
+    F --> G["[Step 3e] Select Diverse Exemplars<br/>(Orthogonal Few-Shot RAG)"]
+```
+
+1. **Step 3f — Compute 4D Sentiment Vectors (`hive.py:248`):** Perception classifies inbound comment energy, intent, and polarity to dynamically parameterize $\alpha_{cs}$ (Code-Switching Vernacular), $\beta_{sf}$ (Sovereignty Defense Strategy), $\gamma_{fr}$ (Frequency Resonance Voltage), and $\tau_{max}$ (Token Economy Constraint).
+2. **Step 3a — Base Exemplar Resolution (`hive.py:253`):** Resolves canonical domain anchors from `lumi_corpus.jsonl` matching the specific conversational intent.
+3. **Step 3b — Adaptive Lambda Tuning (`hive.py:335`):** Dynamically scales MMR relevance vs. diversity balance based on creator vernacular density ($\alpha_{cs}$):
+   $$\lambda = \text{clamp}(0.70 - 0.12 \cdot (\alpha_{cs} - 0.5), 0.50, 0.80)$$
+4. **Step 3c & 3d — MMR Candidate Scoring (`rag_service.py:218, 247`):** Queries ChromaDB vector store and computes the Maximal Marginal Relevance objective:
+   $$\text{MMR}(d) = \lambda \cdot \text{Sim}(q, d) - (1 - \lambda) \cdot \max_{d_j \in \mathcal{S}} \text{Sim}(d, d_j)$$
+5. **Step 3e — Diverse Exemplar Synthesis (`hive.py:373`):** Injects orthogonal, non-redundant few-shot exemplars into Gemini's system prompt, mitigating mode collapse and preventing robotic repetition across high-volume comment loops.
+
 ---
 
 ## 📁 Repository Structure & Directory Map

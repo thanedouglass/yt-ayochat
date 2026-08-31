@@ -119,3 +119,57 @@ Before making adjustments to the codebase, please review and answer the followin
 ### Manual Verification
 - Place a test `client_secret.json` in the root.
 - Execute `python -m scripts.run_agent --poll --video-id <YOUR_TEST_VIDEO_ID>` to verify the browser popup opens, authentication completes, and comments are fetched/replied to in a real YouTube thread.
+
+---
+
+## 🪟 The Glass Box: Cognitive Transparency & Reasoning Extraction
+
+Traditional autonomous agents operate as black boxes: inputs enter, and raw textual outputs are emitted without intermediate verification. In the **Lumi Swarm**, the Hive Node implements a **Cognitive Transparency Layer** utilizing Google ADK's `BuiltInPlanner` and Gemini's native thinking mode to inspect and intercept the agent's internal reasoning loop before final response generation.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Engine as Swarm Engine
+    participant Hive as AutonomousHiveNode
+    participant Planner as ADK BuiltInPlanner
+    participant Gemini as Gemini 3.7 Flash
+    participant Validator as Pydantic Schema
+
+    Engine->>Hive: generate_response(perception, video_ctx)
+    Hive->>Planner: Configure thinking_budget=1024, include_thoughts=True
+    Hive->>Gemini: generate_content(prompt, gen_config)
+    Note over Gemini: [Step 4a] Internal Cognitive Reasoning Phase<br/>Weighs 4D vectors (α, β, γ, τ) & RAG context
+    Gemini-->>Hive: Response object with candidate parts
+    Note over Hive: [Step 4b] Intercept reasoning thoughts<br/>self._last_reasoning_thoughts = "\n".join(thoughts)
+    Hive->>Hive: [Step 4c] Parse raw JSON string (json.loads)
+    Hive->>Validator: [Step 4d] SovereignReplyStructuredOutput.model_validate()
+    Validator-->>Hive: Structured validated payload
+    Hive-->>Engine: HiveResponse(verified_reply, telemetry, rationale)
+```
+
+### Cognitive Security & Verification Mechanics
+
+1. **Step 4a — Generation with Reasoning (`hive.py:514`):**
+   Gemini 3.7 Flash processes the inbound comment alongside video context, 4D sentiment vectors, and few-shot exemplars under `types.GenerateContentConfig(thinking_config=ThinkingConfig(thinking_budget=1024, include_thoughts=True))`.
+
+2. **Step 4b — Thought Interception (`hive.py:529`):**
+   Before parsing the candidate text into downstream structures, the Hive node iterates through `response.candidates[0].content.parts`, extracting parts with `part.thought == True`:
+   ```python
+   reasoning_thoughts = []
+   if hasattr(response, "candidates") and response.candidates:
+       for candidate in response.candidates:
+           if hasattr(candidate, "content") and candidate.content and candidate.content.parts:
+               for part in candidate.content.parts:
+                   if getattr(part, "thought", False) and getattr(part, "text", None):
+                       reasoning_thoughts.append(part.text)
+   self._last_reasoning_thoughts = "\n".join(reasoning_thoughts) if reasoning_thoughts else None
+   ```
+
+3. **Step 4c — Raw JSON Extraction & Guarded Parse (`hive.py:538`):**
+   The non-thought text payload is extracted, sanitized, and parsed via `json.loads(raw_text)` before being passed to schema validation.
+
+### Cognitive Security Significance
+- **Auditability & Traceability:** The intercepted reasoning thoughts provide verifiable proof of why a particular tone, code-switching level ($\alpha_{cs}$), or sovereignty strategy ($\beta_{sf}$) was selected.
+- **Immunity from Hallucination Loops:** If an adversarial prompt attempts a delimiter breakout, the thinking phase intercepts the malicious payload and explicitly reasons through a deflection strategy before emitting any text.
+- **Telemetry Exposure:** Extracted thoughts are streamed directly into the Glass Box Telemetry Dashboard (`/api/telemetry/audit-feed`), providing researchers and creators complete visibility into agent cognition.
+
